@@ -19,9 +19,12 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
 
   return (
     <aside className="w-80 bg-black border-r border-white/5 flex flex-col h-screen sticky top-0 z-20">
-      <div className="p-12">
-        <div className="text-3xl font-display tracking-tighter text-white italic">Casa Linda</div>
-        <div className="text-[8px] uppercase tracking-[0.5em] text-brand-gold mt-1 font-bold">Black Label Portal</div>
+      <div
+        className="p-12 cursor-pointer group"
+        onClick={onLogout}
+      >
+        <div className="text-3xl font-display tracking-tighter text-white italic group-hover:text-brand-gold transition-colors">Casa Linda</div>
+        <div className="text-[8px] uppercase tracking-[0.5em] text-brand-gold mt-1 font-bold group-hover:text-white transition-colors">Black Label Portal</div>
       </div>
 
       <nav className="flex-1 px-6 mt-4 space-y-2">
