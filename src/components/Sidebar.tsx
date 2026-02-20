@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
   const menuItems = [
     { id: '/', label: 'Dashboard', icon: LayoutDashboard },
     { id: '/clientes', label: 'Meus Clientes', icon: Users },
-    { id: '/catalogo', label: 'Catálogo Atacado', icon: ShoppingBag },
+    { id: 'catalogo', label: 'Catálogo Atacado', icon: ShoppingBag, external: true, url: 'https://atacadocasalinda.com.br' },
     { id: '/pedidos', label: 'Pedidos Realizados', icon: Receipt },
     { id: '/comissoes', label: 'Minhas Comissões', icon: DollarSign },
   ];
@@ -27,13 +27,29 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
       <nav className="flex-1 px-6 mt-4 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
+
+          if (item.external) {
+            return (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-500 text-[11px] uppercase tracking-[0.2em] font-bold text-white/30 hover:bg-white/5 hover:text-brand-gold"
+              >
+                <Icon className="w-4 h-4" />
+                {item.label}
+              </a>
+            );
+          }
+
           return (
             <NavLink
               key={item.id}
               to={item.id}
               className={({ isActive }) => `w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-500 text-[11px] uppercase tracking-[0.2em] font-bold ${isActive
-                  ? 'bg-brand-gold text-black shadow-[0_10px_30px_rgba(197,160,89,0.2)]'
-                  : 'text-white/30 hover:bg-white/5 hover:text-brand-gold'
+                ? 'bg-brand-gold text-black shadow-[0_10px_30px_rgba(197,160,89,0.2)]'
+                : 'text-white/30 hover:bg-white/5 hover:text-brand-gold'
                 }`}
             >
               <Icon className="w-4 h-4" />
