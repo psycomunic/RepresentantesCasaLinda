@@ -60,7 +60,7 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
           onClick={onLoginClick}
           className="px-6 py-2.5 bg-white/5 border border-white/10 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all"
         >
-          Portal do Parceiro
+          Portal do Representante
         </button>
       </nav>
 
@@ -76,20 +76,20 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                 Seja um Representante Oficial
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-display text-white leading-[0.9] tracking-tighter">
-                Escale seu <br className="hidden sm:block" /> <span className="italic text-brand-gold">Faturamento.</span>
+                Venda a Maior <br className="hidden sm:block" /> <span className="italic text-brand-gold">do Brasil.</span>
               </h1>
             </div>
 
             <p className="text-lg sm:text-xl text-gray-400 leading-relaxed font-light max-w-lg mx-auto lg:mx-0">
-              Tenha acesso direto à fábrica da Casa Linda. <strong>Markup de até 300%</strong>, curadoria de luxo, entrega blindada e exclusividade territorial para o seu negócio decolar.
+              A Casa Linda Decorações é a maior fábrica de quadros e espelhos do país. Forme sua carteira de lojistas com obras de alto padrão e receba <strong>comissões acima da média do mercado</strong>.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 sm:gap-12">
               <div className="flex -space-x-4">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100&h=100" alt="Retailer" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=100&h=100" alt="Retailer" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
-                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&q=80&w=100&h=100" alt="Retailer" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark bg-brand-gold flex items-center justify-center text-black text-xs font-bold">+2k</div>
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100&h=100" alt="Consultor" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=100&h=100" alt="Consultor" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
+                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&q=80&w=100&h=100" alt="Consultor" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark object-cover" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-dark bg-brand-gold flex items-center justify-center text-black text-xs font-bold">+150</div>
               </div>
               <div className="text-center sm:text-left">
                 <div className="flex items-center gap-1 justify-center sm:justify-start mb-1 text-brand-gold">
@@ -99,7 +99,7 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                   <Star className="w-4 h-4 fill-brand-gold" />
                   <Star className="w-4 h-4 fill-brand-gold" />
                 </div>
-                <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium">Lojistas Lucrando<br />Todos os meses</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium">Representantes Faturando<br />Todos os meses</p>
               </div>
             </div>
 
@@ -113,12 +113,12 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
             <div className="bg-[#0a0a0a] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 sm:p-12 rounded-[2.5rem] relative z-10 w-full max-w-lg mx-auto lg:mr-0">
               <div className="text-center mb-8">
                 <h3 className="text-3xl font-display text-white italic tracking-tight">Análise de <span className="text-brand-gold">Perfil</span></h3>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-3 font-bold">Apenas para CNPJs do setor de decoração/varejo</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-3 font-bold">Apenas para Representantes e Vendedores Externos (CORE não obrigatório)</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">E-mail Corporativo *</label>
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">E-mail Profissional *</label>
                   <input required type="email" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="seu@email.com.br" />
                 </div>
 
@@ -128,12 +128,12 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">CNPJ da Loja *</label>
-                  <input required type="text" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="00.000.000/0001-00" />
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">CNPJ (Se Tiver) ou CPF *</label>
+                  <input required type="text" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="Documento" />
                 </div>
 
                 <button type="submit" className="group w-full py-5 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all mt-6 shadow-[0_10px_40px_rgba(197,160,89,0.3)] flex items-center justify-center gap-3">
-                  QUERO SER UM REPRESENTANTE
+                  QUERO ME TORNAR REPRESENTANTE
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <p className="text-center text-[10px] text-white/30 font-medium">Seus dados estão seguros. Não enviamos spam.</p>
@@ -157,9 +157,9 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
       <section id="vantagens" className="py-24 sm:py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20 max-w-3xl mx-auto space-y-4">
-            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Por que a Casa Linda?</h2>
-            <h3 className="text-4xl sm:text-5xl font-display text-white italic tracking-tight">O Fim da Concorrência Desleal.</h3>
-            <p className="text-gray-400 font-light text-lg">Nossas obras não estão em marketplaces de preço baixo. Vendemos exclusividade para que você possa cobrar o valor que o seu cliente merece pagar.</p>
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Por que representar a Casa Linda?</h2>
+            <h3 className="text-4xl sm:text-5xl font-display text-white italic tracking-tight">Qualidade Incomparável.</h3>
+            <p className="text-gray-400 font-light text-lg">Nós não brigamos por preço nos marketplaces. Nosso foco é entregar o mais alto padrão e a maior variedade de quadros e espelhos do Brasil, para que você construa uma carteira de lojistas recorrentes.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -167,8 +167,8 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
               <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-gold group-hover:text-black transition-all">
                 <TrendingUp className="w-6 h-6 text-brand-gold group-hover:text-black" />
               </div>
-              <h4 className="text-xl font-display text-white mb-3 tracking-wide">Markup de até 300%</h4>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">Compre direto da nossa fábrica com preços de atacado real e revenda com margens altíssimas. Rentabilidade comprovada por nossos lojistas.</p>
+              <h4 className="text-xl font-display text-white mb-3 tracking-wide">Comissões Agressivas</h4>
+              <p className="text-sm text-gray-400 leading-relaxed font-light">Valorizamos o representante de verdade. Trabalhamos com comissões significativamente acima da média do mercado para premiar quem traz grandes resultados e veste nossa camisa.</p>
             </div>
 
             <div className="p-10 bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 rounded-[2rem] hover:border-brand-gold/30 transition-colors group text-center md:text-left relative overflow-hidden">
@@ -177,15 +177,15 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                 <Shield className="w-6 h-6 text-brand-gold group-hover:text-black" />
               </div>
               <h4 className="text-xl font-display text-white mb-3 tracking-wide">Exclusividade Territorial</h4>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">Mapeamos as regiões para evitar conflito. Quando você é aprovado, nos comprometemos a não aprovar concorrentes diretos no seu raio de atuação.</p>
+              <p className="text-sm text-gray-400 leading-relaxed font-light">Sua região, suas vendas. Nós mapeamos as praças com inteligência e garantimos atuação fechada para os nossos representantes de alta performance evitarem conflitos.</p>
             </div>
 
             <div className="p-10 bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 rounded-[2rem] hover:border-brand-gold/30 transition-colors group">
               <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-gold group-hover:text-black transition-all">
                 <Truck className="w-6 h-6 text-brand-gold group-hover:text-black" />
               </div>
-              <h4 className="text-xl font-display text-white mb-3 tracking-wide">Logística Blindada</h4>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">Nossas embalagens em madeira e papelão triplo garantem 99.8% de integridade na entrega. Chega de dor de cabeça com vidros quebrados.</p>
+              <h4 className="text-xl font-display text-white mb-3 tracking-wide">Pós-venda Sem Dores de Cabeça</h4>
+              <p className="text-sm text-gray-400 leading-relaxed font-light">Nossas embalagens em madeira e papelão triplo garantem que 99.8% das peças cheguem intactas. Feche vendas maiores sem medo de devoluções por problemas no transporte.</p>
             </div>
           </div>
         </div>
@@ -208,8 +208,8 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
       <section id="depoimentos" className="py-24 sm:py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-[10px] uppercase tracking-[0.5em] text-white/40 font-bold mb-4">Quem já é Parceiro</h2>
-            <h3 className="text-3xl sm:text-5xl font-display text-white italic tracking-tight">Números irrebatíveis.</h3>
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-white/40 font-bold mb-4">Time de Elite</h2>
+            <h3 className="text-3xl sm:text-5xl font-display text-white italic tracking-tight">O que dizem os representantes.</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -223,13 +223,13 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                 <Star className="w-5 h-5 fill-brand-gold" />
               </div>
               <p className="text-lg text-white font-light italic leading-relaxed mb-8">
-                "Depois que tirei os quadros de plástico genéricos e coloquei Casa Linda na vitrine principal, o ticket médio da minha loja subiu 40%. A qualidade impressiona de perto."
+                "Eu já tinha uma boa carteira no ramo moveleiro, mas quando incluí a Casa Linda, minha média de comissão mensal dobrou. Eles entregam um produto que os lojistas amam exibir na vitrine principal."
               </p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-full"></div>
                 <div>
                   <p className="text-sm font-bold text-white uppercase tracking-wider">Roberto M.</p>
-                  <p className="text-[10px] text-brand-gold uppercase tracking-widest mt-1 font-bold">Proprietário - Móveis & Design</p>
+                  <p className="text-[10px] text-brand-gold uppercase tracking-widest mt-1 font-bold">Representante - Região Sul</p>
                 </div>
               </div>
             </div>
@@ -244,7 +244,7 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
                 <Star className="w-5 h-5 fill-brand-gold" />
               </div>
               <p className="text-lg text-white font-light italic leading-relaxed mb-8">
-                "O portal simplificou muito. Eu consigo fechar orçamentos para grandes escritórios de arquitetura montando carrinhos em minutos, já com os prazos de boleto."
+                "O portal digital simplificou muito as coisas. Consigo apresentar todo o catálogo na visita, gerar o faturamento no boleto ali na mesa com a arquiteta, e a comissão sempre cai certinho e acima do mercado."
               </p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-full"></div>
@@ -265,15 +265,15 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-10 bg-black/80 lg:bg-transparent p-10 rounded-3xl border border-white/5 lg:border-none backdrop-blur-xl lg:backdrop-blur-none">
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display italic text-white tracking-tighter">
-            Última chamada para <br /> transformar sua <span className="text-brand-gold">loja.</span>
+            Última chamada para <br /> exponenciar seus <span className="text-brand-gold">resultados.</span>
           </h2>
-          <p className="text-gray-400 text-lg sm:text-xl font-light">Avaliação de CNPJs em 2h úteis. Não fique de fora da revolução do alto padrão.</p>
+          <p className="text-gray-400 text-lg sm:text-xl font-light">Avaliação de perfil em até 2h úteis. Não fique de fora da seleta equipe da maior do Brasil.</p>
 
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="px-10 py-6 sm:px-16 sm:py-7 bg-brand-gold text-black rounded-full font-bold text-xs sm:text-sm tracking-[0.3em] uppercase hover:bg-white transition-all shadow-[0_0_60px_rgba(197,160,89,0.4)]"
           >
-            CADASTRAR MEU CNPJ AGORA
+            CADASTRAR MEU PERFIL AGORA
           </button>
         </div>
       </section>
