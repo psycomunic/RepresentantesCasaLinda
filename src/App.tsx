@@ -19,10 +19,22 @@ const MOCK_USER: Profile = {
 };
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('@casalinda:auth') === 'true';
+  });
+
+  const handleLogin = () => {
+    localStorage.setItem('@casalinda:auth', 'true');
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('@casalinda:auth');
+    setIsAuthenticated(false);
+  };
 
   if (!isAuthenticated) {
-    return <LeadCapturePage onLoginClick={() => setIsAuthenticated(true)} />;
+    return <LeadCapturePage onLoginClick={handleLogin} />;
   }
 
   return (
@@ -31,7 +43,7 @@ const App: React.FC = () => {
         <div className="flex min-h-screen bg-brand-dark text-white animate-in fade-in duration-1000">
           <Sidebar
             user={MOCK_USER}
-            onLogout={() => setIsAuthenticated(false)}
+            onLogout={handleLogout}
           />
 
           <main className="flex-1 flex flex-col h-screen overflow-hidden">
