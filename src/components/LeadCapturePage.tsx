@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Image, Layers, Frame, Palette, Maximize, Monitor, Sparkles, Zap, Brush, Calculator, Heart, ArrowRight } from 'lucide-react';
 
 interface LeadCapturePageProps {
   onLoginClick: () => void;
@@ -8,6 +7,11 @@ interface LeadCapturePageProps {
 
 const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [calcValue, setCalcValue] = useState<number>(15000);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const formatCurrency = (val: number) =>
+    val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,16 +195,336 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
         </div>
       </section>
 
-      {/* Image Showcase */}
-      <section className="py-20 bg-black/30 border-y border-white/5">
-        <div className="flex overflow-hidden gap-4 px-4 mask-edges pb-8">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800" className="h-[400px] w-[300px] object-cover rounded-3xl shrink-0 border border-white/10" alt="Decor" />
-          <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd64bd0b?auto=format&fit=crop&q=80&w=800" className="h-[400px] w-[600px] object-cover rounded-3xl shrink-0 border border-white/10 hidden md:block" alt="Decor" />
-          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800" className="h-[400px] w-[400px] object-cover rounded-3xl shrink-0 border border-white/10" alt="Decor" />
-          <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=800" className="h-[400px] w-[300px] object-cover rounded-3xl shrink-0 border border-white/10" alt="Decor" />
+      {/* Premium Materials Section */}
+      <section className="py-24 bg-[#0a0a0a] relative overflow-hidden border-t border-white/5">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-gold/5 blur-[120px] rounded-full"></div>
         </div>
-        <div className="text-center pt-8">
-          <p className="text-brand-gold text-sm tracking-widest uppercase font-bold">Padrão Museu — Molduras em Madeira Maciça e Vidro Museo</p>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16 space-y-6">
+            <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Acabamento Premium</h2>
+            <h3 className="text-3xl md:text-5xl font-display italic text-white">Materiais de Padrão Galeria</h3>
+            <p className="text-zinc-400 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+              Trabalhamos com materiais de padrão galeria para garantir durabilidade e impacto visual em todas as vendas.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="group relative bg-[#121212] p-8 md:p-12 rounded-2xl text-center hover:-translate-y-2 transition-all duration-500 border border-white/5">
+              <div className="w-24 h-24 mx-auto rounded-full border-2 border-brand-gold/20 mb-6 overflow-hidden shadow-[0_0_20px_rgba(197,160,89,0.2)] group-hover:border-brand-gold transition-all">
+                <img src="/images/papel-fotografico.jpg" alt="Papel Fotográfico" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              </div>
+              <h4 className="text-xl font-display text-white mb-4">Papel Fotográfico</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed font-light tracking-wide">Nitidez máxima e cores vibrantes.</p>
+            </div>
+            <div className="group relative bg-[#121212] p-8 md:p-12 rounded-2xl text-center hover:-translate-y-2 transition-all duration-500 border border-white/5">
+              <div className="w-24 h-24 mx-auto rounded-full border-2 border-brand-gold/20 mb-6 overflow-hidden shadow-[0_0_20px_rgba(197,160,89,0.2)] group-hover:border-brand-gold transition-all">
+                <img src="/images/vinil-fotografico.jpg" alt="Vinil Fotográfico Texturizado" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              </div>
+              <h4 className="text-xl font-display text-white mb-4">Vinil Fotográfico Texturizado</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed font-light tracking-wide">Versatilidade e resistência com excelente acabamento.</p>
+            </div>
+            <div className="group relative bg-[#121212] p-8 md:p-12 rounded-2xl text-center hover:-translate-y-2 transition-all duration-500 border border-white/5">
+              <div className="w-24 h-24 mx-auto rounded-full border-2 border-brand-gold/20 mb-6 overflow-hidden shadow-[0_0_20px_rgba(197,160,89,0.2)] group-hover:border-brand-gold transition-all">
+                <img src="/images/canvas-museologico.jpg" alt="Canvas Museológico 100% Algodão" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              </div>
+              <h4 className="text-xl font-display text-white mb-4">Canvas Museológico 100% Algodão</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed font-light tracking-wide">A textura da tela de pintura com máxima qualidade de conservação.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Bar */}
+      <section className="py-12 bg-black border-y border-white/5 relative z-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+            {[
+              "Sem exclusividade",
+              "Sem metas obrigatórias",
+              "Comissão acompanhada em dashboard"
+            ].map((benefit, i) => (
+              <div key={i} className="flex flex-col md:flex-row items-center gap-4 group text-center md:text-left">
+                <div className="w-12 h-12 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold group-hover:bg-brand-gold group-hover:text-black transition-all shadow-[0_0_15px_rgba(197,160,89,0.1)]">
+                  <CheckCircle2 size={20} />
+                </div>
+                <span className="text-sm md:text-base text-zinc-200 uppercase tracking-widest font-bold group-hover:text-white transition-colors max-w-[200px] md:max-w-none leading-relaxed">
+                  {benefit}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Customization Section */}
+      <section className="py-24 bg-brand-dark relative overflow-hidden border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Liberdade Criativa</h2>
+                <h3 className="text-3xl md:text-5xl font-display italic text-white leading-tight">Personalização Total <br /> para Seus Projetos</h3>
+              </div>
+              <p className="text-lg text-zinc-400 font-light leading-relaxed">
+                Oferecemos um acervo completo de artes em altíssima resolução e mais de <span className="text-white border-b border-brand-gold/50">250 modelos de molduras</span> para que cada detalhe reflita a identidade do seu projeto ou cliente lojista.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-6 pt-4">
+                <div className="flex gap-4 items-start group">
+                  <div className="p-3 rounded-lg bg-brand-gold/5 border border-brand-gold/20 text-brand-gold group-hover:bg-brand-gold group-hover:text-black transition-colors">
+                    <Palette size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-display text-lg mb-1">Acervo Exclusivo</h4>
+                    <p className="text-zinc-500 text-xs uppercase tracking-wider">Artes em Alta Resolução</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start group">
+                  <div className="p-3 rounded-lg bg-brand-gold/5 border border-brand-gold/20 text-brand-gold group-hover:bg-brand-gold group-hover:text-black transition-colors">
+                    <Frame size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-display text-lg mb-1">Molduras Premium</h4>
+                    <p className="text-zinc-500 text-xs uppercase tracking-wider">+250 Opções de Acabamento</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="relative aspect-square md:aspect-[4/3] rounded-sm overflow-hidden border border-white/10 group">
+                <img src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?q=80&w=1000&auto=format&fit=crop" alt="Acervo de Artes" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 right-6 left-6 md:left-auto md:w-64 bg-black/60 p-6 border-l-4 border-brand-gold backdrop-blur-xl">
+                  <div className="flex items-center gap-3 mb-2 text-brand-gold">
+                    <Maximize size={16} />
+                    <span className="text-[9px] uppercase tracking-widest font-bold">Qualidade Ultra HD</span>
+                  </div>
+                  <p className="text-zinc-300 text-xs leading-relaxed">Impressão fine art com fidelidade de cor e detalhes impressionantes.</p>
+                </div>
+              </div>
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-brand-gold/10 rounded-full blur-[80px] pointer-events-none"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Diferencial Elite */}
+      <section className="py-16 md:py-24 px-6 bg-[#0a0a0a] relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="space-y-16 text-center">
+            <div className="space-y-10 max-w-4xl mx-auto">
+              <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.6em] font-bold">Diferencial Elite</h2>
+              <h3 className="text-4xl md:text-6xl font-display italic text-white leading-tight">Sua marca em primeiro plano. <br /> Nosso acervo como suporte.</h3>
+              <p className="text-lg text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto">
+                Desenvolvemos um ecossistema exclusivo para que você tenha o controle total. Gere propostas imersivas em segundos, personalizadas com a <span className="text-white border-b border-brand-gold">identidade da sua representação</span>.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: <Zap />, title: "Comissão Superior", desc: "Repasse de 15% a 20% em cada indicação." },
+                { icon: <Monitor />, title: "Portal White Label", desc: "Propostas PDF com a sua marca e assinatura." },
+                { icon: <Sparkles />, title: "Produção Própria", desc: "Acesso a obras exclusivas de artistas nacionais." }
+              ].map((item, i) => (
+                <div key={i} className="bg-[#121212] border border-white/5 p-8 rounded-2xl group hover:bg-white/10 transition-all text-left">
+                  <div className="flex flex-col gap-6 items-center text-center">
+                    <div className="text-brand-gold group-hover:scale-110 transition-transform">{item.icon}</div>
+                    <div>
+                      <h5 className="text-sm font-bold uppercase tracking-widest text-white">{item.title}</h5>
+                      <p className="text-[11px] text-zinc-500 mt-2 uppercase tracking-wider leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Por que escolher Casa Linda */}
+      <section className="py-12 md:py-24 bg-brand-dark relative overflow-hidden px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 md:mb-24 space-y-6">
+            <h3 className="text-3xl md:text-6xl font-display italic text-white">Por que representantes escolhem a Casa Linda</h3>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { icon: <Sparkles size={24} />, title: "Quadros Exclusivos", desc: "Artistas internos e obras registradas/patenteadas, garantindo exclusividade total da marca." },
+              { icon: <Zap size={24} />, title: "Produção Artesanal", desc: "Cada quadro é feito à mão e reproduzido em impressão de última geração FULL HD 4K." },
+              { icon: <Shield size={24} />, title: "Canvas Autêntico", desc: "Tecido 100% algodão padrão museu. Textura artística e proteção para longevidade." }
+            ].map((item, i) => (
+              <div key={i} className="bg-[#121212] border border-white/5 p-8 rounded-2xl space-y-6 group hover:-translate-y-2 transition-all duration-500 text-brand-gold">
+                <div className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center group-hover:bg-brand-gold group-hover:text-black transition-all">
+                  {item.icon}
+                </div>
+                <h4 className="text-lg font-display text-white tracking-wide">{item.title}</h4>
+                <p className="text-[11px] text-zinc-500 leading-relaxed uppercase tracking-widest">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NOSSO ARTISTA */}
+      <section className="py-12 md:py-24 bg-[#0a0a0a] relative overflow-hidden px-6 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="relative order-2 lg:order-1">
+              <div className="bg-[#121212] border border-white/5 p-4 rounded-2xl rotate-2 hover:rotate-0 transition-all duration-700 overflow-hidden group">
+                <img src="/images/rod-artist.jpg" className="w-full h-[450px] md:h-[600px] object-cover rounded-xl opacity-60 group-hover:opacity-90 transition-opacity duration-700" alt="Artista Rod" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div className="absolute bottom-10 left-10">
+                  <p className="text-brand-gold text-[10px] uppercase tracking-[0.4em] font-bold mb-2">Residente Casa Linda</p>
+                  <h4 className="text-4xl font-display text-white italic">Rod</h4>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-10 order-1 lg:order-2">
+              <div className="space-y-4">
+                <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.6em] font-bold">A Mão por Trás da Obra</h2>
+                <h3 className="text-5xl md:text-7xl font-display italic text-white">Nosso Artista</h3>
+              </div>
+              <p className="text-xl text-zinc-400 font-light leading-relaxed">
+                Rod é artista residente da Casa Linda, com obras autorais desenvolvidas exclusivamente para oferecer diferenciais aos lojistas. Suas criações unem <span className="text-white italic">autenticidade</span>, <span className="text-white italic">sofisticação</span> e <span className="text-white italic">controle criativo</span>, permitindo obras sob medida alinhadas ao conceito de exclusividade.
+              </p>
+              <div className="grid grid-cols-2 gap-8 pt-10 border-t border-white/5">
+                <div className="space-y-2">
+                  <p className="text-brand-gold text-[10px] uppercase tracking-widest font-bold">Projetos Personalizados</p>
+                  <p className="text-[11px] text-zinc-500 uppercase tracking-widest leading-relaxed">Criações artísticas sob medida para seu parceiro lojista.</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-brand-gold text-[10px] uppercase tracking-widest font-bold">Selo Autoral</p>
+                  <p className="text-[11px] text-zinc-500 uppercase tracking-widest leading-relaxed">Cada peça carrega a essência e assinatura do artista.</p>
+                </div>
+              </div>
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="px-10 py-6 border border-brand-gold/30 text-brand-gold text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-brand-gold hover:text-black transition-all group rounded-xl">
+                <span className="flex items-center gap-4">Conhecer Acervo Autoral <Brush size={14} /></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROGRAMA DE REPRESENTANTES Section */}
+      <section id="programa" className="py-24 bg-brand-dark px-6 border-b border-white/5 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-6 mb-16">
+            <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Transparência Total</h2>
+            <h3 className="text-3xl md:text-5xl font-display text-white">Programa de Representantes Casa Linda</h3>
+            <p className="text-zinc-500 text-sm font-light max-w-2xl mx-auto leading-relaxed">
+              Uma estrutura desenhada para refletir a realidade das vendas B2B, com metas acessíveis e evolução automática.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-7 bg-[#121212] border border-white/5 p-8 md:p-12 rounded-2xl">
+              <h4 className="text-xl font-display text-white mb-8 flex items-center gap-3">
+                <span className="w-8 h-[1px] bg-brand-gold"></span>
+                Tabela de Progressão Mensal
+              </h4>
+              <div className="space-y-1">
+                {[
+                  { range: "Até R$ 5.999", percent: "15%" },
+                  { range: "De R$ 6.000 a R$ 11.999", percent: "16%" },
+                  { range: "De R$ 12.000 a R$ 19.999", percent: "17%" },
+                  { range: "De R$ 20.000 a R$ 29.999", percent: "18%" },
+                  { range: "De R$ 30.000 a R$ 39.999", percent: "19%" },
+                  { range: "A partir de R$ 40.000", percent: "20%", highlight: true }
+                ].map((row, i) => (
+                  <div key={i} className={`flex justify-between items-center p-4 rounded border border-white/5 transition-all hover:bg-white/5 ${row.highlight ? 'bg-brand-gold/10 border-brand-gold/30' : 'bg-transparent'}`}>
+                    <span className={`text-xs md:text-sm uppercase tracking-wider font-bold ${row.highlight ? 'text-white' : 'text-zinc-400'}`}>{row.range}</span>
+                    <span className={`text-xl font-bold font-display ${row.highlight ? 'text-brand-gold' : 'text-zinc-200'}`}>{row.percent}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 space-y-8">
+              <div className="bg-[#121212] border border-white/5 p-8 md:p-10 border-t-4 border-brand-gold rounded-2xl">
+                <h4 className="text-lg font-bold text-white uppercase tracking-widest mb-6">Regras Importantes</h4>
+                <ul className="space-y-4">
+                  {[
+                    "Comissão sobre vendas confirmadas no mês.",
+                    "Progressão automática e reavaliada mensalmente.",
+                    "Sem penalidades se o volume diminuir.",
+                    "Sem metas mínimas obrigatórias.",
+                    "Condições especiais para projetos de alto volume."
+                  ].map((rule, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-zinc-400 font-light leading-relaxed">
+                      <CheckCircle2 size={16} className="text-brand-gold shrink-0 mt-0.5" />
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-[#121212] border border-white/5 p-8 md:p-10 rounded-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Heart size={80} strokeWidth={1} className="text-brand-gold" />
+                </div>
+                <h4 className="text-brand-gold text-xs font-bold uppercase tracking-widest mb-3">Compromisso Casa Linda</h4>
+                <p className="text-zinc-200 text-sm leading-relaxed font-light">
+                  Acreditamos em parcerias de longo prazo. Criamos esta estrutura para incentivar seu crescimento constante e recompensar sua recorrência de forma justa e sustentável.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Calculadora de Ganhos */}
+      <section id="comissao" className="py-24 bg-[#0a0a0a] px-6 relative overflow-hidden border-b border-white/5">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-gold/5 blur-[120px] rounded-full -z-10"></div>
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+          <div className="lg:w-1/2 space-y-8">
+            <h3 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Rentabilidade Exclusiva</h3>
+            <h2 className="text-5xl md:text-7xl font-display text-white">Onde o lucro <br /> abraça a arte.</h2>
+            <p className="text-zinc-500 font-light text-lg">
+              Nosso modelo de negócio foi desenhado para profissionais de elite. Enquanto o mercado oferece 10%, a Casa Linda garante <span className="text-white font-bold">até 20%</span>.
+            </p>
+            <div className="flex items-center gap-6 p-8 bg-[#121212] border-l-4 border-brand-gold rounded-r-2xl border-y border-r border-white/5">
+              <div className="w-12 h-12 bg-brand-gold/10 flex items-center justify-center rounded-full text-brand-gold">
+                <Calculator size={24} />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Potencial de Ganho</p>
+                <p className="text-sm text-zinc-200">Simule agora o retorno de suas próximas vendas.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:w-1/2 w-full bg-[#121212] border border-white/5 p-12 md:p-16 relative rounded-2xl">
+            <div className="space-y-12">
+              <div className="space-y-6">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-zinc-500">Volume de Vendas (Mês)</span>
+                  <span className="text-4xl font-display text-brand-gold">{formatCurrency(calcValue)}</span>
+                </div>
+                <input
+                  type="range"
+                  min="5000"
+                  max="100000"
+                  step="1000"
+                  value={calcValue}
+                  onChange={(e) => setCalcValue(Number(e.target.value))}
+                  className="w-full h-1 bg-zinc-800 appearance-none cursor-pointer accent-brand-gold outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-10 pt-10 border-t border-white/5">
+                <div className="space-y-2">
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-brand-gold">Retorno Estimado (15% a 20%)</p>
+                  <p className="text-5xl font-display text-white">{formatCurrency(calcValue * 0.15)} a {formatCurrency(calcValue * 0.2)}</p>
+                </div>
+                <div className="opacity-40">
+                  <p className="text-[10px] uppercase tracking-widest font-bold">Lojista Comum (10%)</p>
+                  <p className="text-3xl font-display text-zinc-400">{formatCurrency(calcValue * 0.1)}</p>
+                </div>
+              </div>
+
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full py-6 mt-6 bg-white text-black text-[10px] uppercase tracking-[0.5em] font-bold hover:bg-brand-gold transition-all shadow-[0_10px_40px_rgba(255,255,255,0.1)] rounded-xl">
+                QUERO ME TORNAR REPRESENTANTE
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -258,26 +582,84 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
         </div>
       </section>
 
-      {/* Final CTA Action */}
-      <section className="py-32 px-6 relative border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-brand-gold/10 lg:bg-transparent"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(197,160,89,0.1)_0%,transparent_60%)]"></div>
+      {/* FAQ Section */}
+      <section id="faq" className="py-24 bg-brand-dark px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto space-y-16">
+          <div className="text-center space-y-4">
+            <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Dúvidas Frequentes</h2>
+            <h3 className="text-4xl font-display text-white">Perguntas Comuns</h3>
+          </div>
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-10 bg-black/80 lg:bg-transparent p-10 rounded-3xl border border-white/5 lg:border-none backdrop-blur-xl lg:backdrop-blur-none">
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display italic text-white tracking-tighter">
-            Última chamada para <br /> exponenciar seus <span className="text-brand-gold">resultados.</span>
-          </h2>
-          <p className="text-gray-400 text-lg sm:text-xl font-light">Avaliação de perfil em até 2h úteis. Não fique de fora da seleta equipe da maior do Brasil.</p>
-
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="px-10 py-6 sm:px-16 sm:py-7 bg-brand-gold text-black rounded-full font-bold text-xs sm:text-sm tracking-[0.3em] uppercase hover:bg-white transition-all shadow-[0_0_60px_rgba(197,160,89,0.4)]"
-          >
-            CADASTRAR MEU PERFIL AGORA
-          </button>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              { q: "Quais lojistas posso atender?", a: "Você tem liberdade para prospectar e atender lojas de móveis refinados, lojas de decoração de alto padrão e galerias que valorizem nosso nível de acabamento, desde que respeite a exclusividade territorial." },
+              { q: "Posso vender quadros e espelhos sob medida?", a: "Sim, esse é um dos nossos maiores diferenciais. Produzimos tamanhos personalizados para que o lojista atenda projetos específicos dos clientes finais dele." },
+              { q: "Como funciona a comissão em carteira ativa?", a: "Toda compra recorrente do lojista na sua carteira gera comissão para você, enquanto o cliente estiver ativo sob seu atendimento contínuo. Queremos que você construa uma carteira sólida a longo prazo." },
+              { q: "Como acompanho minhas comissões e pedidos?", a: "Através do Portal B2B. Lá você visualiza todos os pedidos dos seus lojistas, o status de entrega e a projeção de repasse da sua comissão com total transparência." },
+              { q: "Qual a periodicidade dos pagamentos?", a: "Os valores são liberados de acordo com os pagamentos recebidos dos boletos dos lojistas mensais, garantindo fluxo regular conforme o recebimento da fábrica." },
+              { q: "Existem metas ou volumes mínimos para me manter?", a: "Nosso sistema avalia o engajamento e a qualidade da prospecção para graduar os níveis de comissão (até 20%), nosso foco é manter representantes consistentes na equipe com boa margem, não focamos apenas em quem 'vende mais'." },
+              { q: "A Casa Linda faz a entrega diretamente na loja?", a: "Sim. A nossa logística cuidará do transporte seguro cobrindo quase todo território nacional, para que as obras cheguem protegidas diretamente no CD ou loja do cliente." }
+            ].map((faq, i) => (
+              <div key={i} className={`bg-[#121212] overflow-hidden transition-all duration-500 rounded-xl border ${openFaq === i ? 'border-brand-gold/30' : 'border-white/5'}`}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full px-8 py-6 flex items-center justify-between text-left group">
+                  <span className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-colors ${openFaq === i ? 'text-brand-gold' : 'text-zinc-300 group-hover:text-white'}`}>{faq.q}</span>
+                  <div className={`transition-transform duration-500 ${openFaq === i ? 'rotate-180 text-brand-gold' : 'text-zinc-600'}`}>
+                    <Star size={14} className={openFaq === i ? 'fill-brand-gold' : ''} />
+                  </div>
+                </button>
+                <div className={`transition-all duration-700 ease-in-out overflow-hidden ${openFaq === i ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className="px-8 pb-8 pt-2">
+                    <p className="text-sm text-zinc-500 leading-relaxed font-light">{faq.a}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* CTA Final: High Urgency */}
+      <section className="py-32 bg-[#0a0a0a] text-center px-6 relative overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-brand-gold/5"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(197,160,89,0.1)_0%,transparent_60%)]"></div>
+
+        <div className="max-w-4xl mx-auto space-y-16 relative z-10">
+          <div className="flex justify-center">
+            <div className="w-12 h-12 bg-[#121212] border border-white/5 flex items-center justify-center rounded-full text-brand-gold animate-bounce shadow-lg">
+              <Star size={20} />
+            </div>
+          </div>
+          <h2 className="text-5xl sm:text-6xl md:text-[8rem] font-display italic text-white leading-tight md:leading-none tracking-tighter">
+            Sua Carteira <br />é Poder.
+          </h2>
+          <p className="text-sm md:text-xl font-light tracking-[0.3em] text-zinc-400 uppercase max-w-2xl mx-auto leading-relaxed">
+            Não oferte apenas produtos básicos. Construa negócios de alto ticket oferecendo um ecossistema premium aos lojistas.
+          </p>
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="group relative overflow-hidden bg-white text-black px-8 md:px-20 py-6 md:py-8 text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold transition-all hover:scale-105 w-full md:w-auto rounded-full"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-4">CADASTRAR MEU PERFIL AGORA <ArrowRight size={16} /></span>
+              <div className="absolute inset-0 bg-brand-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+            </button>
+          </div>
+          <p className="text-[9px] text-zinc-600 font-bold uppercase tracking-[0.4em]">Avaliação em até 2 horas úteis</p>
+        </div>
+      </section>
+
+      <style>{`
+        input[type=range]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 18px;
+          width: 18px;
+          border-radius: 50%;
+          background: #c5a059;
+          cursor: pointer;
+          border: 4px solid #1a1a1a;
+          box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        }
+      `}</style>
       <footer className="py-12 border-t border-white/10 text-center bg-black">
         <div className="text-2xl font-display tracking-tighter text-white italic opacity-50 mb-4">Casa Linda</div>
         <p className="text-[8px] uppercase tracking-[0.5em] text-white/30">© 2024 Casa Linda Decorações — B2B Atacado</p>
