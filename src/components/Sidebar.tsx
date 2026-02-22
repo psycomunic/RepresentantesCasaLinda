@@ -11,6 +11,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
   const menuItems = [
     { id: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { id: '/novo-pedido', label: 'Novo Pedido', icon: ShoppingBag },
     { id: '/clientes', label: 'Meus Clientes', icon: Users },
     { id: 'catalogo', label: 'Catálogo Atacado', icon: ShoppingBag, external: true, url: 'https://atacadocasalinda.com.br' },
     { id: '/pedidos', label: 'Pedidos Realizados', icon: Receipt },
