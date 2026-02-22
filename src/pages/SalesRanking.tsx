@@ -149,10 +149,10 @@ export const SalesRanking: React.FC = () => {
 
             {/* Podium Section (Hidden when searching to not confuse ranking) */}
             {!searchTerm && top3.length > 0 && (
-                <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-12 relative overflow-hidden">
+                <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-12 mt-4 relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.05)_0%,transparent_60%)]"></div>
 
-                    <div className="relative z-10 flex items-end justify-center gap-4 sm:gap-8 h-64">
+                    <div className="relative z-10 flex items-end justify-center gap-4 sm:gap-8 h-[22rem]">
 
                         {/* 2nd Place */}
                         {top3[1] && (
