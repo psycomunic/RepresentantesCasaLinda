@@ -10,6 +10,7 @@ import { CheckoutFlow } from './pages/CheckoutFlow';
 import { Commissions } from './pages/Commissions';
 import { Orders } from './pages/Orders';
 import { NewOrder } from './pages/NewOrder';
+import { SalesRanking } from './pages/SalesRanking';
 import { CartProvider } from './context/CartContext';
 
 const MOCK_USER: Profile = {
@@ -74,6 +75,7 @@ const App: React.FC = () => {
                 <Route path="/comissoes" element={<Commissions />} />
                 <Route path="/pedidos" element={<Orders />} />
                 <Route path="/novo-pedido" element={<NewOrder />} />
+                <Route path="/ranking" element={<SalesRanking />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </section>

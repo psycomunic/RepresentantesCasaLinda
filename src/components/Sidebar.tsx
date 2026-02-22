@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Profile } from '../types';
-import { LayoutDashboard, Users, ShoppingBag, Receipt, DollarSign, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, ShoppingBag, Receipt, DollarSign, LogOut, TrendingUp } from 'lucide-react';
 
 interface SidebarProps {
   user: Profile;
@@ -11,6 +11,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
   const menuItems = [
     { id: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { id: '/ranking', label: 'Ranking de Vendas', icon: TrendingUp },
     { id: '/novo-pedido', label: 'Novo Pedido', icon: ShoppingBag },
     { id: '/clientes', label: 'Meus Clientes', icon: Users },
     { id: 'catalogo', label: 'Catálogo Atacado', icon: ShoppingBag, external: true, url: 'https://atacadocasalinda.com.br' },
