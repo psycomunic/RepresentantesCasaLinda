@@ -7,6 +7,7 @@ interface OrderItem {
     id: string;
     category: ProductCategory;
     description: string;
+    format?: string;
     size?: string;
     frame?: string;
     finish?: string;
@@ -20,6 +21,7 @@ export const NewOrder: React.FC = () => {
     // States for adding a new item
     const [category, setCategory] = useState<ProductCategory>('Quadros Decorativos');
     const [description, setDescription] = useState('');
+    const [format, setFormat] = useState('');
     const [size, setSize] = useState('');
     const [frame, setFrame] = useState('');
     const [finish, setFinish] = useState('');
@@ -33,9 +35,10 @@ export const NewOrder: React.FC = () => {
             id: Math.random().toString(36).substr(2, 9),
             category,
             description,
+            format: category === 'Quadros Decorativos' ? format : undefined,
             size: category === 'Quadros Decorativos' || category === 'Espelhos' ? size : undefined,
-            frame: category === 'Quadros Decorativos' ? frame : undefined,
-            finish: category === 'Quadros Decorativos' ? finish : undefined,
+            frame: category === 'Quadros Decorativos' || category === 'Espelhos' ? frame : undefined,
+            finish: category === 'Quadros Decorativos' || category === 'Espelhos' ? finish : undefined,
             price: parseFloat(price.replace(',', '.')),
         };
 
@@ -43,6 +46,7 @@ export const NewOrder: React.FC = () => {
 
         // Reset fields
         setDescription('');
+        setFormat('');
         setSize('');
         setFrame('');
         setFinish('');
@@ -133,22 +137,75 @@ export const NewOrder: React.FC = () => {
                             />
                         </div>
 
-                        {(category === 'Quadros Decorativos' || category === 'Espelhos') && (
+                        {category === 'Quadros Decorativos' && (
+                            <div>
+                                <label className="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-2">
+                                    Formato do Quadro
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        value={format}
+                                        onChange={(e) => {
+                                            setFormat(e.target.value);
+                                            setSize('');
+                                        }}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                    >
+                                        <option value="" className="bg-brand-dark text-white">Selecione o formato</option>
+                                        <option value="1 Tela Quadrado" className="bg-brand-dark text-white">1 Tela Quadrado</option>
+                                        <option value="1 Tela" className="bg-brand-dark text-white">1 Tela</option>
+                                        <option value="2 Telas" className="bg-brand-dark text-white">2 Telas</option>
+                                        <option value="3 Telas" className="bg-brand-dark text-white">3 Telas</option>
+                                    </select>
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                </div>
+                            </div>
+                        )}
+
+                        {category === 'Quadros Decorativos' && format && (
+                            <div>
+                                <label className="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-2">
+                                    Tamanho
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        value={size}
+                                        onChange={(e) => setSize(e.target.value)}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                    >
+                                        <option value="" className="bg-brand-dark text-white">Selecione o tamanho</option>
+                                        {format === '1 Tela Quadrado' && ['85x85cm', '115x115cm', '145x145cm'].map(s => <option key={s} value={s} className="bg-brand-dark text-white">{s}</option>)}
+                                        {format === '1 Tela' && ['85x55cm', '115x75cm', '145x95cm', '175x100cm'].map(s => <option key={s} value={s} className="bg-brand-dark text-white">{s}</option>)}
+                                        {format === '2 Telas' && ['55x35cm CADA', '85x55cm CADA', '115x75cm CADA', '145x95cm CADA', '175x95cm CADA'].map(s => <option key={s} value={s} className="bg-brand-dark text-white">{s}</option>)}
+                                        {format === '3 Telas' && ['40x20cm CADA', '55x30cm CADA', '70x40cm CADA', '90x50cm CADA', '120x70cm CADA'].map(s => <option key={s} value={s} className="bg-brand-dark text-white">{s}</option>)}
+                                    </select>
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                </div>
+                            </div>
+                        )}
+
+                        {category === 'Espelhos' && (
                             <div>
                                 <label className="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-2">
                                     Tamanho (L x A)
                                 </label>
-                                <input
-                                    type="text"
-                                    value={size}
-                                    onChange={(e) => setSize(e.target.value)}
-                                    placeholder="Ex: 100x150cm"
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
-                                />
+                                <div className="relative">
+                                    <select
+                                        value={size}
+                                        onChange={(e) => setSize(e.target.value)}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                    >
+                                        <option value="" className="bg-brand-dark text-white">Selecione o tamanho</option>
+                                        <option value="130x40cm" className="bg-brand-dark text-white">130x40cm</option>
+                                        <option value="160x50cm" className="bg-brand-dark text-white">160x50cm</option>
+                                        <option value="180x80cm" className="bg-brand-dark text-white">180x80cm</option>
+                                    </select>
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                </div>
                             </div>
                         )}
 
-                        {category === 'Quadros Decorativos' && (
+                        {(category === 'Quadros Decorativos' || category === 'Espelhos') && (
                             <>
                                 <div>
                                     <label className="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-2">
@@ -161,11 +218,40 @@ export const NewOrder: React.FC = () => {
                                             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
                                         >
                                             <option value="" className="bg-brand-dark text-white">Selecione uma opção</option>
-                                            <option value="Caixa Branca" className="bg-brand-dark text-white">Caixa Branca</option>
-                                            <option value="Caixa Preta" className="bg-brand-dark text-white">Caixa Preta</option>
-                                            <option value="Caixa Madeira" className="bg-brand-dark text-white">Caixa Madeira</option>
-                                            <option value="Borda Infinita" className="bg-brand-dark text-white">Borda Infinita</option>
-                                            <option value="Filete Dourado" className="bg-brand-dark text-white">Filete Dourado</option>
+                                            <optgroup label="Sem Moldura">
+                                                <option value="Sem Moldura (Borda Infinita)" className="bg-brand-dark text-white">Sem Moldura (Borda Infinita)</option>
+                                            </optgroup>
+                                            <optgroup label="Caixa">
+                                                <option value="Caixa Preta" className="bg-brand-dark text-white">Caixa Preta</option>
+                                                <option value="Caixa Branca" className="bg-brand-dark text-white">Caixa Branca</option>
+                                                <option value="Caixa Dourada" className="bg-brand-dark text-white">Caixa Dourada</option>
+                                                <option value="Caixa Madeira" className="bg-brand-dark text-white">Caixa Madeira</option>
+                                            </optgroup>
+                                            <optgroup label="Premium (Clássicas)">
+                                                <option value="Trono de Ouro" className="bg-brand-dark text-white">Trono de Ouro</option>
+                                                <option value="Majestade Negra" className="bg-brand-dark text-white">Majestade Negra</option>
+                                                <option value="Galeria Imperial" className="bg-brand-dark text-white">Galeria Imperial</option>
+                                            </optgroup>
+                                            <optgroup label="Premium (Luxo)">
+                                                <option value="Roma Moderna" className="bg-brand-dark text-white">Roma Moderna</option>
+                                                <option value="Palaciana" className="bg-brand-dark text-white">Palaciana</option>
+                                                <option value="Realce Imperial" className="bg-brand-dark text-white">Realce Imperial</option>
+                                                <option value="Imperial Prata e Ouro" className="bg-brand-dark text-white">Imperial Prata e Ouro</option>
+                                                <option value="Barroco Imperial" className="bg-brand-dark text-white">Barroco Imperial</option>
+                                            </optgroup>
+                                            <optgroup label="Flutuante / Canaleta">
+                                                <option value="Flutuante Preta" className="bg-brand-dark text-white">Flutuante Preta</option>
+                                                <option value="Flutuante Branca" className="bg-brand-dark text-white">Flutuante Branca</option>
+                                                <option value="Flutuante Dourada" className="bg-brand-dark text-white">Flutuante Dourada</option>
+                                                <option value="Flutuante Madeira" className="bg-brand-dark text-white">Flutuante Madeira</option>
+                                            </optgroup>
+                                            <optgroup label="Côncava">
+                                                <option value="Côncava Preta" className="bg-brand-dark text-white">Côncava Preta</option>
+                                                <option value="Côncava Branca" className="bg-brand-dark text-white">Côncava Branca</option>
+                                                <option value="Côncava Dourada" className="bg-brand-dark text-white">Côncava Dourada</option>
+                                                <option value="Côncava Madeira" className="bg-brand-dark text-white">Côncava Madeira</option>
+                                                <option value="Inox" className="bg-brand-dark text-white">Inox</option>
+                                            </optgroup>
                                         </select>
                                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
                                     </div>
@@ -182,9 +268,8 @@ export const NewOrder: React.FC = () => {
                                             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
                                         >
                                             <option value="" className="bg-brand-dark text-white">Selecione uma opção</option>
-                                            <option value="Com Vidro Cristal" className="bg-brand-dark text-white">Com Vidro Cristal</option>
-                                            <option value="Com Vidro Antirreflexo" className="bg-brand-dark text-white">Com Vidro Antirreflexo</option>
-                                            <option value="Em Tela / Canvas (Sem Vidro)" className="bg-brand-dark text-white">Em Tela / Canvas (Sem Vidro)</option>
+                                            <option value="Sem Vidro" className="bg-brand-dark text-white">Sem Vidro</option>
+                                            <option value="Com Vidro (+ R$ 250)" className="bg-brand-dark text-white">Com Vidro (+ R$ 250)</option>
                                         </select>
                                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
                                     </div>
@@ -269,10 +354,11 @@ export const NewOrder: React.FC = () => {
                                         </td>
                                         <td className="px-8 py-6 align-top text-sm">
                                             <ul className="space-y-1 text-zinc-400 print:text-zinc-600">
+                                                {item.format && <li><span className="text-zinc-500 print:text-zinc-400">Formato:</span> {item.format}</li>}
                                                 {item.size && <li><span className="text-zinc-500 print:text-zinc-400">Tam:</span> {item.size}</li>}
                                                 {item.frame && <li><span className="text-zinc-500 print:text-zinc-400">Moldura:</span> {item.frame}</li>}
                                                 {item.finish && <li><span className="text-zinc-500 print:text-zinc-400">Acabamento:</span> {item.finish}</li>}
-                                                {!item.size && !item.frame && !item.finish && <li className="italic">Nenhuma especificação</li>}
+                                                {!item.format && !item.size && !item.frame && !item.finish && <li className="italic">Nenhuma especificação</li>}
                                             </ul>
                                         </td>
                                         <td className="px-8 py-6 align-top text-right font-bold text-white print:text-black whitespace-nowrap">
