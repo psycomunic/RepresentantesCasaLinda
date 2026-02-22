@@ -2,6 +2,8 @@ import React from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DollarSign, TrendingUp, Package, Users } from 'lucide-react';
 import { MOCK_USER, MOCK_ORDERS } from '../mockData';
+import { BrazilMap } from '../components/BrazilMap';
+import { leadStore } from '../lib/leadStore';
 
 const MOCK_PERFORMANCE_DATA = [
     { day: '01', sales: 4500, comissao: 450 },
@@ -18,6 +20,14 @@ export const Dashboard: React.FC = () => {
     const currentSales = 22500;
     const currentCommission = 2250;
     const progressPercentage = Math.min((currentSales / montlyGoal) * 100, 100);
+
+    const leads = leadStore.getLeads();
+
+    // Calculate role distribution
+    const roleStats = leads.reduce((acc, lead) => {
+        acc[lead.role] = (acc[lead.role] || 0) + 1;
+        return acc;
+    }, {} as Record<string, number>);
 
     return (
         <div className="max-w-7xl mx-auto animate-in fade-in duration-1000">
@@ -160,6 +170,28 @@ export const Dashboard: React.FC = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Leads Map & Roles Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                <div className="lg:col-span-2 bg-white/[0.01] border border-white/5 rounded-[2rem] p-8 min-h-[400px]">
+                    <BrazilMap leads={leads} />
+                </div>
+
+                <div className="bg-white/[0.01] border border-white/5 rounded-[2rem] p-8">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-white/60 mb-8">Perfil dos Leads</h3>
+                    <div className="space-y-4">
+                        {Object.entries(roleStats).sort((a, b) => b[1] - a[1]).map(([role, count]) => (
+                            <div key={role} className="flex justify-between items-center group">
+                                <span className="text-sm font-medium text-white group-hover:text-brand-gold transition-colors">{role}</span>
+                                <span className="text-sm font-bold text-brand-gold bg-brand-gold/10 px-3 py-1 rounded-full">{count}</span>
+                            </div>
+                        ))}
+                        {Object.keys(roleStats).length === 0 && (
+                            <p className="text-sm text-white/40 italic">Nenhum lead captado ainda.</p>
+                        )}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Image, Layers, Frame, Palette, Maximize, Monitor, Sparkles, Zap, Brush, Calculator, Heart, ArrowRight } from 'lucide-react';
+import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Image, Layers, Frame, Palette, Maximize, Monitor, Sparkles, Zap, Brush, Calculator, Heart, ArrowRight, ArrowLeft } from 'lucide-react';
+import { leadStore } from '../lib/leadStore';
 
 interface LeadCapturePageProps {
   onLoginClick: () => void;
@@ -10,11 +11,32 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
   const [calcValue, setCalcValue] = useState<number>(15000);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  // Typeform state
+  const [step, setStep] = useState(0);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    role: '',
+    document: '',
+    state: '',
+    city: '',
+    email: '',
+    phone: '',
+  });
+
   const formatCurrency = (val: number) =>
     val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+  const handleNext = () => {
+    if (step < 5) setStep(step + 1);
+  };
+
+  const handlePrev = () => {
+    if (step > 0) setStep(step - 1);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    leadStore.addLead(formData);
     setSubmitted(true);
   };
 
@@ -121,26 +143,164 @@ const LeadCapturePage: React.FC<LeadCapturePageProps> = ({ onLoginClick }) => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">E-mail Profissional *</label>
-                  <input required type="email" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="seu@email.com.br" />
+
+                {/* Progress Bar */}
+                <div className="w-full h-1 bg-white/10 rounded-full mb-8 overflow-hidden">
+                  <div
+                    className="h-full bg-brand-gold transition-all duration-500 ease-out"
+                    style={{ width: `${((step + 1) / 6) * 100}%` }}
+                  ></div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">WhatsApp (Com DDD) *</label>
-                  <input required type="tel" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="(11) 99999-9999" />
-                </div>
+                {/* Step 0: Nome */}
+                {step === 0 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Para começar, qual seu Nome Completo? *</label>
+                    <input
+                      required
+                      autoFocus
+                      type="text"
+                      value={formData.fullName}
+                      onChange={e => setFormData({ ...formData, fullName: e.target.value })}
+                      onKeyDown={e => e.key === 'Enter' && formData.fullName && handleNext()}
+                      className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20"
+                      placeholder="Seu nome"
+                    />
+                    <button type="button" onClick={handleNext} disabled={!formData.fullName} className="w-full py-4 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all mt-4 disabled:opacity-50 flex justify-center items-center gap-2">
+                      AVANÇAR <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
 
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">CNPJ (Se Tiver) ou CPF *</label>
-                  <input required type="text" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-sm text-white placeholder:text-white/20" placeholder="Documento" />
-                </div>
+                {/* Step 1: Área de Atuação */}
+                {step === 1 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Qual sua área de atuação? *</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {['Lojista', 'Representante', 'Arquiteto/Designer', 'Outro'].map(role => (
+                        <button
+                          key={role}
+                          type="button"
+                          onClick={() => { setFormData({ ...formData, role }); handleNext(); }}
+                          className={`p-4 rounded-xl border text-sm transition-all text-left ${formData.role === role ? 'bg-brand-gold/10 border-brand-gold text-brand-gold' : 'bg-white/5 border-white/10 text-white hover:border-brand-gold/50'}`}
+                        >
+                          {role}
+                        </button>
+                      ))}
+                    </div>
+                    <button type="button" onClick={handlePrev} className="text-white/40 hover:text-white text-xs flex items-center gap-1 mt-4 transition-colors">
+                      <ArrowLeft size={14} /> Voltar
+                    </button>
+                  </div>
+                )}
 
-                <button type="submit" className="group w-full py-5 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all mt-6 shadow-[0_10px_40px_rgba(197,160,89,0.3)] flex items-center justify-center gap-3">
-                  QUERO ME TORNAR REPRESENTANTE
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <p className="text-center text-[10px] text-white/30 font-medium">Seus dados estão seguros. Não enviamos spam.</p>
+                {/* Step 2: Documento */}
+                {step === 2 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Seu CPF ou CNPJ *</label>
+                    <input
+                      required
+                      autoFocus
+                      type="text"
+                      value={formData.document}
+                      onChange={e => setFormData({ ...formData, document: e.target.value })}
+                      onKeyDown={e => e.key === 'Enter' && formData.document && handleNext()}
+                      className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20"
+                      placeholder="000.000.000-00 ou 00.000.000/0000-00"
+                    />
+                    <div className="flex gap-4">
+                      <button type="button" onClick={handlePrev} className="p-4 bg-white/5 rounded-2xl text-white/60 hover:text-white hover:bg-white/10 transition-all"><ArrowLeft size={16} /></button>
+                      <button type="button" onClick={handleNext} disabled={!formData.document} className="flex-1 py-4 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                        AVANÇAR <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 3: Localização */}
+                {step === 3 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">De onde você é? *</label>
+                    <div className="flex gap-4">
+                      <div className="w-1/3">
+                        <input
+                          required
+                          autoFocus
+                          type="text"
+                          maxLength={2}
+                          value={formData.state}
+                          onChange={e => setFormData({ ...formData, state: e.target.value.toUpperCase() })}
+                          className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20 text-center"
+                          placeholder="UF"
+                        />
+                      </div>
+                      <div className="w-2/3">
+                        <input
+                          required
+                          type="text"
+                          value={formData.city}
+                          onChange={e => setFormData({ ...formData, city: e.target.value })}
+                          onKeyDown={e => e.key === 'Enter' && formData.state && formData.city && handleNext()}
+                          className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20"
+                          placeholder="Cidade"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <button type="button" onClick={handlePrev} className="p-4 bg-white/5 rounded-2xl text-white/60 hover:text-white hover:bg-white/10 transition-all"><ArrowLeft size={16} /></button>
+                      <button type="button" onClick={handleNext} disabled={!formData.state || !formData.city} className="flex-1 py-4 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                        AVANÇAR <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 4: Email */}
+                {step === 4 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Seu melhor E-mail *</label>
+                    <input
+                      required
+                      autoFocus
+                      type="email"
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                      onKeyDown={e => e.key === 'Enter' && formData.email && handleNext()}
+                      className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20"
+                      placeholder="seu@email.com.br"
+                    />
+                    <div className="flex gap-4">
+                      <button type="button" onClick={handlePrev} className="p-4 bg-white/5 rounded-2xl text-white/60 hover:text-white hover:bg-white/10 transition-all"><ArrowLeft size={16} /></button>
+                      <button type="button" onClick={handleNext} disabled={!formData.email.includes('@')} className="flex-1 py-4 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                        AVANÇAR <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 5: WhatsApp */}
+                {step === 5 && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Para finalizar, seu WhatsApp (Com DDD) *</label>
+                    <input
+                      required
+                      autoFocus
+                      type="tel"
+                      value={formData.phone}
+                      onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all outline-none text-xl text-white placeholder:text-white/20"
+                      placeholder="(11) 99999-9999"
+                    />
+                    <div className="flex gap-4">
+                      <button type="button" onClick={handlePrev} className="p-4 bg-white/5 rounded-2xl text-white/60 hover:text-white hover:bg-white/10 transition-all"><ArrowLeft size={16} /></button>
+                      <button type="submit" disabled={!formData.phone} className="group flex-1 py-4 bg-brand-gold text-black rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-white transition-all shadow-[0_10px_40px_rgba(197,160,89,0.3)] disabled:opacity-50 flex justify-center items-center gap-2">
+                        FINALIZAR <CheckCircle2 size={16} />
+                      </button>
+                    </div>
+                    <p className="text-center text-[10px] text-white/30 font-medium pt-2">Seus dados estão seguros. Não enviamos spam.</p>
+                  </div>
+                )}
+
               </form>
             </div>
           </div>
