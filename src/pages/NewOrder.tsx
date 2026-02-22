@@ -269,7 +269,7 @@ export const NewOrder: React.FC = () => {
                                         >
                                             <option value="" className="bg-brand-dark text-white">Selecione uma opção</option>
                                             <option value="Sem Vidro" className="bg-brand-dark text-white">Sem Vidro</option>
-                                            <option value="Com Vidro (+ R$ 250)" className="bg-brand-dark text-white">Com Vidro (+ R$ 250)</option>
+                                            <option value="Com Vidro" className="bg-brand-dark text-white">Com Vidro</option>
                                         </select>
                                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
                                     </div>
