@@ -12,6 +12,8 @@ import { Orders } from './pages/Orders';
 import { NewOrder } from './pages/NewOrder';
 import { SalesRanking } from './pages/SalesRanking';
 import { CartProvider } from './context/CartContext';
+import { AuthPage } from './pages/AuthPage';
+import { AdminDashboard } from './pages/AdminDashboard';
 
 const MOCK_USER: Profile = {
   id: 'rep-123',
@@ -25,6 +27,8 @@ const App: React.FC = () => {
     return localStorage.getItem('@casalinda:auth') === 'true';
   });
 
+  const [showAuthPage, setShowAuthPage] = useState(false);
+
   const handleLogin = () => {
     localStorage.setItem('@casalinda:auth', 'true');
     setIsAuthenticated(true);
@@ -36,7 +40,10 @@ const App: React.FC = () => {
   };
 
   if (!isAuthenticated) {
-    return <LeadCapturePage onLoginClick={handleLogin} />;
+    if (showAuthPage) {
+      return <AuthPage onLogin={handleLogin} onBack={() => setShowAuthPage(false)} />;
+    }
+    return <LeadCapturePage onLoginClick={() => setShowAuthPage(true)} />;
   }
 
   return (
@@ -76,6 +83,7 @@ const App: React.FC = () => {
                 <Route path="/pedidos" element={<Orders />} />
                 <Route path="/novo-pedido" element={<NewOrder />} />
                 <Route path="/ranking" element={<SalesRanking />} />
+                <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </section>

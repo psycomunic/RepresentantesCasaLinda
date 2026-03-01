@@ -8,6 +8,7 @@ export interface LeadCaptureData {
     email: string;
     phone: string;
     createdAt: string;
+    status: 'pending' | 'approved' | 'rejected';
 }
 
 const STORAGE_KEY = 'casalinda_captured_leads';
@@ -23,6 +24,7 @@ const MOCK_INITIAL_LEADS: LeadCaptureData[] = [
         email: 'ana.loja@email.com',
         phone: '11999999999',
         createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+        status: 'approved',
     },
     {
         id: '2',
@@ -34,6 +36,7 @@ const MOCK_INITIAL_LEADS: LeadCaptureData[] = [
         email: 'roberto.rep@email.com',
         phone: '21988888888',
         createdAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+        status: 'approved',
     },
     {
         id: '3',
@@ -45,6 +48,7 @@ const MOCK_INITIAL_LEADS: LeadCaptureData[] = [
         email: 'camila.arq@email.com',
         phone: '19977777777',
         createdAt: new Date().toISOString(),
+        status: 'pending',
     },
     {
         id: '4',
@@ -56,6 +60,7 @@ const MOCK_INITIAL_LEADS: LeadCaptureData[] = [
         email: 'jp.reps@email.com',
         phone: '41966666666',
         createdAt: new Date().toISOString(),
+        status: 'pending',
     },
     {
         id: '5',
@@ -67,6 +72,7 @@ const MOCK_INITIAL_LEADS: LeadCaptureData[] = [
         email: 'contato@decoramais.com',
         phone: '31955555555',
         createdAt: new Date().toISOString(),
+        status: 'pending',
     }
 ];
 
@@ -85,13 +91,14 @@ export const leadStore = {
         }
     },
 
-    addLead: (lead: Omit<LeadCaptureData, 'id' | 'createdAt'>) => {
+    addLead: (lead: Omit<LeadCaptureData, 'id' | 'createdAt' | 'status'>) => {
         try {
             const leads = leadStore.getLeads();
             const newLead: LeadCaptureData = {
                 ...lead,
                 id: Math.random().toString(36).substr(2, 9),
                 createdAt: new Date().toISOString(),
+                status: 'pending',
             };
 
             const updated = [newLead, ...leads];
@@ -105,5 +112,18 @@ export const leadStore = {
 
     clearLeads: () => {
         localStorage.removeItem(STORAGE_KEY);
+    },
+
+    updateLeadStatus: (id: string, status: 'pending' | 'approved' | 'rejected') => {
+        try {
+            const leads = leadStore.getLeads();
+            const updated = leads.map(lead =>
+                lead.id === id ? { ...lead, status } : lead
+            );
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+            return true;
+        } catch {
+            return false;
+        }
     }
 };
