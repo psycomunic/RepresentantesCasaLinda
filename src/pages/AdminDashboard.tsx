@@ -72,7 +72,7 @@ export const AdminDashboard: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="font-medium text-white">{lead.fullName}</div>
-                                        <div className="text-xs text-brand-gold">{lead.role}</div>
+                                        <div className="text-xs text-brand-gold">Área: {lead.role}</div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-zinc-300">
                                         {lead.document}
@@ -83,8 +83,8 @@ export const AdminDashboard: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${lead.status === 'approved' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                                                lead.status === 'rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                                                    'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                                            lead.status === 'rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                                                'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
                                             }`}>
                                             {lead.status === 'approved' && <CheckCircle2 size={12} />}
                                             {lead.status === 'rejected' && <XCircle size={12} />}
