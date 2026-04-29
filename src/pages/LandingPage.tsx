@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Monitor, Heart, ArrowRight, Layers } from 'lucide-react';
 import { AnimatedMarqueeHero } from '../components/ui/hero-3';
+import { CinematicHero } from '../components/ui/cinematic-landing-hero';
+
 
 interface LandingPageProps {
   onLoginClick: () => void;
@@ -142,6 +144,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
           </div>
         </div>
       </section>
+
+      {/* Cinematic Dashboard Showcase */}
+      <div className="overflow-x-hidden w-[100%] bg-black">
+        <CinematicHero />
+      </div>
 
       {/* Bloco 4 & 5: Quem buscamos & Operation */}
       <section id="programa" className="py-32 px-6 border-b border-white/5 relative overflow-hidden">
