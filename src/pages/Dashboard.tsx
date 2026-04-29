@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DollarSign, TrendingUp, Package, Users } from 'lucide-react';
-import { MOCK_USER, MOCK_ORDERS } from '../mockData';
+import { supabase } from '../lib/supabase';
 import { BrazilMap } from '../components/BrazilMap';
-import { leadStore } from '../lib/leadStore';
+import { Order, Profile } from '../types';
 
 const MOCK_PERFORMANCE_DATA = [
     { day: '01', sales: 4500, comissao: 450 },
@@ -16,16 +16,74 @@ const MOCK_PERFORMANCE_DATA = [
 ];
 
 export const Dashboard: React.FC = () => {
-    const montlyGoal = 50000;
-    const currentSales = 22500;
-    const currentCommission = 2250;
-    const progressPercentage = Math.min((currentSales / montlyGoal) * 100, 100);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [leads, setLeads] = useState<any[]>([]);
+    const [representatives, setRepresentatives] = useState<Profile[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const leads = leadStore.getLeads();
+    useEffect(() => {
+        fetchDashboardData();
+    }, []);
+
+    const fetchDashboardData = async () => {
+        try {
+            setLoading(true);
+            
+            // Fetch Orders
+            const { data: ordersData, error: ordersError } = await supabase
+                .from('orders')
+                .select('*, client:clients(*)')
+                .order('created_at', { ascending: false });
+                
+            if (ordersError) throw ordersError;
+            setOrders(ordersData || []);
+
+            // Fetch Leads
+            const { data: leadsData, error: leadsError } = await supabase
+                .from('representantes_leads')
+                .select('*');
+                
+            if (leadsError) throw leadsError;
+            setLeads(leadsData || []);
+
+            // Fetch Representatives
+            const { data: repsData, error: repsError } = await supabase
+                .from('profiles')
+                .select('*')
+                .in('role', ['representative', 'retailer']);
+                
+            if (repsError) throw repsError;
+            setRepresentatives(repsData || []);
+            
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const montlyGoal = 500000;
+    
+    const currentSales = orders.reduce((acc, order) => acc + order.total_amount, 0);
+    const currentCommission = orders.reduce((acc, order) => acc + (order.total_amount * 0.12), 0);
+    const progressPercentage = Math.min((currentSales / montlyGoal) * 100, 100);
+    
+    const averageTicket = orders.length > 0 ? currentSales / orders.length : 0;
+
+    // Build chart data from orders
+    const chartDataMap = new Map<string, number>();
+    orders.forEach(order => {
+        const day = new Date(order.created_at).getDate().toString().padStart(2, '0');
+        chartDataMap.set(day, (chartDataMap.get(day) || 0) + order.total_amount);
+    });
+
+    const chartData = Array.from(chartDataMap.entries())
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([day, sales]) => ({ day, sales, comissao: sales * 0.12 }));
 
     // Calculate role distribution
-    const roleStats = leads.reduce((acc, lead) => {
-        acc[lead.role] = (acc[lead.role] || 0) + 1;
+    const roleStats = representatives.reduce((acc, rep) => {
+        acc[rep.role === 'representative' ? 'Representante' : 'Lojista'] = (acc[rep.role === 'representative' ? 'Representante' : 'Lojista'] || 0) + 1;
         return acc;
     }, {} as Record<string, number>);
 
@@ -61,9 +119,9 @@ export const Dashboard: React.FC = () => {
                         <Package className="w-8 h-8 text-brand-gold" />
                     </div>
                     <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold mb-2">Pedidos Realizados</p>
-                    <p className="text-3xl font-display text-white mt-1">12</p>
+                    <p className="text-3xl font-display text-white mt-1">{orders.length}</p>
                     <div className="mt-4 flex items-center gap-2 text-[10px] text-white/30 font-medium">
-                        <span>Ticket médio: R$ 1.875,00</span>
+                        <span>Ticket médio: R$ {averageTicket.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                 </div>
 
@@ -105,7 +163,7 @@ export const Dashboard: React.FC = () => {
                     <h3 className="text-sm font-bold uppercase tracking-widest text-white/60 mb-8">Evolução de Vendas</h3>
                     <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={MOCK_PERFORMANCE_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                            <AreaChart data={chartData.length > 0 ? chartData : MOCK_PERFORMANCE_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="5%" stopColor="#C5A059" stopOpacity={0.3} />
@@ -151,7 +209,11 @@ export const Dashboard: React.FC = () => {
                     </div>
 
                     <div className="space-y-6">
-                        {MOCK_ORDERS.map((order) => (
+                        {loading ? (
+                            <div className="flex justify-center items-center h-32">
+                                <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        ) : orders.slice(0, 5).map((order) => (
                             <div key={order.id} className="flex justify-between items-center group cursor-pointer">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[10px] text-white/50 group-hover:bg-brand-gold/10 group-hover:text-brand-gold transition-colors">
@@ -161,15 +223,18 @@ export const Dashboard: React.FC = () => {
                                         <p className="text-sm font-medium text-white group-hover:text-brand-gold transition-colors">
                                             {order.client?.company_name}
                                         </p>
-                                        <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{order.id} - {new Date(order.created_at).toLocaleDateString()}</p>
+                                        <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{order.id.slice(0, 8)} - {new Date(order.created_at).toLocaleDateString()}</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-sm font-bold text-white">R$ {(order.total_amount).toLocaleString('pt-BR')}</p>
-                                    <p className={`text-[9px] uppercase tracking-widest mt-1 ${order.status === 'approved' ? 'text-emerald-400' : 'text-brand-gold'}`}>{order.status === 'approved' ? 'Aprovado' : 'Aguardando Pagamento'}</p>
+                                    <p className="text-sm font-bold text-white">R$ {(order.total_amount).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                                    <p className={`text-[9px] uppercase tracking-widest mt-1 ${order.status === 'approved' ? 'text-emerald-400' : 'text-brand-gold'}`}>{order.status === 'approved' ? 'Aprovado' : 'Em Processamento'}</p>
                                 </div>
                             </div>
                         ))}
+                        {!loading && orders.length === 0 && (
+                            <div className="py-10 text-center text-zinc-500 text-sm">Nenhum pedido encontrado.</div>
+                        )}
                     </div>
                 </div>
             </div>

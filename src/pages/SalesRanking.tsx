@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Trophy, TrendingUp, Medal, Plus, Search, Edit2, Save, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Trophy, TrendingUp, Medal, Search } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface RankItem {
     id: string;
@@ -7,28 +8,47 @@ interface RankItem {
     sales: number;
 }
 
-const INITIAL_MOCK_DATA: RankItem[] = [
-    { id: '1', name: 'João Silva', sales: 154000.50 },
-    { id: '2', name: 'Maria Souza', sales: 120500.00 },
-    { id: '3', name: 'Carlos Ferreira', sales: 98000.00 },
-    { id: '4', name: 'Ana Oliveira', sales: 85400.75 },
-    { id: '5', name: 'Pedro Santos', sales: 72100.20 },
-    { id: 'rep-123', name: 'Angelo Garcia', sales: 65000.00 },
-    { id: '7', name: 'Fernanda Lima', sales: 45000.00 },
-];
-
 export const SalesRanking: React.FC = () => {
-    const [representatives, setRepresentatives] = useState<RankItem[]>(INITIAL_MOCK_DATA);
+    const [representatives, setRepresentatives] = useState<RankItem[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    // State for Add New Rep
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [newName, setNewName] = useState('');
-    const [newSales, setNewSales] = useState('');
+    useEffect(() => {
+        fetchRanking();
+    }, []);
 
-    // State for Editing
-    const [editingId, setEditingId] = useState<string | null>(null);
-    const [editSalesValue, setEditSalesValue] = useState<string>('');
+    const fetchRanking = async () => {
+        try {
+            setLoading(true);
+            const { data, error } = await supabase
+                .from('orders')
+                .select('total_amount, status, representative:profiles!representative_id(id, full_name)');
+
+            if (error) throw error;
+            
+            const salesMap = new Map<string, RankItem>();
+            
+            (data || []).forEach((order: any) => {
+                if (order.status === 'draft' || order.status === 'cancelled') return;
+                
+                const repId = order.representative?.id;
+                const repName = order.representative?.full_name || 'Desconhecido';
+                
+                if (repId) {
+                    if (!salesMap.has(repId)) {
+                        salesMap.set(repId, { id: repId, name: repName, sales: 0 });
+                    }
+                    salesMap.get(repId)!.sales += order.total_amount;
+                }
+            });
+            
+            setRepresentatives(Array.from(salesMap.values()));
+        } catch (error) {
+            console.error('Error fetching ranking:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Sort representatives automatically when there's a change
     const sortedReps = [...representatives].sort((a, b) => b.sales - a.sales);
@@ -36,39 +56,6 @@ export const SalesRanking: React.FC = () => {
 
     const top3 = sortedReps.slice(0, 3);
     const others = filteredReps.filter(rep => !top3.find(t => t.id === rep.id) || searchTerm !== ''); // If searching, show all in list
-
-    const handleAddRep = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newName || !newSales) return;
-
-        const newRep: RankItem = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: newName,
-            sales: parseFloat(newSales.replace(',', '.')),
-        };
-
-        setRepresentatives([...representatives, newRep]);
-        setNewName('');
-        setNewSales('');
-        setShowAddForm(false);
-    };
-
-    const startEditing = (rep: RankItem) => {
-        setEditingId(rep.id);
-        setEditSalesValue(rep.sales.toString());
-    };
-
-    const saveEdit = (id: string) => {
-        if (!editSalesValue) return;
-
-        setRepresentatives(reprs => reprs.map(rep => {
-            if (rep.id === id) {
-                return { ...rep, sales: parseFloat(editSalesValue.replace(',', '.')) };
-            }
-            return rep;
-        }));
-        setEditingId(null);
-    };
 
     const getMedalColor = (index: number) => {
         switch (index) {
@@ -98,54 +85,7 @@ export const SalesRanking: React.FC = () => {
                     </h2>
                     <p className="text-zinc-500 mt-1">Acompanhe e gerencie o faturamento da equipe de representantes.</p>
                 </div>
-
-                <button
-                    onClick={() => setShowAddForm(!showAddForm)}
-                    className="flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-brand-gold transition-all rounded-xl font-bold text-xs uppercase tracking-widest"
-                >
-                    {showAddForm ? <X size={16} /> : <Plus size={16} />}
-                    {showAddForm ? 'Cancelar' : 'Novo Representante'}
-                </button>
             </div>
-
-            {showAddForm && (
-                <form onSubmit={handleAddRep} className="bg-[#121212] border border-brand-gold/20 p-6 rounded-2xl flex items-end gap-6 animate-in slide-in-from-top-4">
-                    <div className="flex-1">
-                        <label className="block text-[10px] uppercase tracking-widest text-brand-gold font-bold mb-2">
-                            Nome do Representante
-                        </label>
-                        <input
-                            type="text"
-                            value={newName}
-                            onChange={(e) => setNewName(e.target.value)}
-                            placeholder="Ex: João Silva"
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
-                        />
-                    </div>
-                    <div className="flex-1">
-                        <label className="block text-[10px] uppercase tracking-widest text-brand-gold font-bold mb-2">
-                            Faturamento Inicial (R$)
-                        </label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={newSales}
-                            onChange={(e) => setNewSales(e.target.value)}
-                            placeholder="0.00"
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="px-8 py-3 h-[46px] bg-brand-gold text-black hover:bg-white transition-all rounded-xl font-bold text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(197,160,89,0.2)]"
-                    >
-                        Adicionar
-                    </button>
-                </form>
-            )}
 
             {/* Podium Section (Hidden when searching to not confuse ranking) */}
             {!searchTerm && top3.length > 0 && (
@@ -233,13 +173,20 @@ export const SalesRanking: React.FC = () => {
                                 <th className="px-8 py-4 font-bold text-center w-16">Pos</th>
                                 <th className="px-8 py-4 font-bold">Representante</th>
                                 <th className="px-8 py-4 font-bold text-right">Faturamento Total</th>
-                                <th className="px-8 py-4 font-bold text-center">Ação</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {filteredReps.length === 0 ? (
+                            {loading ? (
                                 <tr>
-                                    <td colSpan={4} className="px-8 py-12 text-center text-zinc-500">
+                                    <td colSpan={3} className="px-8 py-12 text-center">
+                                        <div className="flex justify-center items-center">
+                                            <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ) : filteredReps.length === 0 ? (
+                                <tr>
+                                    <td colSpan={3} className="px-8 py-12 text-center text-zinc-500">
                                         Nenhum representante encontrado.
                                     </td>
                                 </tr>
@@ -247,7 +194,6 @@ export const SalesRanking: React.FC = () => {
                                 (searchTerm ? filteredReps : others).map((rep) => {
                                     const originalIndex = sortedReps.findIndex(r => r.id === rep.id);
                                     const isTop3 = originalIndex < 3;
-                                    const isEditing = editingId === rep.id;
 
                                     return (
                                         <tr key={rep.id} className="group hover:bg-white/[0.02] transition-colors">
@@ -263,51 +209,9 @@ export const SalesRanking: React.FC = () => {
                                                 {originalIndex === 0 && <span className="ml-2 text-[8px] bg-brand-gold/10 text-brand-gold px-2 py-1 rounded-full uppercase tracking-widest font-bold">Líder</span>}
                                             </td>
                                             <td className="px-8 py-6 text-right">
-                                                {isEditing ? (
-                                                    <div className="flex items-center justify-end gap-2">
-                                                        <input
-                                                            type="number"
-                                                            step="0.01"
-                                                            min="0"
-                                                            value={editSalesValue}
-                                                            onChange={(e) => setEditSalesValue(e.target.value)}
-                                                            className="w-32 px-3 py-2 bg-black border border-brand-gold rounded-lg focus:outline-none text-white text-sm text-right font-display"
-                                                            autoFocus
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <span className={`${isTop3 ? 'text-brand-gold font-bold text-lg' : 'text-zinc-300'} font-display`}>
-                                                        {rep.sales.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                                    </span>
-                                                )}
-                                            </td>
-                                            <td className="px-8 py-6 text-center">
-                                                {isEditing ? (
-                                                    <div className="flex items-center justify-center gap-2">
-                                                        <button
-                                                            onClick={() => saveEdit(rep.id)}
-                                                            className="p-2 bg-green-500/10 text-green-500 rounded-lg hover:bg-green-500 hover:text-white transition-all"
-                                                            title="Salvar"
-                                                        >
-                                                            <Save size={16} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => setEditingId(null)}
-                                                            className="p-2 bg-zinc-800 text-zinc-400 rounded-lg hover:bg-zinc-700 hover:text-white transition-all"
-                                                            title="Cancelar"
-                                                        >
-                                                            <X size={16} />
-                                                        </button>
-                                                    </div>
-                                                ) : (
-                                                    <button
-                                                        onClick={() => startEditing(rep)}
-                                                        className="p-2 bg-white/5 text-zinc-400 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-white border text-white transition-all mx-auto"
-                                                        title="Editar Faturamento"
-                                                    >
-                                                        <Edit2 size={16} />
-                                                    </button>
-                                                )}
+                                                <span className={`${isTop3 ? 'text-brand-gold font-bold text-lg' : 'text-zinc-300'} font-display`}>
+                                                    {rep.sales.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                                </span>
                                             </td>
                                         </tr>
                                     );

@@ -1,26 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DollarSign, ArrowUpRight, ArrowDownRight, FileText, CheckCircle2, Clock } from 'lucide-react';
-import { MOCK_ORDERS } from '../mockData';
+import { supabase } from '../lib/supabase';
+import { Order } from '../types';
 
 export const Commissions: React.FC = () => {
-    // Generate mock commissions from the mock orders
-    const mockCommissions = MOCK_ORDERS.map((order, index) => {
-        // Just alternating status for demonstration
-        const isPaid = index % 2 === 0;
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchOrders();
+    }, []);
+
+    const fetchOrders = async () => {
+        try {
+            setLoading(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) return;
+
+            const { data, error } = await supabase
+                .from('orders')
+                .select('*, client:clients(*)')
+                .eq('representative_id', session.user.id)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+            setOrders(data || []);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Generate commissions from real orders
+    const commissions = orders.map((order, index) => {
+        const isPaid = order.status === 'delivered'; // Example logic: paid if delivered
         return {
-            id: `comm-00${index + 1}`,
-            order_id: order.id,
+            id: `comm-${order.id}`,
+            order_id: order.id.slice(0, 8),
             client_name: order.client?.company_name || 'Desconhecido',
-            amount: order.total_amount * 0.10, // 10% commission
+            amount: order.total_amount * 0.12, // 12% commission as per LP
             status: isPaid ? 'paid' : 'pending',
             date: new Date(order.created_at),
             expected_date: new Date(new Date(order.created_at).getTime() + 30 * 24 * 60 * 60 * 1000) // 30 days later
         };
     });
 
-    const totalCommissions = mockCommissions.reduce((acc, curr) => acc + curr.amount, 0);
-    const paidCommissions = mockCommissions.filter(c => c.status === 'paid').reduce((acc, curr) => acc + curr.amount, 0);
-    const pendingCommissions = mockCommissions.filter(c => c.status === 'pending').reduce((acc, curr) => acc + curr.amount, 0);
+    const totalCommissions = commissions.reduce((acc, curr) => acc + curr.amount, 0);
+    const paidCommissions = commissions.filter(c => c.status === 'paid').reduce((acc, curr) => acc + curr.amount, 0);
+    const pendingCommissions = commissions.filter(c => c.status === 'pending').reduce((acc, curr) => acc + curr.amount, 0);
 
     return (
         <div className="max-w-7xl mx-auto animate-in fade-in duration-1000">
@@ -77,7 +105,16 @@ export const Commissions: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                    {mockCommissions.map((comm) => (
+                    {loading ? (
+                        <div className="flex justify-center items-center h-32">
+                            <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                    ) : commissions.length === 0 ? (
+                        <div className="py-10 text-center text-zinc-500 text-sm">
+                            Nenhuma comissão encontrada.
+                        </div>
+                    ) : (
+                    commissions.map((comm) => (
                         <div key={comm.id} className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 rounded-2xl transition-all duration-300">
 
                             <div className="flex items-center gap-6 mb-4 md:mb-0">
@@ -118,7 +155,7 @@ export const Commissions: React.FC = () => {
                             </div>
 
                         </div>
-                    ))}
+                    )))}
                 </div>
             </div>
         </div>

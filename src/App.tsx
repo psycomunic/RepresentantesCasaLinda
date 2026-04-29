@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { UserRole, Profile } from './types';
 import Sidebar from './components/Sidebar';
@@ -16,20 +16,14 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { LandingPage } from './pages/LandingPage';
 import { SignupPage } from './pages/SignupPage';
 import { ThankYouPage } from './pages/ThankYouPage';
+import { supabase } from './lib/supabase';
 
-const MOCK_USER: Profile = {
-  id: 'rep-123',
-  full_name: 'Angelo Garcia',
-  email: 'angelo@casalinda.com.br',
-  role: UserRole.REPRESENTATIVE,
-};
-
-const ProtectedLayout = ({ onLogout }: { onLogout: () => void }) => {
+const ProtectedLayout = ({ user, onLogout }: { user: Profile, onLogout: () => void }) => {
   return (
     <CartProvider>
       <div className="flex min-h-screen bg-brand-dark text-white animate-in fade-in duration-1000">
         <Sidebar
-          user={MOCK_USER}
+          user={user}
           onLogout={onLogout}
         />
 
@@ -42,11 +36,11 @@ const ProtectedLayout = ({ onLogout }: { onLogout: () => void }) => {
 
             <div className="flex items-center gap-8">
               <div className="text-right hidden sm:block">
-                <p className="text-xs font-bold uppercase tracking-widest text-white">{MOCK_USER.full_name}</p>
-                <p className="text-[9px] uppercase tracking-[0.2em] text-brand-gold mt-1">Vendas B2B</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-white">{user.full_name}</p>
+                <p className="text-[9px] uppercase tracking-[0.2em] text-brand-gold mt-1">{user.role === 'admin' ? 'Administração' : 'Vendas B2B'}</p>
               </div>
               <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-display text-lg italic shadow-xl">
-                AG
+                {user.full_name?.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AG'}
               </div>
             </div>
           </header>
@@ -58,10 +52,10 @@ const ProtectedLayout = ({ onLogout }: { onLogout: () => void }) => {
               <Route path="/catalogo" element={<WholesalePortal />} />
               <Route path="/checkout" element={<CheckoutFlow />} />
               <Route path="/comissoes" element={<Commissions />} />
-              <Route path="/pedidos" element={<Orders />} />
+              <Route path="/pedidos" element={<Orders user={user} />} />
               <Route path="/novo-pedido" element={<NewOrder />} />
               <Route path="/ranking" element={<SalesRanking />} />
-              <Route path="/admin" element={<AdminDashboard />} />
+              {user.role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </section>
@@ -72,37 +66,80 @@ const ProtectedLayout = ({ onLogout }: { onLogout: () => void }) => {
 };
 
 const AppRoutes = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('@casalinda:auth') === 'true';
-  });
+  const [session, setSession] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    localStorage.setItem('@casalinda:auth', 'true');
-    setIsAuthenticated(true);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else {
+        setUserProfile(null);
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+        
+      if (error) throw error;
+      if (data) setUserProfile(data as Profile);
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     navigate('/');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('@casalinda:auth');
-    setIsAuthenticated(false);
-    navigate('/');
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-brand-dark flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
-  if (!isAuthenticated) {
+  if (!session || !userProfile) {
     return (
       <Routes>
         <Route path="/" element={<LandingPage onLoginClick={() => navigate('/login')} />} />
         <Route path="/cadastro" element={<SignupPage />} />
         <Route path="/obrigado" element={<ThankYouPage />} />
-        <Route path="/login" element={<AuthPage onLogin={handleLogin} onBack={() => navigate('/')} />} />
+        <Route path="/login" element={<AuthPage onLogin={() => navigate('/')} onBack={() => navigate('/')} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
   }
 
-  return <ProtectedLayout onLogout={handleLogout} />;
+  return <ProtectedLayout user={userProfile} onLogout={handleLogout} />;
 };
 
 const App: React.FC = () => {

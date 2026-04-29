@@ -1,17 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { Building2, CreditCard, CheckCircle2, ArrowLeft } from 'lucide-react';
-
-const MOCK_CLIENTS = [
-    { id: '1', company_name: 'Loja Decor Prime', cnpj: '12.345.678/0001-90', address: 'Av. Paulista, 1000 - Bela Vista, São Paulo - SP', representative_id: 'rep-123', delivery_address: 'Av. Paulista, 1000', created_at: '' },
-    { id: '2', company_name: 'Maison Zara', cnpj: '98.765.432/0001-10', address: 'Rua Oscar Freire, 500 - Cerqueira César, São Paulo - SP', representative_id: 'rep-123', delivery_address: '', created_at: '' },
-];
+import { supabase } from '../lib/supabase';
+import { Client } from '../types';
 
 export const CheckoutFlow: React.FC = () => {
     const navigate = useNavigate();
     const { items, cartTotals, selectedClient, setClient, paymentTerm, setPaymentTerm, clearCart } = useCart();
     const [step, setStep] = useState<1 | 2 | 3>(1);
+    const [clients, setClients] = useState<Client[]>([]);
+    const [loadingClients, setLoadingClients] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        fetchClients();
+    }, []);
+
+    const fetchClients = async () => {
+        try {
+            setLoadingClients(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) return;
+
+            const { data, error } = await supabase
+                .from('clients')
+                .select('*')
+                .eq('representative_id', session.user.id)
+                .order('company_name', { ascending: true });
+
+            if (error) throw error;
+            setClients(data || []);
+        } catch (error) {
+            console.error('Error fetching clients:', error);
+        } finally {
+            setLoadingClients(false);
+        }
+    };
 
     if (items.length === 0 && step !== 3) {
         return (
@@ -27,12 +52,56 @@ export const CheckoutFlow: React.FC = () => {
         );
     }
 
-    const handleFinishOrder = () => {
-        // In a real app, this would be an API call to Supabase
-        setStep(3);
-        setTimeout(() => {
-            clearCart();
-        }, 2000);
+    const handleFinishOrder = async () => {
+        if (!selectedClient || !paymentTerm || isSubmitting) return;
+
+        try {
+            setIsSubmitting(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) throw new Error('Not authenticated');
+
+            // 1. Create the Order
+            const newOrder = {
+                representative_id: session.user.id,
+                client_id: selectedClient.id,
+                total_amount: cartTotals.totalAmount,
+                discount_amount: cartTotals.discountAmount,
+                payment_terms: paymentTerm,
+                status: 'pending'
+            };
+
+            const { data: orderData, error: orderError } = await supabase
+                .from('orders')
+                .insert([newOrder])
+                .select()
+                .single();
+
+            if (orderError) throw orderError;
+
+            // 2. Create the Order Items
+            const orderItemsToInsert = items.map(item => ({
+                order_id: orderData.id,
+                product_id: item.id,
+                quantity: item.quantity,
+                unit_price: item.wholesale_price
+            }));
+
+            const { error: itemsError } = await supabase
+                .from('order_items')
+                .insert(orderItemsToInsert);
+
+            if (itemsError) throw itemsError;
+
+            setStep(3);
+            setTimeout(() => {
+                clearCart();
+            }, 2000);
+        } catch (error) {
+            console.error('Error finishing order:', error);
+            alert('Houve um erro ao processar seu pedido. Tente novamente.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -68,21 +137,32 @@ export const CheckoutFlow: React.FC = () => {
                             1. Selecione o Lojista
                         </h3>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {MOCK_CLIENTS.map(client => (
-                                <div
-                                    key={client.id}
-                                    onClick={() => setClient(client)}
-                                    className={`p-6 rounded-2xl border cursor-pointer transition-all ${selectedClient?.id === client.id
-                                            ? 'bg-brand-gold/10 border-brand-gold/50 shadow-[0_0_20px_rgba(197,160,89,0.15)]'
-                                            : 'bg-white/5 border-white/10 hover:border-white/30'
-                                        }`}
-                                >
-                                    <p className="font-display text-lg text-white group-hover:text-brand-gold transition-colors">{client.company_name}</p>
-                                    <p className="text-[10px] uppercase tracking-widest text-white/40 mt-1">{client.cnpj}</p>
-                                </div>
-                            ))}
-                        </div>
+                        {loadingClients ? (
+                            <div className="flex justify-center items-center h-32">
+                                <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        ) : clients.length === 0 ? (
+                            <div className="text-center py-10 opacity-50">
+                                <Building2 className="w-12 h-12 mx-auto mb-4" />
+                                <p className="text-[12px] uppercase tracking-[0.2em] text-white">Nenhum cliente cadastrado.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {clients.map(client => (
+                                    <div
+                                        key={client.id}
+                                        onClick={() => setClient(client)}
+                                        className={`p-6 rounded-2xl border cursor-pointer transition-all ${selectedClient?.id === client.id
+                                                ? 'bg-brand-gold/10 border-brand-gold/50 shadow-[0_0_20px_rgba(197,160,89,0.15)]'
+                                                : 'bg-white/5 border-white/10 hover:border-white/30'
+                                            }`}
+                                    >
+                                        <p className="font-display text-lg text-white group-hover:text-brand-gold transition-colors">{client.company_name}</p>
+                                        <p className="text-[10px] uppercase tracking-widest text-white/40 mt-1">{client.cnpj}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
 
                         <button
                             onClick={() => navigate('/clientes')}
@@ -172,13 +252,13 @@ export const CheckoutFlow: React.FC = () => {
 
                             <button
                                 onClick={handleFinishOrder}
-                                disabled={!paymentTerm}
-                                className={`w-full py-5 rounded-2xl font-bold text-[10px] uppercase tracking-[0.3em] transition-all duration-500 ${paymentTerm
+                                disabled={!paymentTerm || isSubmitting}
+                                className={`w-full py-5 rounded-2xl font-bold text-[10px] uppercase tracking-[0.3em] transition-all duration-500 ${paymentTerm && !isSubmitting
                                         ? 'bg-brand-gold text-black hover:bg-white hover:scale-[1.02] shadow-[0_10px_40px_rgba(197,160,89,0.4)]'
                                         : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/10'
                                     }`}
                             >
-                                Confirmar Pedido
+                                {isSubmitting ? 'Processando...' : 'Confirmar Pedido'}
                             </button>
                         </div>
                     </div>
@@ -193,7 +273,7 @@ export const CheckoutFlow: React.FC = () => {
                     </div>
                     <h2 className="text-4xl font-display text-white italic mb-4">Pedido <span className="text-brand-gold">Recebido!</span></h2>
                     <p className="text-white/50 text-sm mb-12 leading-relaxed">
-                        O pedido para <strong>Loja Decor Prime</strong> foi gerado com sucesso sob o pagamento <strong>{paymentTerm}</strong>. O faturamento será processado em breve.
+                        O pedido para <strong>{selectedClient?.company_name}</strong> foi gerado com sucesso sob o pagamento <strong>{paymentTerm}</strong>. O faturamento será processado em breve.
                     </p>
                     <div className="flex justify-center gap-4">
                         <button
@@ -214,3 +294,4 @@ export const CheckoutFlow: React.FC = () => {
         </div>
     );
 };
+

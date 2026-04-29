@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
-
-const MOCK_PRODUCTS: Product[] = [
-  { id: '1', name: 'Quadro Abstrato Minimalista Gold', sku: 'CL-QA-001', wholesale_price: 280.00, category: 'Artes Modernas', image_url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=400' },
-  { id: '2', name: 'Vaso de Cerâmica Off-White', sku: 'CL-VC-042', wholesale_price: 145.00, category: 'Cerâmicas', image_url: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?auto=format&fit=crop&q=80&w=400' },
-  { id: '3', name: 'Espelho Adnet Couro Preto', sku: 'CL-ES-102', wholesale_price: 420.00, category: 'Espelhos', image_url: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=400' },
-  { id: '4', name: 'Escultura Silhueta em Metal', sku: 'CL-SC-088', wholesale_price: 310.00, category: 'Esculturas', image_url: 'https://images.unsplash.com/photo-1544411047-c491e34a2465?auto=format&fit=crop&q=80&w=400' },
-  { id: '5', name: 'Conjunto Telas Botânicas', sku: 'CL-CT-023', wholesale_price: 190.00, category: 'Artes Modernas', image_url: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&q=80&w=400' },
-];
+import { supabase } from '../lib/supabase';
 
 const WholesalePortal: React.FC = () => {
   const navigate = useNavigate();
   const { items, updateQuantity, cartTotals } = useCart();
   const [localQuantities, setLocalQuantities] = useState<Record<string, number>>({});
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.from('products').select('*');
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Sync local input state with global cart (handles initial load and updates from other components)
   React.useEffect(() => {
@@ -72,7 +84,22 @@ const WholesalePortal: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {MOCK_PRODUCTS.map((product) => {
+                {loading ? (
+                    <tr>
+                        <td colSpan={4} className="px-10 py-12 text-center text-brand-gold">
+                            <div className="flex justify-center items-center">
+                                <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        </td>
+                    </tr>
+                ) : products.length === 0 ? (
+                    <tr>
+                        <td colSpan={4} className="px-10 py-12 text-center text-zinc-500">
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+                ) : (
+                products.map((product) => {
                   const qty = localQuantities[product.id] || 0;
                   const disc = calculateDiscount(qty);
                   return (
@@ -109,7 +136,8 @@ const WholesalePortal: React.FC = () => {
                       </td>
                     </tr>
                   );
-                })}
+                })
+                )}
               </tbody>
             </table>
           </div>

@@ -1,11 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, Eye, Package, FileText, ChevronRight } from 'lucide-react';
-import { MOCK_ORDERS } from '../mockData';
+import { supabase } from '../lib/supabase';
+import { Order } from '../types';
 
 export const Orders: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredOrders = MOCK_ORDERS.filter(order =>
+    useEffect(() => {
+        fetchOrders();
+    }, []);
+
+    const fetchOrders = async () => {
+        try {
+            setLoading(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) return;
+
+            const { data, error } = await supabase
+                .from('orders')
+                .select('*, client:clients(*)')
+                .eq('representative_id', session.user.id)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+            setOrders(data || []);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const filteredOrders = orders.filter(order =>
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (order.client?.company_name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -21,7 +49,7 @@ export const Orders: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white/[0.01] border border-white/5 rounded-[3rem] p-8 shadow-2xl relative overflow-hidden">
+            <div className="bg-white/[0.01] border border-white/5 rounded-[3rem] p-8 shadow-2xl relative overflow-hidden min-h-[400px]">
                 {/* Search & Filters */}
                 <div className="flex flex-col md:flex-row gap-4 mb-8">
                     <div className="flex-1 relative">
@@ -44,76 +72,83 @@ export const Orders: React.FC = () => {
                 </div>
 
                 {/* Orders List */}
-                <div className="space-y-4">
-                    {filteredOrders.map((order) => (
-                        <div key={order.id} className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-brand-gold/20 rounded-2xl transition-all duration-300 cursor-pointer">
+                {loading ? (
+                    <div className="flex justify-center items-center h-48">
+                        <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {filteredOrders.map((order) => (
+                            <div key={order.id} className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-brand-gold/20 rounded-2xl transition-all duration-300 cursor-pointer">
 
-                            <div className="flex items-start md:items-center gap-6 mb-4 md:mb-0">
-                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-brand-gold/10 transition-colors">
-                                    <Package className="w-5 h-5 text-white/50 group-hover:text-brand-gold" />
-                                </div>
-
-                                <div>
-                                    <div className="flex items-center gap-3 mb-1">
-                                        <p className="text-sm font-bold text-white group-hover:text-brand-gold transition-colors">{order.client?.company_name}</p>
-                                        <span className={`px-2 py-0.5 rounded text-[8px] uppercase tracking-widest font-bold ${order.status === 'approved' ? 'bg-emerald-500/10 text-emerald-400' :
-                                                order.status === 'shipped' ? 'bg-blue-500/10 text-blue-400' :
-                                                    order.status === 'delivered' ? 'bg-purple-500/10 text-purple-400' :
-                                                        order.status === 'draft' ? 'bg-white/10 text-white/50' :
-                                                            'bg-brand-gold/10 text-brand-gold'
-                                            }`}>
-                                            {
-                                                order.status === 'approved' ? 'Aprovado' :
-                                                    order.status === 'pending' ? 'Pendente' :
-                                                        order.status === 'shipped' ? 'Enviado' :
-                                                            order.status === 'delivered' ? 'Entregue' :
-                                                                order.status === 'draft' ? 'Rascunho' :
-                                                                    'Cancelado'
-                                            }
-                                        </span>
+                                <div className="flex items-start md:items-center gap-6 mb-4 md:mb-0">
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-brand-gold/10 transition-colors">
+                                        <Package className="w-5 h-5 text-white/50 group-hover:text-brand-gold" />
                                     </div>
-                                    <div className="flex items-center gap-4">
-                                        <span className="flex items-center gap-1 text-[10px] text-white/40 uppercase tracking-widest">
-                                            <FileText className="w-3 h-3" /> {order.id}
-                                        </span>
-                                        <span className="w-1 h-1 rounded-full bg-white/20"></span>
-                                        <span className="text-[10px] text-white/40 uppercase tracking-widest">
-                                            {new Date(order.created_at).toLocaleDateString('pt-BR')}
-                                        </span>
+
+                                    <div>
+                                        <div className="flex items-center gap-3 mb-1">
+                                            <p className="text-sm font-bold text-white group-hover:text-brand-gold transition-colors">{order.client?.company_name}</p>
+                                            <span className={`px-2 py-0.5 rounded text-[8px] uppercase tracking-widest font-bold ${order.status === 'approved' ? 'bg-emerald-500/10 text-emerald-400' :
+                                                    order.status === 'shipped' ? 'bg-blue-500/10 text-blue-400' :
+                                                        order.status === 'delivered' ? 'bg-purple-500/10 text-purple-400' :
+                                                            order.status === 'draft' ? 'bg-white/10 text-white/50' :
+                                                                'bg-brand-gold/10 text-brand-gold'
+                                                }`}>
+                                                {
+                                                    order.status === 'approved' ? 'Aprovado' :
+                                                        order.status === 'pending' ? 'Pendente' :
+                                                            order.status === 'shipped' ? 'Enviado' :
+                                                                order.status === 'delivered' ? 'Entregue' :
+                                                                    order.status === 'draft' ? 'Rascunho' :
+                                                                        'Cancelado'
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                            <span className="flex items-center gap-1 text-[10px] text-white/40 uppercase tracking-widest">
+                                                <FileText className="w-3 h-3" /> {order.id.slice(0, 8)}
+                                            </span>
+                                            <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                                            <span className="text-[10px] text-white/40 uppercase tracking-widest">
+                                                {new Date(order.created_at).toLocaleDateString('pt-BR')}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="flex items-center gap-8 flex-row-reverse md:flex-row justify-between w-full md:w-auto">
-                                <div className="text-right">
-                                    <p className="text-xs uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Total</p>
-                                    <p className="text-xl font-display text-white group-hover:text-brand-gold transition-colors">
-                                        R$ {order.total_amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                    </p>
+                                <div className="flex items-center gap-8 flex-row-reverse md:flex-row justify-between w-full md:w-auto">
+                                    <div className="text-right">
+                                        <p className="text-xs uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Total</p>
+                                        <p className="text-xl font-display text-white group-hover:text-brand-gold transition-colors">
+                                            R$ {order.total_amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                        </p>
+                                    </div>
+                                    <div className="text-right hidden md:block">
+                                        <p className="text-xs uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Condição</p>
+                                        <p className="text-xs text-white/70">{order.payment_terms}</p>
+                                    </div>
+
+                                    <button className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 group-hover:bg-brand-gold group-hover:text-black transition-all">
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
                                 </div>
-                                <div className="text-right hidden md:block">
-                                    <p className="text-xs uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Condição</p>
-                                    <p className="text-xs text-white/70">{order.payment_terms}</p>
+
+                            </div>
+                        ))}
+
+                        {filteredOrders.length === 0 && (
+                            <div className="py-20 text-center">
+                                <div className="flex flex-col items-center justify-center opacity-30">
+                                    <Package className="w-16 h-16 mb-6" />
+                                    <p className="text-[12px] uppercase tracking-[0.4em] font-bold">Nenhum pedido encontrado</p>
                                 </div>
-
-                                <button className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 group-hover:bg-brand-gold group-hover:text-black transition-all">
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
                             </div>
-
-                        </div>
-                    ))}
-
-                    {filteredOrders.length === 0 && (
-                        <div className="py-20 text-center">
-                            <div className="flex flex-col items-center justify-center opacity-30">
-                                <Package className="w-16 h-16 mb-6" />
-                                <p className="text-[12px] uppercase tracking-[0.4em] font-bold">Nenhum pedido encontrado</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
 };
+

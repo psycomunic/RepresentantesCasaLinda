@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-import { LeadCaptureData } from '../lib/leadStore';
 
 interface BrazilMapProps {
-    leads: LeadCaptureData[];
+    leads: any[];
 }
 
 // GeoJSON for Brazil states
@@ -14,7 +13,7 @@ export const BrazilMap: React.FC<BrazilMapProps> = ({ leads }) => {
     const stateCounts = useMemo(() => {
         const counts: Record<string, number> = {};
         leads.forEach(lead => {
-            const uf = lead.state?.toUpperCase().trim();
+            const uf = lead.estado?.toUpperCase().trim();
             if (uf) {
                 counts[uf] = (counts[uf] || 0) + 1;
             }
