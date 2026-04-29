@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Maximize, Monitor, Sparkles, Zap, Brush, Calculator, Heart, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Maximize, Monitor, Sparkles, Zap, Brush, Calculator, Heart, ArrowRight, ArrowLeft, Check, Layers } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface LeadCapturePageProps {

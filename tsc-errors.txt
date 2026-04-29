@@ -1,0 +1,5 @@
+src/components/LeadCapturePage.tsx(418,24): error TS2304: Cannot find name 'Layers'.
+src/lib/magazordService.ts(10,38): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/lib/magazordService.ts(11,40): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/lib/supabase.ts(3,33): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/lib/supabase.ts(4,33): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
