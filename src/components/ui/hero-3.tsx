@@ -13,13 +13,12 @@ interface AnimatedMarqueeHeroProps {
   onCtaClick?: () => void;
 }
 
-// Reusable Button component styled like in the image
 const ActionButton = ({ children, onClick }: { children: React.ReactNode, onClick?: () => void }) => (
   <motion.button
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
-    className="mt-8 px-12 py-4 rounded-full bg-brand-gold text-black font-bold uppercase tracking-[0.2em] text-xs shadow-[0_10px_30px_rgba(197,160,89,0.3)] transition-colors hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-opacity-75"
+    className="mt-8 px-12 py-5 rounded-full bg-[#25D366] text-black font-extrabold uppercase tracking-[0.2em] text-sm shadow-[0_0_40px_rgba(37,211,102,0.6)] transition-all hover:bg-[#20bd5a] hover:shadow-[0_0_60px_rgba(37,211,102,0.8)] focus:outline-none border border-[#25D366]"
   >
     {children}
   </motion.button>
@@ -51,7 +50,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
         className
       )}
     >
-      <div className="z-10 flex flex-col items-center relative">
+      <div className="z-20 flex flex-col items-center relative">
         {/* Tagline */}
         <motion.div
           initial="hidden"
@@ -115,7 +114,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
       </div>
 
       {/* Animated Image Marquee */}
-      <div className="absolute bottom-[-10%] left-0 w-full h-[55%] md:h-[60%] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]">
+      <div className="absolute z-0 bottom-[-15%] md:bottom-[-10%] left-0 w-full h-[50%] md:h-[55%] pointer-events-none [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]">
         <motion.div
           className="flex gap-4"
           animate={{
