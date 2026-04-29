@@ -5,6 +5,80 @@
   --color-brand-dark: #050505;
   --font-display: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
+
+  --animate-float: float 10s ease-in-out infinite;
+  --animate-float-slow: float 15s ease-in-out infinite;
+  --animate-float-delayed: float 12s ease-in-out 2s infinite;
+  --animate-pulse-slow: pulse-glow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) scale(1.05);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+  }
+}
+
+@layer utilities {
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  .glass-panel {
+    @apply bg-white/[0.01] backdrop-blur-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.6)];
+  }
+
+  .glass-edge {
+    position: relative;
+  }
+  
+  .glass-edge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .input-gold-glow {
+    @apply relative border-none bg-transparent outline-none transition-all duration-500 ease-out;
+  }
+  
+  .input-gold-glow::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-brand-gold) 0%, transparent 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease-out;
+  }
+  
+  .input-gold-glow:focus-within::after {
+    transform: scaleX(1);
+    box-shadow: 0 0 20px 0 var(--color-brand-gold);
+  }
 }
 
 body {
