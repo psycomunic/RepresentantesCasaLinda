@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Monitor, Heart, ArrowRight, Layers } from 'lucide-react';
-import { AnimatedMarquee } from '../components/AnimatedMarquee';
+import { AnimatedMarqueeHero } from '../components/ui/hero-3';
 
 interface LandingPageProps {
   onLoginClick: () => void;
@@ -39,53 +39,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-0 px-0 overflow-hidden min-h-screen flex flex-col justify-between border-b border-white/5">
-        
-        {/* Floating 3D Orbs / Volumetric Lights */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-gold/[0.05] rounded-full blur-[150px] pointer-events-none animate-float"></div>
-        <div className="absolute bottom-0 left-[-200px] w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[120px] pointer-events-none animate-float-delayed"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-brand-gold/[0.02] rounded-full blur-[180px] pointer-events-none animate-pulse-slow"></div>
-
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 w-full px-6 pt-16">
-          
-          <div className="space-y-8 lg:space-y-10 max-w-4xl">
-            <div className="space-y-6 animate-in slide-in-from-bottom-8 duration-1000 fade-in">
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-brand-gold/30 bg-brand-gold/10 text-brand-gold text-[10px] uppercase tracking-[0.3em] font-bold shadow-[0_0_20px_rgba(197,160,89,0.15)] mx-auto">
-                <span className="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
-                Seja Representante Black Label
-              </div>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-sans font-bold text-white leading-[0.9] tracking-tighter">
-                Sua região é <br className="hidden sm:block" /> <span className="font-display italic font-normal text-brand-gold">o seu império.</span>
-              </h1>
-            </div>
-
-            <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed font-light mx-auto animate-in slide-in-from-bottom-10 duration-1000 fade-in delay-200">
-              Assuma o mercado local com a marca mais cobiçada de quadros decorativos. Comissão premium de <strong className="text-white font-medium">12%</strong> e portal exclusivo de vendas.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 animate-in slide-in-from-bottom-12 duration-1000 fade-in delay-300">
-              <span className="px-5 py-2.5 glass-panel rounded-full text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Comissão 12%</span>
-              <span className="px-5 py-2.5 glass-panel rounded-full text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Plataforma Exclusiva</span>
-              <span className="px-5 py-2.5 glass-panel rounded-full text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Maleta de Amostras</span>
-            </div>
-            
-            <div className="pt-6 animate-in slide-in-from-bottom-12 duration-1000 fade-in delay-500">
-              <button
-                onClick={() => navigate('/cadastro')}
-                className="group relative overflow-hidden bg-brand-gold text-black px-12 md:px-20 py-6 text-xs uppercase tracking-[0.4em] font-bold transition-all hover:scale-105 rounded-full shadow-[0_20px_60px_rgba(197,160,89,0.25)]"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-4">INICIAR CANDIDATURA <ArrowRight size={20} /></span>
-                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Animated Marquee placed at the bottom of the Hero */}
-        <div className="relative z-10 mt-12 w-full animate-in slide-in-from-bottom-16 duration-1000 fade-in delay-700">
-          <AnimatedMarquee />
-        </div>
-      </section>
+      <AnimatedMarqueeHero
+        tagline="Seja Representante Black Label"
+        title={
+          <>
+            Sua região é<br className="hidden sm:block" />
+            <span className="font-display italic font-normal text-brand-gold">o seu império.</span>
+          </>
+        }
+        description="Assuma o mercado local com a marca mais cobiçada de quadros decorativos. Comissão premium de 12% e portal exclusivo de vendas."
+        ctaText="INICIAR CANDIDATURA"
+        onCtaClick={() => navigate('/cadastro')}
+        images={[
+          "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800",
+          "https://images.unsplash.com/photo-1583847268964-b28ce8f89f13?auto=format&fit=crop&q=80&w=800",
+          "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=800",
+          "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&q=80&w=800",
+          "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&q=80&w=800",
+          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800",
+        ]}
+      />
 
       {/* Bloco 2: Benefícios Premium */}
       <section id="beneficios" className="py-32 px-6 border-b border-white/5 relative">
