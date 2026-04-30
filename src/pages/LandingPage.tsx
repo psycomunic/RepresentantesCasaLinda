@@ -80,9 +80,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       />
 
       {/* Bloco 2: Benefícios Premium */}
-      <section id="beneficios" className="py-32 px-6 border-b border-white/5 relative">
+      <section id="beneficios" className="py-16 px-6 border-b border-white/5 relative">
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-24 max-w-4xl mx-auto space-y-6">
+          <div className="text-center mb-12 max-w-4xl mx-auto space-y-4">
             <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Estrutura de Ponta</h2>
             <h3 className="text-5xl sm:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight">O poder de uma grande marca <br/> em suas mãos.</h3>
             <p className="text-zinc-600 dark:text-zinc-400 font-light text-xl">
@@ -116,7 +116,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Bloco 3: Kit Comercial */}
-      <section className="py-32 px-6 relative border-b border-white/5 overflow-hidden">
+      <section className="py-16 px-6 relative border-b border-white/5 overflow-hidden">
         {/* Glow */}
         <div className="absolute top-1/2 right-[-200px] -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.04] blur-[150px] rounded-full pointer-events-none animate-pulse-slow"></div>
         
@@ -181,7 +181,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
 
       {/* Cinematic Dashboard Showcase */}
       <div className="overflow-x-hidden w-full bg-zinc-50 dark:bg-brand-dark transition-colors duration-500">
-        <div className="flex flex-col overflow-hidden pb-[100px] pt-[100px]">
+        <div className="flex flex-col overflow-hidden pb-8 pt-8">
           <ContainerScroll
             titleComponent={
               <div className="mb-8">
@@ -203,7 +203,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </div>
 
       {/* Bloco 4 & 5: Quem buscamos & Operation */}
-      <section id="programa" className="py-32 px-6 border-b border-white/5 relative overflow-hidden">
+      <section id="programa" className="py-16 px-6 border-b border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 relative z-10">
           <div className="glass-panel glass-edge p-12 md:p-16 rounded-[3rem] relative group">
             <h3 className="text-4xl font-display text-zinc-900 dark:text-white italic mb-12">Quem queremos a bordo</h3>
@@ -248,10 +248,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Política Comercial Séria */}
-      <section className="py-32 px-6 text-center border-b border-white/5 relative">
+      <section className="py-16 px-6 text-center border-b border-white/5 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.03] blur-[150px] rounded-full pointer-events-none"></div>
         
-        <div className="max-w-5xl mx-auto space-y-16 relative z-10">
+        <div className="max-w-5xl mx-auto space-y-8 relative z-10">
           <div className="w-20 h-20 mx-auto glass-panel glass-edge flex items-center justify-center rounded-3xl text-brand-gold mb-8">
             <Shield size={36} />
           </div>
@@ -274,8 +274,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-32 px-6 border-b border-white/5">
-        <div className="max-w-4xl mx-auto space-y-20">
+      <section id="faq" className="py-16 px-6 border-b border-white/5">
+        <div className="max-w-4xl mx-auto space-y-10">
           <div className="text-center space-y-6">
             <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">FAQ</h2>
             <h3 className="text-5xl font-display text-zinc-900 dark:text-white italic">Transparência Total</h3>
@@ -323,10 +323,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-40 text-center px-6 relative overflow-hidden">
+      <section className="py-20 text-center px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(197,160,89,0.1)_0%,transparent_60%)] pointer-events-none"></div>
         
-        <div className="max-w-5xl mx-auto space-y-16 relative z-10">
+        <div className="max-w-5xl mx-auto space-y-8 relative z-10">
           <h2 className="text-5xl md:text-7xl font-display text-zinc-900 dark:text-white leading-tight italic tracking-tighter">
             Domine o mercado de decoração <br className="hidden md:block" /> da sua região.
           </h2>
