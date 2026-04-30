@@ -35,7 +35,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
       onLogin();
     } catch (err: any) {
       console.error('Login error:', err);
-      setError('Credenciais inválidas ou erro no login.');
+      // Extraindo a mensagem de erro real do Supabase
+      setError(err.message || 'Erro desconhecido no login.');
     } finally {
       setLoading(false);
     }
