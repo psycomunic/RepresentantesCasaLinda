@@ -1,13 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-    console.warn('Supabase URL or Anon Key is missing. Check your .env.local file.');
-}
+// Hardcoding temporário para garantir que o Vite não se perca com o .env.local
+const supabaseUrl = 'https://wvnqbvydepkeyygkjwul.supabase.co';
+const supabaseKey = 'sb_publishable_zkJoacVwptB7_L1O1nVFiw_xCR3pa5c';
 
 export const supabase = createClient(
-    supabaseUrl || 'https://placeholder.supabase.co',
-    supabaseKey || 'placeholder-key'
+    supabaseUrl,
+    supabaseKey
 );
