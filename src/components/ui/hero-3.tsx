@@ -36,7 +36,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
   return (
     <section
       className={cn(
-        "relative w-full h-screen overflow-hidden bg-brand-dark flex flex-col items-center justify-start pt-32 md:pt-40 text-center px-4",
+        "relative w-full h-screen overflow-hidden bg-transparent flex flex-col items-center justify-start pt-32 md:pt-40 text-center px-4",
         className
       )}
     >
@@ -64,7 +64,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
               },
             },
           }}
-          className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-bold text-white leading-[0.9] tracking-tighter"
+          className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-bold text-zinc-900 dark:text-white leading-[0.9] tracking-tighter"
         >
           {typeof title === 'string' ? (
             title.split(" ").map((word, i) => (
@@ -87,7 +87,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
           animate="show"
           variants={FADE_IN_ANIMATION_VARIANTS}
           transition={{ delay: 0.5 }}
-          className="mt-8 max-w-3xl text-xl text-zinc-400 font-light"
+          className="mt-8 max-w-3xl text-xl text-zinc-600 dark:text-zinc-400 font-light"
         >
           {description}
         </motion.p>
@@ -124,11 +124,11 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
                 rotate: `${(index % 2 === 0 ? -2 : 5)}deg`,
               }}
             >
-              <div className="absolute inset-0 bg-black/20 z-10 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-black/5 dark:bg-black/20 z-10 rounded-2xl"></div>
               <img
                 src={src}
                 alt={`Showcase image ${index + 1}`}
-                className="w-full h-full object-cover rounded-2xl shadow-md border border-white/10"
+                className="w-full h-full object-cover rounded-2xl shadow-lg border border-black/5 dark:border-white/10"
               />
             </div>
           ))}

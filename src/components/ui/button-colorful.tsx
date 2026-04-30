@@ -18,30 +18,20 @@ export function ButtonColorful({
             whileTap={{ scale: 0.95 }}
             className={cn(
                 "relative h-14 px-12 rounded-full overflow-hidden",
-                "bg-brand-dark dark:bg-white",
-                "transition-all duration-200",
-                "group shadow-[0_0_40px_rgba(197,160,89,0.4)] hover:shadow-[0_0_60px_rgba(197,160,89,0.7)]",
+                "bg-brand-gold text-white",
+                "transition-all duration-300",
+                "group shadow-[0_10px_40px_rgba(197,160,89,0.3)] hover:shadow-[0_15px_50px_rgba(197,160,89,0.5)] border border-brand-gold/50 hover:border-white/50",
                 className
             )}
             {...props}
         >
-            {/* Gradient background effect - Casa Linda Palette */}
-            <div
-                className={cn(
-                    "absolute inset-0",
-                    "bg-gradient-to-r from-amber-600 via-brand-gold to-yellow-400",
-                    "opacity-90 group-hover:opacity-100",
-                    "transition-opacity duration-500"
-                )}
-            />
-            
-            {/* Animated Shine Effect */}
-            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"></div>
+            {/* Elegant Shine Effect */}
+            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
 
             {/* Content */}
             <div className="relative flex items-center justify-center gap-3">
-                <span className="text-black font-extrabold uppercase tracking-[0.2em] text-sm drop-shadow-sm">{label}</span>
-                <ArrowUpRight className="w-5 h-5 text-black drop-shadow-sm group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                <span className="font-bold uppercase tracking-[0.2em] text-sm drop-shadow-md">{label}</span>
+                <ArrowUpRight className="w-5 h-5 drop-shadow-md group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
             </div>
         </motion.button>
     );

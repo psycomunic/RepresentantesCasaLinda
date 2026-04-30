@@ -81,12 +81,10 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
-        boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full bg-white/50 dark:bg-black/50 backdrop-blur-xl p-2 md:p-4 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border border-white/50 dark:border-white/10 ring-1 ring-black/5 dark:ring-white/5"
     >
-      <div className=" h-full w-full overflow-hidden rounded-2xl bg-zinc-50 dark:bg-zinc-900 md:rounded-2xl relative">
+      <div className="h-full w-full overflow-hidden rounded-[2rem] bg-zinc-50 dark:bg-brand-dark relative shadow-inner">
         {children}
       </div>
     </motion.div>
