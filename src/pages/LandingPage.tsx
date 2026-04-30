@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Monitor, Heart, ArrowRight, Layers } from 'lucide-react';
+import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Monitor, Heart, ArrowRight, Layers, Briefcase } from 'lucide-react';
 import { AnimatedMarqueeHero } from '../components/ui/hero-3';
 import { ContainerScroll } from '../components/ui/container-scroll-animation';
 import { MockDashboard } from '../components/ui/mock-dashboard';
@@ -108,14 +108,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         {/* Glow */}
         <div className="absolute top-1/2 right-[-200px] -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.04] blur-[150px] rounded-full pointer-events-none animate-pulse-slow"></div>
         
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
           <div className="space-y-12">
             <div className="space-y-4">
               <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">O Seu Arsenal</h2>
               <h3 className="text-5xl sm:text-7xl font-display text-zinc-900 dark:text-white italic tracking-tight leading-[1.1]">Kit Premium <br/> de Vendas.</h3>
             </div>
             
-            <ul className="space-y-8">
+            <ul className="space-y-4">
               {[
                 "Catálogo de Luxo (Físico)",
                 "Acesso ao Portal de Atacado (Login Exclusivo)",
@@ -124,27 +124,35 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
                 "Suporte Comercial Full-Time",
                 "Comissão Fixa de 12%"
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-6">
-                  <div className="w-12 h-12 rounded-full glass-panel glass-edge flex items-center justify-center text-brand-gold shrink-0 shadow-[0_0_20px_rgba(197,160,89,0.1)]">
-                    <CheckCircle2 size={20} />
+                <li key={i} className="flex items-center gap-6 group p-4 -ml-4 hover:bg-white dark:hover:bg-white/5 rounded-2xl transition-all duration-300 cursor-default">
+                  <div className="w-12 h-12 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-white/10 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                    <CheckCircle2 size={20} className="text-brand-gold" />
                   </div>
-                  <span className="text-xl text-zinc-700 dark:text-zinc-300 font-light tracking-wide">{item}</span>
+                  <span className="text-lg text-zinc-800 dark:text-zinc-200 font-medium tracking-wide">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="relative">
-            <div className="aspect-[4/5] rounded-[3rem] glass-panel glass-edge overflow-hidden flex items-center justify-center relative group p-2">
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-80"></div>
-              <div className="w-full h-full rounded-[2.5rem] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1000" alt="Kit Representante" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s] opacity-60" />
+          
+          <div className="relative lg:h-[700px] flex items-center mt-12 lg:mt-0">
+            {/* Main Image */}
+            <div className="relative w-[85%] h-[500px] lg:h-[600px] rounded-[2rem] overflow-hidden shadow-2xl ml-auto border border-zinc-200 dark:border-white/10">
+              <img 
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200" 
+                alt="Kit Representante" 
+                className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-105" 
+              />
+            </div>
+            
+            {/* Floating Card - Break out of grid */}
+            <div className="absolute left-0 bottom-[5%] lg:bottom-[15%] w-[85%] lg:w-[80%] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl p-8 lg:p-10 rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-zinc-100 dark:border-white/10 group hover:-translate-y-2 transition-transform duration-500">
+              <div className="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold mb-6 border border-brand-gold/20">
+                <Briefcase size={28} />
               </div>
-              <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="glass-panel backdrop-blur-3xl p-8 rounded-3xl border border-white/10">
-                  <p className="text-brand-gold text-[10px] uppercase tracking-[0.3em] font-bold mb-3">Maleta Exclusiva</p>
-                  <p className="text-zinc-900 dark:text-white text-lg font-light leading-relaxed">Mostre a textura do canvas e o peso da moldura. Venda pela experiência tátil.</p>
-                </div>
-              </div>
+              <h4 className="text-2xl lg:text-3xl font-display text-zinc-900 dark:text-white italic mb-4">Maleta Exclusiva</h4>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-lg font-light">
+                Mostre a textura do canvas e o peso da moldura. Venda pela experiência tátil e encante seus clientes logo no primeiro contato.
+              </p>
             </div>
           </div>
         </div>
