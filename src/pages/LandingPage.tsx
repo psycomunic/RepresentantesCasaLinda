@@ -65,12 +65,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         ctaText="INICIAR CANDIDATURA"
         onCtaClick={() => navigate('/cadastro')}
         images={[
-          "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800",
-          "https://images.unsplash.com/photo-1583847268964-b28ce8f89f13?auto=format&fit=crop&q=80&w=800",
-          "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=800",
-          "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&q=80&w=800",
-          "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&q=80&w=800",
-          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800",
+          "/carrossel hero/imgi_14_641202422_18348715264227392_8604599904752408319_n.jpg",
+          "/carrossel hero/imgi_15_642230641_18349355023227392_5257048329492571312_n.jpg",
+          "/carrossel hero/imgi_21_673720305_18357154510227392_7100613360312219449_n.jpg",
+          "/carrossel hero/imgi_25_670542895_1517559006603040_8127320229596745845_n.jpg",
+          "/carrossel hero/imgi_30_639863458_18347588731227392_6963111105457300201_n.jpg",
+          "/carrossel hero/imgi_33_636851025_18347385577227392_8552691080150606817_n.jpg",
+          "/carrossel hero/imgi_35_635009382_18347402968227392_6373606614894034933_n.jpg",
+          "/carrossel hero/imgi_54_621444801_18343990660227392_5026714762914889050_n.jpg",
+          "/carrossel hero/imgi_75_605781477_18340702771227392_7686613490261021487_n.jpg",
+          "/carrossel hero/imgi_79_604557123_18339982237227392_2133471787004715059_n.jpg",
+          "/carrossel hero/imgi_89_586715108_18336665482227392_1213084868107507203_n.jpg",
         ]}
       />
 
