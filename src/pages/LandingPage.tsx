@@ -146,27 +146,36 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             </ul>
           </div>
           
-          <div className="relative lg:h-[700px] flex items-center mt-12 lg:mt-0">
-            {/* Main Image */}
-            <div className="relative w-[85%] h-[500px] lg:h-[600px] rounded-[2rem] overflow-hidden shadow-2xl ml-auto border border-zinc-200 dark:border-white/10">
+          <div className="flex flex-col gap-6 mt-12 lg:mt-0">
+            {/* Main Image - Full prominence, no overlap */}
+            <div className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-200 dark:border-white/10 group">
               <img 
                 src="/images/maleta02.png" 
                 alt="Maleta Black Label - Kit Representante Casa Linda" 
-                className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-105" 
+                className="w-full h-[480px] lg:h-[560px] object-cover transition-transform duration-[2s] group-hover:scale-105" 
               />
-            </div>
-            
-            {/* Floating Card - Break out of grid */}
-            <div className="absolute left-0 bottom-[5%] lg:bottom-[15%] w-[85%] lg:w-[80%] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl p-8 lg:p-10 rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-zinc-100 dark:border-white/10 group hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold mb-6 border border-brand-gold/20">
-                <Briefcase size={28} />
+              {/* Subtle gradient overlay at bottom for depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+              {/* Gold badge floating on image corner */}
+              <div className="absolute top-6 right-6 bg-brand-gold text-black text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+                Black Label
               </div>
-              <h4 className="text-2xl lg:text-3xl font-display text-zinc-900 dark:text-white italic mb-4">Maleta Exclusiva</h4>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-lg font-light">
-                Mostre a textura do canvas e o peso da moldura. Venda pela experiência tátil e encante seus clientes logo no primeiro contato.
-              </p>
+            </div>
+
+            {/* Info card below the image — no overlap */}
+            <div className="flex items-start gap-6 bg-white dark:bg-zinc-900/80 backdrop-blur-xl p-7 rounded-[1.5rem] shadow-md border border-zinc-100 dark:border-white/10 group hover:-translate-y-1 transition-transform duration-500">
+              <div className="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold shrink-0 border border-brand-gold/20 group-hover:bg-brand-gold group-hover:text-black transition-colors duration-300">
+                <Briefcase size={26} />
+              </div>
+              <div>
+                <h4 className="text-xl font-display text-zinc-900 dark:text-white italic mb-1">Maleta Exclusiva</h4>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light leading-relaxed">
+                  Mostre a textura do canvas e o peso da moldura. Venda pela experiência tátil.
+                </p>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
