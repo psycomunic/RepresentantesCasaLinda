@@ -135,13 +135,15 @@ const AppRoutes = () => {
 
   if (!session || !userProfile) {
     return (
-      <Routes>
-        <Route path="/" element={<LandingPage onLoginClick={() => navigate('/login')} />} />
-        <Route path="/cadastro" element={<SignupPage />} />
-        <Route path="/obrigado" element={<ThankYouPage />} />
-        <Route path="/login" element={<AuthPage onLogin={() => navigate('/')} onBack={() => navigate('/')} />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <ThemeProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage onLoginClick={() => navigate('/login')} />} />
+          <Route path="/cadastro" element={<SignupPage />} />
+          <Route path="/obrigado" element={<ThankYouPage />} />
+          <Route path="/login" element={<AuthPage onLogin={() => navigate('/')} onBack={() => navigate('/')} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ThemeProvider>
     );
   }
 

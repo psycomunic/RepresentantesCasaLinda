@@ -41,6 +41,8 @@
   }
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --theme-bg: #F8F9FA; /* Off-white for light mode background */
   --theme-text: #111827; /* Dark gray/black for text */
