@@ -3,6 +3,9 @@
 @theme {
   --color-brand-gold: #C5A059;
   --color-brand-dark: #050505;
+  --color-background: var(--theme-bg);
+  --color-foreground: var(--theme-text);
+  
   --font-display: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
 
@@ -30,15 +33,51 @@
       transform: scale(1.1);
     }
   }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(200%);
+    }
+  }
+}
+
+:root {
+  --theme-bg: #F8F9FA; /* Off-white for light mode background */
+  --theme-text: #111827; /* Dark gray/black for text */
+  --noise-opacity: 0.03;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-shadow: rgba(0, 0, 0, 0.05);
+}
+
+:root.dark {
+  --theme-bg: var(--color-brand-dark);
+  --theme-text: #FFFFFF;
+  --noise-opacity: 0.05;
+  --glass-bg: rgba(255, 255, 255, 0.01);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: rgba(0, 0, 0, 0.6);
 }
 
 @layer utilities {
   .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+    opacity: var(--noise-opacity);
+    mix-blend-mode: overlay;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-noise-wrapper {
+    @apply relative isolate;
   }
 
   .glass-panel {
-    @apply bg-white/[0.01] backdrop-blur-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.6)];
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
   }
 
   .glass-edge {
@@ -51,7 +90,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(135deg, var(--glass-border) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, var(--glass-border) 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -83,8 +122,9 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-brand-dark);
-  color: #FFFFFF;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 html {

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Star, Shield, TrendingUp, Truck, CheckCircle2, Monitor, Heart, ArrowRight, Layers } from 'lucide-react';
 import { AnimatedMarqueeHero } from '../components/ui/hero-3';
-import { CinematicHero } from '../components/ui/cinematic-landing-hero';
+import { ContainerScroll } from '../components/ui/container-scroll-animation';
+import { MockDashboard } from '../components/ui/mock-dashboard';
 
 
 interface LandingPageProps {
@@ -146,8 +147,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Cinematic Dashboard Showcase */}
-      <div className="overflow-x-hidden w-[100%] bg-black">
-        <CinematicHero />
+      <div className="overflow-x-hidden w-full bg-zinc-50 dark:bg-brand-dark transition-colors duration-500">
+        <div className="flex flex-col overflow-hidden pb-[100px] pt-[100px]">
+          <ContainerScroll
+            titleComponent={
+              <div className="mb-8">
+                <h2 className="text-4xl md:text-5xl font-display text-zinc-900 dark:text-white italic mb-2 tracking-tight">
+                  Acompanhe suas vendas,
+                </h2>
+                <h2 className="text-5xl md:text-[5rem] font-black uppercase tracking-tighter text-zinc-900 dark:text-white mb-8">
+                  em tempo real.
+                </h2>
+                <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto text-lg font-light">
+                  <span className="text-brand-gold font-bold">O Portal Casa Linda</span> capacita nossos representantes com acompanhamento de comissões, gestão de pedidos e visualização das metas mensais.
+                </p>
+              </div>
+            }
+          >
+            <MockDashboard />
+          </ContainerScroll>
+        </div>
       </div>
 
       {/* Bloco 4 & 5: Quem buscamos & Operation */}

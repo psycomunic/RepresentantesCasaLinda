@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils"; // Adjusted from "@/lib/utils"
+import { ButtonColorful } from "./button-colorful";
 
 // Props interface for the component
 interface AnimatedMarqueeHeroProps {
@@ -12,17 +13,6 @@ interface AnimatedMarqueeHeroProps {
   className?: string;
   onCtaClick?: () => void;
 }
-
-const ActionButton = ({ children, onClick }: { children: React.ReactNode, onClick?: () => void }) => (
-  <motion.button
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    onClick={onClick}
-    className="mt-8 px-12 py-5 rounded-full bg-[#25D366] text-black font-extrabold uppercase tracking-[0.2em] text-sm shadow-[0_0_40px_rgba(37,211,102,0.6)] transition-all hover:bg-[#20bd5a] hover:shadow-[0_0_60px_rgba(37,211,102,0.8)] focus:outline-none border border-[#25D366]"
-  >
-    {children}
-  </motion.button>
-);
 
 // The main hero component
 export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
@@ -109,7 +99,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
           variants={FADE_IN_ANIMATION_VARIANTS}
           transition={{ delay: 0.6 }}
         >
-          <ActionButton onClick={onCtaClick}>{ctaText}</ActionButton>
+          <ButtonColorful onClick={onCtaClick} label={ctaText} className="mt-8" />
         </motion.div>
       </div>
 

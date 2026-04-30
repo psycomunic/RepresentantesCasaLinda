@@ -17,51 +17,57 @@ import { LandingPage } from './pages/LandingPage';
 import { SignupPage } from './pages/SignupPage';
 import { ThankYouPage } from './pages/ThankYouPage';
 import { supabase } from './lib/supabase';
+import { ThemeProvider } from './context/ThemeContext';
+import { ThemeToggle } from './components/ThemeToggle';
 
 const ProtectedLayout = ({ user, onLogout }: { user: Profile, onLogout: () => void }) => {
   return (
-    <CartProvider>
-      <div className="flex min-h-screen bg-brand-dark text-white animate-in fade-in duration-1000">
-        <Sidebar
-          user={user}
-          onLogout={onLogout}
-        />
+    <ThemeProvider>
+      <CartProvider>
+        <div className="flex min-h-screen bg-background text-foreground transition-colors duration-500 animate-in fade-in duration-1000">
+          <Sidebar
+            user={user}
+            onLogout={onLogout}
+          />
 
-        <main className="flex-1 flex flex-col h-screen overflow-hidden">
-          <header className="h-24 shrink-0 border-b border-white/5 bg-black/20 backdrop-blur-xl flex items-center justify-between px-12 z-10">
-            <div>
-              <h1 className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold">Portal do Representante</h1>
-              <p className="text-2xl font-display text-white mt-1 italic">Casa Linda <span className="text-white/20 tracking-tighter">Black Label</span></p>
-            </div>
-
-            <div className="flex items-center gap-8">
-              <div className="text-right hidden sm:block">
-                <p className="text-xs font-bold uppercase tracking-widest text-white">{user.full_name}</p>
-                <p className="text-[9px] uppercase tracking-[0.2em] text-brand-gold mt-1">{user.role === 'admin' ? 'Administração' : 'Vendas B2B'}</p>
+          <main className="flex-1 flex flex-col h-screen overflow-hidden">
+            <header className="h-24 shrink-0 border-b border-black/5 dark:border-white/5 bg-white/50 dark:bg-black/20 backdrop-blur-xl flex items-center justify-between px-12 z-10 transition-colors duration-500">
+              <div>
+                <h1 className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold">Portal do Representante</h1>
+                <p className="text-2xl font-display text-zinc-900 dark:text-white mt-1 italic">Casa Linda <span className="text-zinc-400 dark:text-white/20 tracking-tighter">Black Label</span></p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-display text-lg italic shadow-xl">
-                {user.full_name?.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AG'}
-              </div>
-            </div>
-          </header>
 
-          <section className="flex-1 overflow-y-auto p-12">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/clientes" element={<ClientManager />} />
-              <Route path="/catalogo" element={<WholesalePortal />} />
-              <Route path="/checkout" element={<CheckoutFlow />} />
-              <Route path="/comissoes" element={<Commissions />} />
-              <Route path="/pedidos" element={<Orders user={user} />} />
-              <Route path="/novo-pedido" element={<NewOrder />} />
-              <Route path="/ranking" element={<SalesRanking />} />
-              {user.role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </section>
-        </main>
-      </div>
-    </CartProvider>
+              <div className="flex items-center gap-8">
+                <div className="text-right hidden sm:block">
+                  <p className="text-xs font-bold uppercase tracking-widest text-zinc-900 dark:text-white">{user.full_name}</p>
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-brand-gold mt-1">{user.role === 'admin' ? 'Administração' : 'Vendas B2B'}</p>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-display text-lg italic shadow-xl">
+                  {user.full_name?.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AG'}
+                </div>
+                {/* Theme Toggle Button added in Header */}
+                <ThemeToggle />
+              </div>
+            </header>
+
+            <section className="flex-1 overflow-y-auto p-12">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/clientes" element={<ClientManager />} />
+                <Route path="/catalogo" element={<WholesalePortal />} />
+                <Route path="/checkout" element={<CheckoutFlow />} />
+                <Route path="/comissoes" element={<Commissions />} />
+                <Route path="/pedidos" element={<Orders user={user} />} />
+                <Route path="/novo-pedido" element={<NewOrder />} />
+                <Route path="/ranking" element={<SalesRanking />} />
+                {user.role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </section>
+          </main>
+        </div>
+      </CartProvider>
+    </ThemeProvider>
   );
 };
 

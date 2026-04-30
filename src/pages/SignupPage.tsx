@@ -126,12 +126,12 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-brand-dark bg-noise text-white selection:bg-brand-gold selection:text-black font-sans relative overflow-hidden flex flex-col justify-center">
+    <div className="min-h-screen bg-zinc-50 dark:bg-brand-dark bg-noise text-zinc-900 dark:text-white selection:bg-brand-gold selection:text-black font-sans relative overflow-hidden flex flex-col justify-center transition-colors duration-500">
       {/* Dynamic Background */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-gold/[0.05] rounded-full blur-[150px] pointer-events-none animate-pulse-slow"></div>
       
       {/* Top Progress */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-white/5 z-50">
+      <div className="fixed top-0 left-0 w-full h-1 bg-black/5 dark:bg-white/5 z-50 transition-colors duration-500">
         <div 
           className="h-full bg-brand-gold transition-all duration-700 ease-out shadow-[0_0_20px_rgba(197,160,89,0.8)]"
           style={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -142,7 +142,7 @@ export const SignupPage: React.FC = () => {
       {currentStep > 1 && (
         <button 
           onClick={prevStep}
-          className="fixed top-10 left-10 z-50 w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white/50 hover:text-brand-gold hover:bg-white/5 transition-all"
+          className="fixed top-10 left-10 z-50 w-12 h-12 rounded-full glass-panel flex items-center justify-center text-zinc-500 dark:text-white/50 hover:text-brand-gold hover:bg-white dark:hover:bg-white/5 transition-all"
         >
           <ChevronLeft size={24} />
         </button>
@@ -150,7 +150,7 @@ export const SignupPage: React.FC = () => {
 
       {/* Logo Home Link */}
       <div className="fixed top-10 right-10 z-50">
-        <button onClick={() => navigate('/')} className="text-xl font-display text-white italic opacity-50 hover:opacity-100 transition-opacity">
+        <button onClick={() => navigate('/')} className="text-xl font-display text-zinc-900 dark:text-white italic opacity-50 hover:opacity-100 transition-opacity">
           Casa Linda
         </button>
       </div>
@@ -164,13 +164,13 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">1 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">Qual o seu nome e contato?</h2>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">Qual o seu nome e contato?</h2>
                 </div>
                 <div className="space-y-8 max-w-2xl">
                   <input
                     type="text"
                     placeholder="Seu nome completo"
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                     value={formData.nome}
                     onChange={(e) => handleInputChange('nome', e.target.value)}
                     autoFocus
@@ -178,7 +178,7 @@ export const SignupPage: React.FC = () => {
                   <input
                     type="tel"
                     placeholder="WhatsApp (com DDD)"
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                     value={formData.whatsapp}
                     onChange={(e) => handleInputChange('whatsapp', e.target.value)}
                   />
@@ -191,20 +191,20 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">2 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">Seus dados profissionais</h2>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">Seus dados profissionais</h2>
                 </div>
                 <div className="space-y-8 max-w-2xl">
                   <input
                     type="email"
                     placeholder="Seu melhor e-mail"
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                   />
                   <input
                     type="text"
                     placeholder="CPF ou CNPJ"
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                     value={formData.documento}
                     onChange={(e) => handleInputChange('documento', e.target.value)}
                   />
@@ -217,24 +217,24 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">3 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">De onde você é?</h2>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">De onde você é?</h2>
                 </div>
                 <div className="space-y-8 max-w-2xl">
                   <input
                     type="text"
                     placeholder="Cidade base"
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                     value={formData.cidade}
                     onChange={(e) => handleInputChange('cidade', e.target.value)}
                   />
                   <select
-                    className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-3xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors appearance-none"
+                    className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-3xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors appearance-none"
                     value={formData.estado}
                     onChange={(e) => handleInputChange('estado', e.target.value)}
                   >
-                    <option value="" className="bg-brand-dark">Selecione o Estado</option>
+                    <option value="" className="bg-zinc-50 dark:bg-brand-dark">Selecione o Estado</option>
                     {['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'].map(uf => (
-                      <option key={uf} value={uf} className="bg-brand-dark text-lg">{uf}</option>
+                      <option key={uf} value={uf} className="bg-zinc-50 dark:bg-brand-dark text-lg">{uf}</option>
                     ))}
                   </select>
                 </div>
@@ -246,8 +246,8 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">4 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">Registro CORE</h2>
-                  <p className="text-xl text-zinc-400 font-light">Você possui registro no Conselho dos Representantes?</p>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">Registro CORE</h2>
+                  <p className="text-xl text-zinc-500 dark:text-zinc-400 font-light">Você possui registro no Conselho dos Representantes?</p>
                 </div>
                 <div className="grid sm:grid-cols-3 gap-6 max-w-3xl">
                   {[
@@ -259,9 +259,9 @@ export const SignupPage: React.FC = () => {
                       key={opt.val}
                       type="button"
                       onClick={() => handleInputChange('core_status', opt.val)}
-                      className={`p-6 rounded-2xl border text-left transition-all ${formData.core_status === opt.val ? 'border-brand-gold bg-brand-gold/10 shadow-[0_0_30px_rgba(197,160,89,0.15)]' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
+                      className={`p-6 rounded-2xl border text-left transition-all ${formData.core_status === opt.val ? 'border-brand-gold bg-brand-gold/10 shadow-[0_0_30px_rgba(197,160,89,0.15)]' : 'border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 hover:border-zinc-300 dark:hover:border-white/30'}`}
                     >
-                      <div className="w-6 h-6 rounded-full border mb-4 flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full border border-zinc-200 dark:border-white/10 mb-4 flex items-center justify-center">
                         {formData.core_status === opt.val ? <div className="w-3 h-3 bg-brand-gold rounded-full" /> : null}
                       </div>
                       <span className="text-xl font-light">{opt.label}</span>
@@ -276,8 +276,8 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">5 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">Segmentos de Atuação</h2>
-                  <p className="text-xl text-zinc-400 font-light">Quais linhas você já representa? (Múltipla escolha)</p>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">Segmentos de Atuação</h2>
+                  <p className="text-xl text-zinc-500 dark:text-zinc-400 font-light">Quais linhas você já representa? (Múltipla escolha)</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl">
                   {[
@@ -288,7 +288,7 @@ export const SignupPage: React.FC = () => {
                       key={seg}
                       type="button"
                       onClick={() => handleSegmentToggle(seg)}
-                      className={`px-6 py-4 rounded-xl border text-center transition-all ${formData.segmentos.includes(seg) ? 'border-brand-gold bg-brand-gold/10 text-brand-gold shadow-[0_0_20px_rgba(197,160,89,0.15)]' : 'border-white/10 bg-white/5 text-white hover:border-white/30'}`}
+                      className={`px-6 py-4 rounded-xl border text-center transition-all ${formData.segmentos.includes(seg) ? 'border-brand-gold bg-brand-gold/10 text-brand-gold shadow-[0_0_20px_rgba(197,160,89,0.15)]' : 'border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 text-zinc-900 dark:text-white hover:border-zinc-300 dark:hover:border-white/30'}`}
                     >
                       {seg}
                     </button>
@@ -302,25 +302,25 @@ export const SignupPage: React.FC = () => {
               <div className="space-y-12">
                 <div className="space-y-4">
                   <span className="text-brand-gold text-sm uppercase tracking-widest font-bold">6 / 6</span>
-                  <h2 className="text-4xl md:text-6xl font-display text-white">Sua Operação</h2>
+                  <h2 className="text-4xl md:text-6xl font-display text-zinc-900 dark:text-white">Sua Operação</h2>
                 </div>
                 <div className="space-y-10 max-w-2xl">
                   <div>
-                    <label className="text-sm text-zinc-400 uppercase tracking-widest font-bold block mb-4">Área exata que você cobre geograficamente</label>
+                    <label className="text-sm text-zinc-500 dark:text-zinc-400 uppercase tracking-widest font-bold block mb-4">Área exata que você cobre geograficamente</label>
                     <input
                       type="text"
                       placeholder="Ex: Todo o sul de Minas e Triângulo"
-                      className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-2xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                      className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-2xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                       value={formData.regioes_atuacao}
                       onChange={(e) => handleInputChange('regioes_atuacao', e.target.value)}
                     />
                   </div>
                   <div>
-                    <label className="text-sm text-zinc-400 uppercase tracking-widest font-bold block mb-4">Tamanho da sua carteira (quantos clientes ativos atende)</label>
+                    <label className="text-sm text-zinc-500 dark:text-zinc-400 uppercase tracking-widest font-bold block mb-4">Tamanho da sua carteira (quantos clientes ativos atende)</label>
                     <input
                       type="text"
                       placeholder="Ex: 50 clientes ativos mensais"
-                      className="w-full bg-transparent border-b-2 border-white/10 pb-4 text-2xl font-light text-white placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
+                      className="w-full bg-transparent border-b-2 border-zinc-200 dark:border-white/10 pb-4 text-2xl font-light text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-white/20 focus:outline-none focus:border-brand-gold focus:ring-0 transition-colors"
                       value={formData.quantidade_lojistas}
                       onChange={(e) => handleInputChange('quantidade_lojistas', e.target.value)}
                     />
@@ -332,13 +332,13 @@ export const SignupPage: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mt-8 p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 text-sm max-w-2xl">
+            <div className="mt-8 p-4 bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-500/50 rounded-xl text-red-600 dark:text-red-200 text-sm max-w-2xl">
               {error}
             </div>
           )}
 
           {/* Bottom Actions */}
-          <div className="fixed bottom-0 left-0 w-full p-6 sm:p-10 flex justify-between items-center bg-gradient-to-t from-brand-dark to-transparent z-40">
+          <div className="fixed bottom-0 left-0 w-full p-6 sm:p-10 flex justify-between items-center bg-gradient-to-t from-zinc-50 dark:from-brand-dark to-transparent z-40 transition-colors duration-500">
             <div className="text-xs text-zinc-500 font-bold uppercase tracking-widest hidden sm:block">
               Etapa {currentStep} de {totalSteps}
             </div>
