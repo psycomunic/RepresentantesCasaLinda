@@ -13,7 +13,14 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 44);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-brand-dark bg-noise text-zinc-900 dark:text-white selection:bg-brand-gold selection:text-black font-sans relative transition-colors duration-500">
@@ -24,7 +31,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed w-full z-40 px-6 sm:px-10 py-5 flex justify-between items-center bg-white/80 dark:bg-black/40 backdrop-blur-3xl border-b border-zinc-200 dark:border-white/5 transition-all top-[40px]">
+      <nav className={`fixed w-full z-40 px-6 sm:px-10 py-5 flex justify-between items-center bg-white/80 dark:bg-black/40 backdrop-blur-3xl border-b border-zinc-200 dark:border-white/5 transition-all duration-300 ${scrolled ? 'top-0' : 'top-[40px]'}`}>
         <div className="flex flex-col">
           <span className="text-2xl font-display tracking-tighter text-zinc-900 dark:text-white">Casa Linda</span>
           <span className="text-[8px] uppercase tracking-[0.4em] text-brand-gold -mt-1 font-bold">Atacado Oficial</span>
