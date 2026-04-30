@@ -52,9 +52,10 @@ export interface Order {
   total_amount: number;
   discount_amount: number;
   payment_terms: string;
-  status: 'draft' | 'pending' | 'approved' | 'shipped' | 'delivered' | 'cancelled';
+  status: 'draft' | 'pending' | 'approved' | 'production' | 'shipped' | 'delivered' | 'cancelled';
   created_at: string;
   client?: Client;
+  representative?: Partial<Profile>;
   items?: OrderItem[];
 }
 

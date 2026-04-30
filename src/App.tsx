@@ -57,7 +57,7 @@ const ProtectedLayout = ({ user, onLogout }: { user: Profile, onLogout: () => vo
                 <Route path="/catalogo" element={<WholesalePortal />} />
                 <Route path="/checkout" element={<CheckoutFlow />} />
                 <Route path="/comissoes" element={<Commissions />} />
-                <Route path="/pedidos" element={<Orders user={user} />} />
+                <Route path="/pedidos" element={<Orders />} />
                 <Route path="/novo-pedido" element={<NewOrder />} />
                 <Route path="/ranking" element={<SalesRanking />} />
                 {user.role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}

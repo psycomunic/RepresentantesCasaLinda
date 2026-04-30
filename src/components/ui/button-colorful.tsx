@@ -46,5 +46,3 @@ export function ButtonColorful({
         </motion.button>
     );
 }
-
-export { ButtonColorful }

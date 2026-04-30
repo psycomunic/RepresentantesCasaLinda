@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2 } from 'lucide-react';
+import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Profile, Order } from '../types';
 
