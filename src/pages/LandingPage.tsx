@@ -150,8 +150,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             {/* Main Image */}
             <div className="relative w-[85%] h-[500px] lg:h-[600px] rounded-[2rem] overflow-hidden shadow-2xl ml-auto border border-zinc-200 dark:border-white/10">
               <img 
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200" 
-                alt="Kit Representante" 
+                src="/imagens/maleta.png" 
+                alt="Maleta Black Label - Kit Representante Casa Linda" 
                 className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-105" 
               />
             </div>
