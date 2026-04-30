@@ -67,7 +67,7 @@ export const NewOrder: React.FC = () => {
         <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500">
             <div className="flex justify-between items-center print:hidden">
                 <div>
-                    <h2 className="text-3xl font-display text-white">Novo Pedido / Orçamento</h2>
+                    <h2 className="text-3xl font-display text-zinc-900 dark:text-white">Novo Pedido / Orçamento</h2>
                     <p className="text-zinc-500 mt-1">Crie um pedido facilmente para o seu cliente lojista.</p>
                 </div>
                 <button
@@ -79,9 +79,9 @@ export const NewOrder: React.FC = () => {
                 </button>
             </div>
 
-            <div className="bg-[#121212] border border-white/5 p-8 rounded-2xl relative">
+            <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/5 p-8 rounded-2xl relative shadow-sm dark:shadow-none">
                 <div className="space-y-6">
-                    <h3 className="text-lg font-display text-white border-b border-white/5 pb-4">1. Dados do Cliente</h3>
+                    <h3 className="text-lg font-display text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 pb-4">1. Dados do Cliente</h3>
                     <div className="max-w-md">
                         <label className="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-2">
                             Nome do Lojista / Empresa
@@ -93,15 +93,15 @@ export const NewOrder: React.FC = () => {
                                 value={clientName}
                                 onChange={(e) => setClientName(e.target.value)}
                                 placeholder="Ex: Decor Prime, Maison Zara..."
-                                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
+                                className="w-full pl-11 pr-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                             />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-[#121212] border border-white/5 p-8 rounded-2xl print:hidden">
-                <h3 className="text-lg font-display text-white border-b border-white/5 pb-4 mb-6">2. Adicionar Produtos</h3>
+            <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/5 p-8 rounded-2xl print:hidden shadow-sm dark:shadow-none">
+                <h3 className="text-lg font-display text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 pb-4 mb-6">2. Adicionar Produtos</h3>
 
                 <form onSubmit={handleAddItem} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -113,7 +113,7 @@ export const NewOrder: React.FC = () => {
                                 <select
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value as ProductCategory)}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                    className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                 >
                                     <option value="Quadros Decorativos" className="bg-brand-dark text-white">Quadros Decorativos</option>
                                     <option value="Espelhos" className="bg-brand-dark text-white">Espelhos</option>
@@ -133,7 +133,7 @@ export const NewOrder: React.FC = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Ex: Quadro Leão Preto e Branco, Mesa de Centro..."
                                 required
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
+                                className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                             />
                         </div>
 
@@ -149,7 +149,7 @@ export const NewOrder: React.FC = () => {
                                             setFormat(e.target.value);
                                             setSize('');
                                         }}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                        className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                     >
                                         <option value="" className="bg-brand-dark text-white">Selecione o formato</option>
                                         <option value="1 Tela Quadrado" className="bg-brand-dark text-white">1 Tela Quadrado</option>
@@ -171,7 +171,7 @@ export const NewOrder: React.FC = () => {
                                     <select
                                         value={size}
                                         onChange={(e) => setSize(e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                        className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                     >
                                         <option value="" className="bg-brand-dark text-white">Selecione o tamanho</option>
                                         {format === '1 Tela Quadrado' && ['85x85cm', '115x115cm', '145x145cm'].map(s => <option key={s} value={s} className="bg-brand-dark text-white">{s}</option>)}
@@ -193,7 +193,7 @@ export const NewOrder: React.FC = () => {
                                     <select
                                         value={size}
                                         onChange={(e) => setSize(e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                        className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                     >
                                         <option value="" className="bg-brand-dark text-white">Selecione o tamanho</option>
                                         <option value="130x40cm" className="bg-brand-dark text-white">130x40cm</option>
@@ -215,7 +215,7 @@ export const NewOrder: React.FC = () => {
                                         <select
                                             value={frame}
                                             onChange={(e) => setFrame(e.target.value)}
-                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                            className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                         >
                                             <option value="" className="bg-brand-dark text-white">Selecione uma opção</option>
                                             <optgroup label="Sem Moldura">
@@ -265,7 +265,7 @@ export const NewOrder: React.FC = () => {
                                         <select
                                             value={finish}
                                             onChange={(e) => setFinish(e.target.value)}
-                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all appearance-none"
+                                            className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all appearance-none"
                                         >
                                             <option value="" className="bg-brand-dark text-white">Selecione uma opção</option>
                                             <option value="Sem Vidro" className="bg-brand-dark text-white">Sem Vidro</option>
@@ -289,7 +289,7 @@ export const NewOrder: React.FC = () => {
                                 onChange={(e) => setPrice(e.target.value)}
                                 placeholder="0.00"
                                 required
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-white text-sm transition-all"
+                                className="w-full px-4 py-3 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-sm transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                             />
                         </div>
                     </div>
@@ -297,7 +297,7 @@ export const NewOrder: React.FC = () => {
                     <div className="flex justify-end pt-4">
                         <button
                             type="submit"
-                            className="flex items-center gap-2 px-8 py-3 bg-white text-black hover:bg-brand-gold transition-all rounded-xl font-bold text-xs uppercase tracking-widest"
+                            className="flex items-center gap-2 px-8 py-3 bg-brand-gold text-black hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all rounded-xl font-bold text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(197,160,89,0.2)]"
                         >
                             <Plus size={16} />
                             Adicionar Produto
@@ -307,9 +307,9 @@ export const NewOrder: React.FC = () => {
             </div>
 
             {/* Tabela de Itens (visível na tela e na impressão) */}
-            <div className="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden print:border-none print:shadow-none print:p-0">
-                <div className="p-8 border-b border-white/5 print:hidden">
-                    <h3 className="text-lg font-display text-white">Resumo do Pedido</h3>
+            <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-sm dark:shadow-none print:border-none print:shadow-none print:p-0">
+                <div className="p-8 border-b border-zinc-200 dark:border-white/5 print:hidden">
+                    <h3 className="text-lg font-display text-zinc-900 dark:text-white">Resumo do Pedido</h3>
                 </div>
 
                 {/* Print Header */}
@@ -338,18 +338,18 @@ export const NewOrder: React.FC = () => {
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="border-b border-white/5 print:border-zinc-200 text-[10px] uppercase tracking-widest text-zinc-500 print:text-zinc-500">
+                                <tr className="border-b border-zinc-200 dark:border-white/5 print:border-zinc-200 text-[10px] uppercase tracking-widest text-zinc-500 print:text-zinc-500">
                                     <th className="px-8 py-4 font-bold">Produto</th>
                                     <th className="px-8 py-4 font-bold">Especificações</th>
                                     <th className="px-8 py-4 font-bold text-right">Preço</th>
                                     <th className="px-8 py-4 font-bold text-center print:hidden">Ação</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5 print:divide-zinc-200">
+                            <tbody className="divide-y divide-zinc-100 dark:divide-white/5 print:divide-zinc-200">
                                 {items.map((item, index) => (
-                                    <tr key={item.id} className="group hover:bg-white/[0.02] print:hover:bg-transparent transition-colors">
+                                    <tr key={item.id} className="group hover:bg-zinc-50 dark:hover:bg-white/[0.02] print:hover:bg-transparent transition-colors">
                                         <td className="px-8 py-6 align-top">
-                                            <div className="font-bold text-white print:text-black mb-1">{item.description}</div>
+                                            <div className="font-bold text-zinc-900 dark:text-white print:text-black mb-1">{item.description}</div>
                                             <div className="text-[10px] uppercase tracking-wider text-brand-gold print:text-zinc-500">{item.category}</div>
                                         </td>
                                         <td className="px-8 py-6 align-top text-sm">
@@ -361,7 +361,7 @@ export const NewOrder: React.FC = () => {
                                                 {!item.format && !item.size && !item.frame && !item.finish && <li className="italic">Nenhuma especificação</li>}
                                             </ul>
                                         </td>
-                                        <td className="px-8 py-6 align-top text-right font-bold text-white print:text-black whitespace-nowrap">
+                                        <td className="px-8 py-6 align-top text-right font-bold text-zinc-900 dark:text-white print:text-black whitespace-nowrap">
                                             {item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                         </td>
                                         <td className="px-8 py-6 align-top text-center print:hidden">
@@ -377,7 +377,7 @@ export const NewOrder: React.FC = () => {
                                 ))}
                             </tbody>
                             <tfoot>
-                                <tr className="bg-black/50 print:bg-zinc-50">
+                                <tr className="bg-zinc-100 dark:bg-black/50 print:bg-zinc-50">
                                     <td colSpan={2} className="px-8 py-6 text-right text-sm uppercase tracking-widest text-zinc-500 font-bold">
                                         Total Estimado
                                     </td>
