@@ -173,28 +173,28 @@ export const AdminDashboard: React.FC = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-display text-white">Painel de Gestão</h2>
-          <p className="text-sm text-gray-400 mt-2">Gerencie leads e consulte as fichas de seus representantes aprovados.</p>
+          <h2 className="text-3xl font-display text-zinc-900 dark:text-white">Painel de Gestão</h2>
+          <p className="text-sm text-zinc-500 dark:text-gray-400 mt-2">Gerencie leads e consulte as fichas de seus representantes aprovados.</p>
         </div>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-gray-400" />
           <input
             type="text"
             placeholder="Buscar..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none w-full sm:w-64"
+            className="pl-9 pr-4 py-2 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-lg text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none w-full sm:w-64"
           />
         </div>
       </div>
 
-      <div className="flex border-b border-white/10">
+      <div className="flex border-b border-zinc-200 dark:border-white/10">
         <button
           onClick={() => setActiveTab('leads')}
           className={`flex items-center gap-2 px-6 py-4 text-sm font-bold uppercase tracking-widest transition-colors border-b-2 ${
             activeTab === 'leads' 
               ? 'text-brand-gold border-brand-gold' 
-              : 'text-white/40 border-transparent hover:text-white'
+              : 'text-zinc-400 dark:text-white/40 border-transparent hover:text-zinc-900 dark:hover:text-white'
           }`}
         >
           <UserPlus size={18} />
@@ -205,7 +205,7 @@ export const AdminDashboard: React.FC = () => {
           className={`flex items-center gap-2 px-6 py-4 text-sm font-bold uppercase tracking-widest transition-colors border-b-2 ${
             activeTab === 'reps' 
               ? 'text-brand-gold border-brand-gold' 
-              : 'text-white/40 border-transparent hover:text-white'
+              : 'text-zinc-400 dark:text-white/40 border-transparent hover:text-zinc-900 dark:hover:text-white'
           }`}
         >
           <Users size={18} />
@@ -216,7 +216,7 @@ export const AdminDashboard: React.FC = () => {
           className={`flex items-center gap-2 px-6 py-4 text-sm font-bold uppercase tracking-widest transition-colors border-b-2 ${
             activeTab === 'orders' 
               ? 'text-brand-gold border-brand-gold' 
-              : 'text-white/40 border-transparent hover:text-white'
+              : 'text-zinc-400 dark:text-white/40 border-transparent hover:text-zinc-900 dark:hover:text-white'
           }`}
         >
           <Package size={18} />
@@ -224,7 +224,7 @@ export const AdminDashboard: React.FC = () => {
         </button>
       </div>
 
-      <div className="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden min-h-[400px]">
+      <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/5 rounded-2xl overflow-hidden min-h-[400px]">
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
@@ -232,8 +232,8 @@ export const AdminDashboard: React.FC = () => {
         ) : (
           <div className="overflow-x-auto">
             {activeTab === 'leads' ? (
-              <table className="w-full text-left text-sm text-gray-400">
-                <thead className="text-xs uppercase bg-white/5 font-bold text-gray-300">
+              <table className="w-full text-left text-sm text-zinc-600 dark:text-gray-400">
+                <thead className="text-xs uppercase bg-zinc-50 dark:bg-white/5 font-bold text-zinc-500 dark:text-gray-300">
                   <tr>
                     <th className="px-6 py-4">Data</th>
                     <th className="px-6 py-4">Nome / Atuação</th>
@@ -242,18 +242,18 @@ export const AdminDashboard: React.FC = () => {
                     <th className="px-6 py-4 text-right">Ações</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
                   {filteredLeads.map((lead) => (
-                    <tr key={lead.id} className="hover:bg-white/[0.02] transition-colors">
+                    <tr key={lead.id} className="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap">
                         {new Date(lead.created_at).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{lead.nome}</div>
+                        <div className="font-medium text-zinc-900 dark:text-white">{lead.nome}</div>
                         <div className="text-xs text-brand-gold">Área: {lead.regioes_atuacao}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-white">{lead.cidade} - {lead.estado}</div>
+                        <div className="text-zinc-800 dark:text-white">{lead.cidade} - {lead.estado}</div>
                         <div className="text-xs whitespace-nowrap">{lead.whatsapp} • {lead.email}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -271,7 +271,7 @@ export const AdminDashboard: React.FC = () => {
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => setSelectedLead(lead)}
-                            className="px-3 py-1 text-xs text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors flex items-center gap-2"
+                            className="px-3 py-1 text-xs text-zinc-500 dark:text-white/60 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 rounded-md transition-colors flex items-center gap-2"
                           >
                             <Eye size={14} /> Ficha
                           </button>
@@ -310,8 +310,8 @@ export const AdminDashboard: React.FC = () => {
                 </tbody>
               </table>
             ) : activeTab === 'reps' ? (
-              <table className="w-full text-left text-sm text-gray-400">
-                <thead className="text-xs uppercase bg-white/5 font-bold text-gray-300">
+              <table className="w-full text-left text-sm text-zinc-600 dark:text-gray-400">
+                <thead className="text-xs uppercase bg-zinc-50 dark:bg-white/5 font-bold text-zinc-500 dark:text-gray-300">
                   <tr>
                     <th className="px-6 py-4">Nome do Representante</th>
                     <th className="px-6 py-4">Email</th>
@@ -320,18 +320,18 @@ export const AdminDashboard: React.FC = () => {
                     <th className="px-6 py-4 text-right">Ações</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
                   {filteredReps.map((rep) => (
-                    <tr key={rep.id} className="hover:bg-white/[0.02] transition-colors">
+                    <tr key={rep.id} className="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{rep.full_name}</div>
+                        <div className="font-medium text-zinc-900 dark:text-white">{rep.full_name}</div>
                       </td>
-                      <td className="px-6 py-4 text-zinc-300">
+                      <td className="px-6 py-4 text-zinc-600 dark:text-zinc-300">
                         {rep.email}
                       </td>
-                      <td className="px-6 py-4 text-zinc-300">
+                      <td className="px-6 py-4 text-zinc-600 dark:text-zinc-300">
                         <div>{rep.cnpj || '-'}</div>
-                        <div className="text-xs text-white/50">{rep.company_name}</div>
+                        <div className="text-xs text-zinc-500 dark:text-white/50">{rep.company_name}</div>
                       </td>
                       <td className="px-6 py-4">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-brand-gold/10 text-brand-gold border-brand-gold/20">
@@ -341,7 +341,7 @@ export const AdminDashboard: React.FC = () => {
                       <td className="px-6 py-4 text-right">
                         <button 
                           onClick={() => openRepModal(rep)}
-                          className="px-3 py-1 text-xs text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors flex items-center gap-2 ml-auto"
+                          className="px-3 py-1 text-xs text-zinc-500 dark:text-white/60 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 rounded-md transition-colors flex items-center gap-2 ml-auto"
                         >
                           <Eye size={14} /> Ficha Completa
                         </button>
@@ -358,8 +358,8 @@ export const AdminDashboard: React.FC = () => {
                 </tbody>
               </table>
             ) : (
-              <table className="w-full text-left text-sm text-gray-400">
-                <thead className="text-xs uppercase bg-white/5 font-bold text-gray-300">
+              <table className="w-full text-left text-sm text-zinc-600 dark:text-gray-400">
+                <thead className="text-xs uppercase bg-zinc-50 dark:bg-white/5 font-bold text-zinc-500 dark:text-gray-300">
                   <tr>
                     <th className="px-6 py-4">ID / Data</th>
                     <th className="px-6 py-4">Cliente</th>
@@ -368,19 +368,19 @@ export const AdminDashboard: React.FC = () => {
                     <th className="px-6 py-4">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
                   {filteredOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-white/[0.02] transition-colors">
+                    <tr key={order.id} className="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white text-xs uppercase tracking-wider">{order.id.split('-')[0]}</div>
+                        <div className="font-medium text-zinc-900 dark:text-white text-xs uppercase tracking-wider">{order.id.split('-')[0]}</div>
                         <div className="text-xs text-zinc-500">{new Date(order.created_at).toLocaleDateString()}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{order.client?.company_name}</div>
+                        <div className="font-medium text-zinc-900 dark:text-white">{order.client?.company_name}</div>
                         <div className="text-xs text-zinc-500">{order.client?.cnpj}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{order.representative?.full_name}</div>
+                        <div className="font-medium text-zinc-900 dark:text-white">{order.representative?.full_name}</div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="font-medium text-brand-gold">
@@ -428,15 +428,15 @@ export const AdminDashboard: React.FC = () => {
       {/* Modal para Ficha Completa do Lead */}
       {selectedLead && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#121212] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-            <div className="p-6 border-b border-white/5 flex justify-between items-center bg-black/20">
+          <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="p-6 border-b border-zinc-100 dark:border-white/5 flex justify-between items-center bg-zinc-50/50 dark:bg-black/20">
               <div>
-                <h3 className="text-2xl font-display text-white">Ficha de Cadastro</h3>
-                <p className="text-sm text-gray-400 mt-1">Detalhes completos do lead</p>
+                <h3 className="text-2xl font-display text-zinc-900 dark:text-white">Ficha de Cadastro</h3>
+                <p className="text-sm text-zinc-500 dark:text-gray-400 mt-1">Detalhes completos do lead</p>
               </div>
               <button 
                 onClick={() => setSelectedLead(null)}
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-white/5 hover:bg-zinc-200 dark:hover:bg-white/10 flex items-center justify-center text-zinc-500 dark:text-white/60 hover:text-zinc-900 dark:hover:text-white transition-colors"
               >
                 <X size={20} />
               </button>
@@ -463,77 +463,77 @@ export const AdminDashboard: React.FC = () => {
               {/* Data Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-6">
-                  <div className="bg-white/5 border border-white/5 p-5 rounded-xl">
+                  <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl">
                     <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                       <User size={14} /> Dados Pessoais
                     </h4>
                     <div className="space-y-4">
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">Nome Completo</div>
-                        <div className="text-white font-medium">{selectedLead.nome}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Nome Completo</div>
+                        <div className="text-zinc-900 dark:text-white font-medium">{selectedLead.nome}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">CPF / CNPJ</div>
-                        <div className="text-white">{selectedLead.documento}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">CPF / CNPJ</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.documento}</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white/5 border border-white/5 p-5 rounded-xl">
+                  <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl">
                     <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                       <Phone size={14} /> Contato
                     </h4>
                     <div className="space-y-4">
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">WhatsApp</div>
-                        <div className="text-white">{selectedLead.whatsapp}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">WhatsApp</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.whatsapp}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">E-mail</div>
-                        <div className="text-white">{selectedLead.email}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">E-mail</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.email}</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-white/5 border border-white/5 p-5 rounded-xl">
+                  <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl">
                     <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                       <Briefcase size={14} /> Atuação Profissional
                     </h4>
                     <div className="space-y-4">
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">Região de Atuação</div>
-                        <div className="text-white">{selectedLead.regioes_atuacao}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Região de Atuação</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.regioes_atuacao}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">Local Base</div>
-                        <div className="text-white">{selectedLead.cidade} - {selectedLead.estado}</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Local Base</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.cidade} - {selectedLead.estado}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">Tamanho da Carteira</div>
-                        <div className="text-white">{selectedLead.quantidade_lojistas} clientes</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Tamanho da Carteira</div>
+                        <div className="text-zinc-900 dark:text-white">{selectedLead.quantidade_lojistas} clientes</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white/5 border border-white/5 p-5 rounded-xl">
+                  <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl">
                     <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                       <FileText size={14} /> Detalhes
                     </h4>
                     <div className="space-y-4">
                       <div>
-                        <div className="text-xs text-gray-500 mb-1">Status CORE</div>
-                        <div className="text-white">
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Status CORE</div>
+                        <div className="text-zinc-900 dark:text-white">
                           {selectedLead.core_status === 'sim' ? 'Ativo' : 
                            selectedLead.core_status === 'nao' ? 'Não possui' : 'Em regularização'}
                         </div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-2">Segmentos</div>
+                        <div className="text-xs text-zinc-500 dark:text-gray-500 mb-2">Segmentos</div>
                         <div className="flex flex-wrap gap-2">
                           {selectedLead.segmentos.map(seg => (
-                            <span key={seg} className="px-2 py-1 bg-white/10 rounded text-xs text-white/80">
+                            <span key={seg} className="px-2 py-1 bg-zinc-200 dark:bg-white/10 rounded text-xs text-zinc-700 dark:text-white/80">
                               {seg}
                             </span>
                           ))}
@@ -546,7 +546,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {selectedLead.status === 'pending' && (
-              <div className="p-6 border-t border-white/5 bg-black/20 flex justify-end gap-4">
+              <div className="p-6 border-t border-zinc-100 dark:border-white/5 bg-zinc-50/50 dark:bg-black/20 flex justify-end gap-4">
                 <button
                   onClick={() => handleReject(selectedLead.id)}
                   className="px-6 py-2.5 text-sm text-red-400 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors font-bold uppercase tracking-widest"
@@ -568,14 +568,14 @@ export const AdminDashboard: React.FC = () => {
       {/* Modal para Ficha Completa do Representante Ativo */}
       {selectedRep && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#121212] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-            <div className="p-6 border-b border-white/5 flex justify-between items-center bg-black/20">
+          <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="p-6 border-b border-zinc-100 dark:border-white/5 flex justify-between items-center bg-zinc-50/50 dark:bg-black/20">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-display text-lg italic shadow-xl">
                   {selectedRep.full_name?.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'RP'}
                 </div>
                 <div>
-                  <h3 className="text-2xl font-display text-white">{selectedRep.full_name}</h3>
+                  <h3 className="text-2xl font-display text-zinc-900 dark:text-white">{selectedRep.full_name}</h3>
                   <p className="text-sm text-brand-gold uppercase tracking-widest font-bold mt-1">
                     {selectedRep.role === 'representative' ? 'Representante Ativo' : 'Lojista'}
                   </p>
@@ -583,7 +583,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <button 
                 onClick={() => { setSelectedRep(null); setRepLeadDetails(null); }}
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-white/5 hover:bg-zinc-200 dark:hover:bg-white/10 flex items-center justify-center text-zinc-500 dark:text-white/60 hover:text-zinc-900 dark:hover:text-white transition-colors"
               >
                 <X size={20} />
               </button>
@@ -598,22 +598,22 @@ export const AdminDashboard: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Info da Conta */}
                   <div className="space-y-6">
-                    <div className="bg-white/5 border border-white/5 p-5 rounded-xl">
+                    <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl">
                       <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                         <User size={14} /> Dados da Conta
                       </h4>
                       <div className="space-y-4">
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">E-mail de Acesso</div>
-                          <div className="text-white">{selectedRep.email}</div>
+                          <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">E-mail de Acesso</div>
+                          <div className="text-zinc-900 dark:text-white">{selectedRep.email}</div>
                         </div>
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Empresa / Razão Social</div>
-                          <div className="text-white">{selectedRep.company_name || 'Não informado'}</div>
+                          <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Empresa / Razão Social</div>
+                          <div className="text-zinc-900 dark:text-white">{selectedRep.company_name || 'Não informado'}</div>
                         </div>
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">CNPJ Associado</div>
-                          <div className="text-white">{selectedRep.cnpj || 'Não informado'}</div>
+                          <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">CNPJ Associado</div>
+                          <div className="text-zinc-900 dark:text-white">{selectedRep.cnpj || 'Não informado'}</div>
                         </div>
                       </div>
                     </div>
@@ -621,33 +621,33 @@ export const AdminDashboard: React.FC = () => {
 
                   {/* Info Histórica do Lead (se houver) */}
                   <div className="space-y-6">
-                    <div className="bg-white/5 border border-white/5 p-5 rounded-xl h-full">
+                    <div className="bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 p-5 rounded-xl h-full">
                       <h4 className="text-brand-gold text-xs uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
                         <Briefcase size={14} /> Dados de Cadastro Original
                       </h4>
                       {repLeadDetails ? (
                         <div className="space-y-4">
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Região de Atuação Declarada</div>
-                            <div className="text-white">{repLeadDetails.regioes_atuacao}</div>
+                            <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Região de Atuação Declarada</div>
+                            <div className="text-zinc-900 dark:text-white">{repLeadDetails.regioes_atuacao}</div>
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">WhatsApp de Contato</div>
-                            <div className="text-white">{repLeadDetails.whatsapp}</div>
+                            <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">WhatsApp de Contato</div>
+                            <div className="text-zinc-900 dark:text-white">{repLeadDetails.whatsapp}</div>
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Localização Base</div>
-                            <div className="text-white">{repLeadDetails.cidade} - {repLeadDetails.estado}</div>
+                            <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Localização Base</div>
+                            <div className="text-zinc-900 dark:text-white">{repLeadDetails.cidade} - {repLeadDetails.estado}</div>
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Tamanho da Carteira</div>
-                            <div className="text-white">{repLeadDetails.quantidade_lojistas} clientes</div>
+                            <div className="text-xs text-zinc-500 dark:text-gray-500 mb-1">Tamanho da Carteira</div>
+                            <div className="text-zinc-900 dark:text-white">{repLeadDetails.quantidade_lojistas} clientes</div>
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500 mb-2">Segmentos Atendidos</div>
+                            <div className="text-xs text-zinc-500 dark:text-gray-500 mb-2">Segmentos Atendidos</div>
                             <div className="flex flex-wrap gap-2">
                               {repLeadDetails.segmentos.map(seg => (
-                                <span key={seg} className="px-2 py-1 bg-white/10 rounded text-xs text-white/80">
+                                <span key={seg} className="px-2 py-1 bg-zinc-200 dark:bg-white/10 rounded text-xs text-zinc-700 dark:text-white/80">
                                   {seg}
                                 </span>
                               ))}
