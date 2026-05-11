@@ -8,6 +8,20 @@ interface RankItem {
     sales: number;
 }
 
+// Apelidos de poder — determinísticos por ID
+const CODENAMES = [
+    'Apex', 'Vortex', 'Onyx', 'Cipher', 'Nova',
+    'Axiom', 'Zenith', 'Lynx', 'Orion', 'Volt',
+    'Nexus', 'Titan', 'Blaze', 'Raven', 'Pulse',
+    'Echo', 'Kryon', 'Slate', 'Quasar', 'Specter',
+];
+
+function getCodename(id: string): string {
+    // Soma simples dos char codes para escolher um apelido fixo por ID
+    const hash = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    return CODENAMES[hash % CODENAMES.length];
+}
+
 export const SalesRanking: React.FC = () => {
     const [representatives, setRepresentatives] = useState<RankItem[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -51,10 +65,10 @@ export const SalesRanking: React.FC = () => {
     };
 
     const sortedReps = [...representatives].sort((a, b) => b.sales - a.sales);
-    const filteredReps = sortedReps.filter(rep => rep.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredReps = sortedReps; // sem filtro por nome (apelidos anônimos)
 
     const top3 = sortedReps.slice(0, 3);
-    const others = filteredReps.filter(rep => !top3.find(t => t.id === rep.id) || searchTerm !== '');
+    const others = filteredReps.filter(rep => !top3.find(t => t.id === rep.id));
 
     const getMedalColor = (index: number) => {
         switch (index) {
@@ -76,15 +90,13 @@ export const SalesRanking: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
-            <div className="flex justify-between items-end">
-                <div>
+            <div>
                     <h2 className="text-3xl font-display text-zinc-900 dark:text-white italic flex items-center gap-3">
                         <Trophy className="text-brand-gold" />
                         Ranking de Vendas
                     </h2>
                     <p className="text-zinc-500 mt-1">Acompanhe e gerencie o faturamento da equipe de representantes.</p>
                 </div>
-            </div>
 
             {/* Podium Section */}
             {!searchTerm && top3.length > 0 && (
@@ -98,7 +110,7 @@ export const SalesRanking: React.FC = () => {
                             <div className="flex flex-col items-center w-1/3 max-w-[200px] animate-in slide-in-from-bottom border-b-2 border-zinc-300 dark:border-zinc-300/30">
                                 <div className="text-center mb-4">
                                     <Medal size={32} className={`mx-auto mb-2 ${getMedalColor(1)}`} />
-                                    <p className="text-zinc-900 dark:text-white font-bold truncate w-full px-2" title={top3[1].name}>{top3[1].name}</p>
+                                    <p className="text-zinc-900 dark:text-white font-bold truncate w-full px-2 font-display italic tracking-wide">{getCodename(top3[1].id)}</p>
                                     <p className="text-xs text-brand-gold font-display mt-1">
                                         {top3[1].sales.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </p>
@@ -117,7 +129,7 @@ export const SalesRanking: React.FC = () => {
                                         <div className="absolute -inset-4 bg-brand-gold/20 blur-xl rounded-full"></div>
                                         <Trophy size={48} className={`mx-auto mb-2 ${getMedalColor(0)} relative`} />
                                     </div>
-                                    <p className="text-zinc-900 dark:text-white font-bold text-lg truncate w-full px-2" title={top3[0].name}>{top3[0].name}</p>
+                                    <p className="text-zinc-900 dark:text-white font-bold text-lg truncate w-full px-2 font-display italic tracking-wide">{getCodename(top3[0].id)}</p>
                                     <p className="text-sm text-brand-gold font-display mt-1 font-bold">
                                         {top3[0].sales.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </p>
@@ -133,7 +145,7 @@ export const SalesRanking: React.FC = () => {
                             <div className="flex flex-col items-center w-1/3 max-w-[200px] animate-in slide-in-from-bottom border-b-2 border-amber-600/30">
                                 <div className="text-center mb-4">
                                     <Medal size={28} className={`mx-auto mb-2 ${getMedalColor(2)}`} />
-                                    <p className="text-zinc-900 dark:text-white font-bold truncate w-full px-2" title={top3[2].name}>{top3[2].name}</p>
+                                    <p className="text-zinc-900 dark:text-white font-bold truncate w-full px-2 font-display italic tracking-wide">{getCodename(top3[2].id)}</p>
                                     <p className="text-xs text-brand-gold font-display mt-1">
                                         {top3[2].sales.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </p>
@@ -150,19 +162,8 @@ export const SalesRanking: React.FC = () => {
 
             {/* List Section */}
             <div className="bg-white dark:bg-[#121212] border border-zinc-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-sm dark:shadow-none">
-                <div className="p-8 border-b border-zinc-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="p-8 border-b border-zinc-200 dark:border-white/5">
                     <h3 className="text-lg font-display text-zinc-900 dark:text-white">Tabela de Classificação Geral</h3>
-
-                    <div className="relative w-full sm:w-auto">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-500" />
-                        <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Buscar representante..."
-                            className="w-full sm:w-72 pl-11 pr-4 py-3 bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-white/10 rounded-xl focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-zinc-900 dark:text-white text-xs transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
-                        />
-                    </div>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -170,7 +171,7 @@ export const SalesRanking: React.FC = () => {
                         <thead>
                             <tr className="border-b border-zinc-200 dark:border-white/5 text-[10px] uppercase tracking-widest text-zinc-500">
                                 <th className="px-8 py-4 font-bold text-center w-16">Pos</th>
-                                <th className="px-8 py-4 font-bold">Representante</th>
+                                <th className="px-8 py-4 font-bold">Agente</th>
                                 <th className="px-8 py-4 font-bold text-right">Faturamento Total</th>
                             </tr>
                         </thead>
@@ -193,6 +194,7 @@ export const SalesRanking: React.FC = () => {
                                 (searchTerm ? filteredReps : others).map((rep) => {
                                     const originalIndex = sortedReps.findIndex(r => r.id === rep.id);
                                     const isTop3 = originalIndex < 3;
+                                    const codename = getCodename(rep.id);
 
                                     return (
                                         <tr key={rep.id} className="group hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
@@ -203,9 +205,9 @@ export const SalesRanking: React.FC = () => {
                                                     <span className="text-zinc-400 dark:text-zinc-500 font-display italic text-lg">{originalIndex + 1}º</span>
                                                 )}
                                             </td>
-                                            <td className="px-8 py-6 font-bold text-zinc-900 dark:text-white">
-                                                {rep.name}
-                                                {originalIndex === 0 && <span className="ml-2 text-[8px] bg-brand-gold/10 text-brand-gold px-2 py-1 rounded-full uppercase tracking-widest font-bold">Líder</span>}
+                                            <td className="px-8 py-6 font-bold text-zinc-900 dark:text-white font-display italic tracking-wide">
+                                                {codename}
+                                                {originalIndex === 0 && <span className="ml-2 text-[8px] bg-brand-gold/10 text-brand-gold px-2 py-1 rounded-full uppercase tracking-widest font-bold not-italic">Líder</span>}
                                             </td>
                                             <td className="px-8 py-6 text-right">
                                                 <span className={`${isTop3 ? 'text-brand-gold font-bold text-lg' : 'text-zinc-600 dark:text-zinc-300'} font-display`}>
