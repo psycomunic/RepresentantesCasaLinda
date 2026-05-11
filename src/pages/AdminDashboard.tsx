@@ -33,6 +33,7 @@ export const AdminDashboard: React.FC = () => {
   const [selectedRep, setSelectedRep] = useState<Profile | null>(null);
   const [repLeadDetails, setRepLeadDetails] = useState<Lead | null>(null);
   const [loadingRepDetails, setLoadingRepDetails] = useState(false);
+  const [isGeneratingCatalog, setIsGeneratingCatalog] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -152,6 +153,31 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  const handleGenerateCatalog = async () => {
+    setIsGeneratingCatalog(true);
+    try {
+      const { data, error } = await supabase.from('products').select('*');
+      if (error) throw error;
+      
+      const { pdf } = await import('@react-pdf/renderer');
+      const { CatalogPDF } = await import('../components/CatalogPDF');
+      
+      const blob = await pdf(<CatalogPDF products={data || []} />).toBlob();
+      
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Catalogo_CasaLinda_${new Date().getFullYear()}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Error generating catalog:', err);
+      alert('Erro ao gerar catálogo. Verifique sua conexão e tente novamente.');
+    } finally {
+      setIsGeneratingCatalog(false);
+    }
+  };
+
   const filteredLeads = leads.filter(l =>
     l.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
     l.documento.includes(searchTerm)
@@ -176,15 +202,29 @@ export const AdminDashboard: React.FC = () => {
           <h2 className="text-3xl font-display text-zinc-900 dark:text-white">Painel de Gestão</h2>
           <p className="text-sm text-zinc-500 dark:text-gray-400 mt-2">Gerencie leads e consulte as fichas de seus representantes aprovados.</p>
         </div>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-gray-400" />
-          <input
-            type="text"
-            placeholder="Buscar..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 pr-4 py-2 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-lg text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none w-full sm:w-64"
-          />
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <button
+            onClick={handleGenerateCatalog}
+            disabled={isGeneratingCatalog}
+            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-dark dark:bg-white text-brand-gold dark:text-black hover:bg-zinc-900 dark:hover:bg-zinc-200 rounded-lg transition-all shadow-[0_0_20px_rgba(197,160,89,0.15)] hover:shadow-[0_0_25px_rgba(197,160,89,0.3)] font-bold uppercase tracking-widest text-xs border border-brand-gold/30 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGeneratingCatalog ? (
+              <div className="w-4 h-4 border-2 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              <FileText size={16} />
+            )}
+            {isGeneratingCatalog ? 'Gerando...' : 'Catálogo PDF'}
+          </button>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-gray-400" />
+            <input
+              type="text"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9 pr-4 py-2 bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 rounded-lg text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none w-full sm:w-64"
+            />
+          </div>
         </div>
       </div>
 
