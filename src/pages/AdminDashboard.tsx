@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2, User } from 'lucide-react';
+import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2, User, Link, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Profile, Order } from '../types';
 
@@ -34,6 +34,9 @@ export const AdminDashboard: React.FC = () => {
   const [repLeadDetails, setRepLeadDetails] = useState<Lead | null>(null);
   const [loadingRepDetails, setLoadingRepDetails] = useState(false);
   const [isGeneratingCatalog, setIsGeneratingCatalog] = useState(false);
+  const [linkingOrderId, setLinkingOrderId] = useState<string | null>(null);
+  const [magazordInput, setMagazordInput] = useState('');
+  const [linkingSaving, setLinkingSaving] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -63,7 +66,7 @@ export const AdminDashboard: React.FC = () => {
           .select('*, client:clients(*), representative:profiles!representative_id(*)')
           .order('created_at', { ascending: false });
         if (error) throw error;
-        setOrders(data || []);
+        setOrders((data || []) as any);
       }
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -84,6 +87,29 @@ export const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Error updating order status:', err);
       alert('Erro ao atualizar status do pedido.');
+    }
+  };
+
+  const handleLinkMagazord = async (orderId: string) => {
+    if (!magazordInput.trim()) return;
+    setLinkingSaving(true);
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .update({ magazord_order_id: magazordInput.trim(), status: 'in_production' })
+        .eq('id', orderId);
+      if (error) throw error;
+      setOrders(orders.map(o => o.id === orderId
+        ? { ...o, magazord_order_id: magazordInput.trim(), status: 'in_production' as any }
+        : o
+      ));
+      setLinkingOrderId(null);
+      setMagazordInput('');
+    } catch (err) {
+      console.error('Erro ao vincular Magazord:', err);
+      alert('Erro ao vincular pedido. Tente novamente.');
+    } finally {
+      setLinkingSaving(false);
     }
   };
 
@@ -189,10 +215,11 @@ export const AdminDashboard: React.FC = () => {
     (r.email && r.email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const filteredOrders = orders.filter(o => 
+  const filteredOrders = orders.filter((o: any) => 
     o.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (o.client?.company_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (o.representative?.full_name || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ((o.client_name || '') + (o.client?.company_name || '')).toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (o.representative?.full_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (o.magazord_order_id || '').includes(searchTerm)
   );
 
   return (
@@ -398,68 +425,110 @@ export const AdminDashboard: React.FC = () => {
                 </tbody>
               </table>
             ) : (
-              <table className="w-full text-left text-sm text-zinc-600 dark:text-gray-400">
-                <thead className="text-xs uppercase bg-zinc-50 dark:bg-white/5 font-bold text-zinc-500 dark:text-gray-300">
-                  <tr>
-                    <th className="px-6 py-4">ID / Data</th>
-                    <th className="px-6 py-4">Cliente</th>
-                    <th className="px-6 py-4">Representante</th>
-                    <th className="px-6 py-4">Valor</th>
-                    <th className="px-6 py-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
-                  {filteredOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-zinc-900 dark:text-white text-xs uppercase tracking-wider">{order.id.split('-')[0]}</div>
-                        <div className="text-xs text-zinc-500">{new Date(order.created_at).toLocaleDateString()}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-zinc-900 dark:text-white">{order.client?.company_name}</div>
-                        <div className="text-xs text-zinc-500">{order.client?.cnpj}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-zinc-900 dark:text-white">{order.representative?.full_name}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-brand-gold">
-                           R$ {order.total_amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                        </div>
-                        <div className="text-[10px] text-zinc-500 uppercase">{order.payment_terms}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                         <select 
-                            value={order.status}
-                            onChange={(e) => handleOrderStatusUpdate(order.id, e.target.value)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium uppercase tracking-wider border outline-none appearance-none cursor-pointer ${
-                               order.status === 'approved' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                               order.status === 'production' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                               order.status === 'shipped' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
-                               order.status === 'delivered' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                               order.status === 'cancelled' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                               'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
-                            }`}
-                         >
-                            <option value="pending" className="bg-[#121212] text-yellow-500">Pendente</option>
-                            <option value="approved" className="bg-[#121212] text-emerald-400">Aprovado</option>
-                            <option value="production" className="bg-[#121212] text-blue-400">Em Produção</option>
-                            <option value="shipped" className="bg-[#121212] text-indigo-400">Enviado</option>
-                            <option value="delivered" className="bg-[#121212] text-purple-400">Entregue</option>
-                            <option value="cancelled" className="bg-[#121212] text-red-400">Cancelado</option>
-                         </select>
-                      </td>
-                    </tr>
-                  ))}
-                  {filteredOrders.length === 0 && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-zinc-600 dark:text-gray-400">
+                  <thead className="text-xs uppercase bg-zinc-50 dark:bg-white/5 font-bold text-zinc-500 dark:text-gray-300">
                     <tr>
-                      <td colSpan={5} className="px-6 py-12 text-center text-zinc-500">
-                        Nenhum pedido encontrado.
-                      </td>
+                      <th className="px-5 py-4">#</th>
+                      <th className="px-5 py-4">Cliente</th>
+                      <th className="px-5 py-4">Representante</th>
+                      <th className="px-5 py-4">Valor</th>
+                      <th className="px-5 py-4">Magazord</th>
+                      <th className="px-5 py-4">Status</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
+                    {filteredOrders.map((order) => (
+                      <tr key={order.id} className="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
+                        <td className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-mono text-xs text-zinc-500">#{order.order_number || order.id.slice(0,6)}</div>
+                          <div className="text-[10px] text-zinc-400">{new Date(order.created_at).toLocaleDateString('pt-BR')}</div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="font-medium text-zinc-900 dark:text-white">
+                            {order.client_name || order.client?.company_name || '—'}
+                          </div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="text-zinc-700 dark:text-zinc-300">{order.representative?.full_name || '—'}</div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="font-medium text-brand-gold">
+                            {order.total_amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                          </div>
+                        </td>
+
+                        {/* Coluna Magazord */}
+                        <td className="px-5 py-4">
+                          {order.magazord_order_id ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 rounded text-xs font-bold">
+                              <FileText size={10} /> #{order.magazord_order_id}
+                            </span>
+                          ) : linkingOrderId === order.id ? (
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                value={magazordInput}
+                                onChange={e => setMagazordInput(e.target.value)}
+                                placeholder="Nº Pedido"
+                                className="w-24 px-2 py-1 text-xs border border-zinc-300 dark:border-white/20 rounded-lg bg-white dark:bg-white/5 text-zinc-900 dark:text-white outline-none focus:border-brand-gold"
+                                onKeyDown={e => e.key === 'Enter' && handleLinkMagazord(order.id)}
+                              />
+                              <button
+                                onClick={() => handleLinkMagazord(order.id)}
+                                disabled={linkingSaving}
+                                className="px-2 py-1 bg-brand-gold text-black text-xs rounded-lg font-bold hover:bg-amber-500 transition-all disabled:opacity-50"
+                              >
+                                {linkingSaving ? <Loader2 size={12} className="animate-spin" /> : 'OK'}
+                              </button>
+                              <button onClick={() => setLinkingOrderId(null)} className="text-zinc-400 hover:text-red-400">
+                                <X size={12} />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => { setLinkingOrderId(order.id); setMagazordInput(''); }}
+                              className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-zinc-400 hover:text-brand-gold transition-colors font-bold"
+                            >
+                              <Link size={11} /> Vincular
+                            </button>
+                          )}
+                        </td>
+
+                        {/* Status */}
+                        <td className="px-5 py-4">
+                          <select
+                            value={order.status}
+                            onChange={e => handleOrderStatusUpdate(order.id, e.target.value)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium uppercase tracking-wider border outline-none appearance-none cursor-pointer ${
+                              order.status === 'approved'      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                              order.status === 'in_production' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                              order.status === 'shipped'       ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
+                              order.status === 'delivered'     ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                              order.status === 'cancelled'     ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                              'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                            }`}
+                          >
+                            <option value="pending">Aguardando</option>
+                            <option value="approved">Aprovado</option>
+                            <option value="in_production">Em Produção</option>
+                            <option value="shipped">Enviado</option>
+                            <option value="delivered">Entregue</option>
+                            <option value="cancelled">Cancelado</option>
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                    {filteredOrders.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-12 text-center text-zinc-500">
+                          Nenhum pedido encontrado.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}

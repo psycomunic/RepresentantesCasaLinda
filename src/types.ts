@@ -39,20 +39,27 @@ export interface Product {
 export interface OrderItem {
   id?: string;
   order_id?: string;
-  product_id: string;
+  product_id?: string | null;
+  product_name?: string;
   quantity: number;
   unit_price: number;
+  image_url?: string;
+  custom_details?: Record<string, string>;
   product?: Product;
 }
 
 export interface Order {
   id: string;
+  order_number?: number;
   representative_id: string;
-  client_id: string;
+  client_id?: string | null;
+  client_name?: string;
   total_amount: number;
-  discount_amount: number;
-  payment_terms: string;
-  status: 'draft' | 'pending' | 'approved' | 'production' | 'shipped' | 'delivered' | 'cancelled';
+  discount_amount?: number;
+  payment_terms?: string;
+  status: 'draft' | 'pending' | 'approved' | 'in_production' | 'shipped' | 'delivered' | 'cancelled';
+  magazord_order_id?: string | null;
+  notes?: string;
   created_at: string;
   client?: Client;
   representative?: Partial<Profile>;
