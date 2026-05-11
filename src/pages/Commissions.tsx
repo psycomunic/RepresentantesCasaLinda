@@ -32,12 +32,17 @@ export const Commissions: React.FC = () => {
         }
     };
 
-    const commissions = orders.map((order) => {
+    // Apenas pedidos que foram aprovados pelo admin geram comissão
+    const APPROVED_STATUSES = ['approved', 'in_production', 'shipped', 'delivered'];
+
+    const commissions = orders
+        .filter(order => APPROVED_STATUSES.includes(order.status))
+        .map((order) => {
         const isPaid = order.status === 'delivered';
         return {
             id: `comm-${order.id}`,
             order_id: order.id.slice(0, 8),
-            client_name: order.client?.company_name || 'Desconhecido',
+            client_name: order.client_name || order.client?.company_name || 'Desconhecido',
             amount: order.total_amount * 0.12,
             status: isPaid ? 'paid' : 'pending',
             date: new Date(order.created_at),
@@ -109,8 +114,9 @@ export const Commissions: React.FC = () => {
                             <div className="w-8 h-8 border-4 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : commissions.length === 0 ? (
-                        <div className="py-10 text-center text-zinc-400 dark:text-zinc-500 text-sm">
-                            Nenhuma comissão encontrada.
+                        <div className="py-10 text-center text-zinc-400 dark:text-zinc-500 text-sm space-y-2">
+                            <p>Nenhuma comissão disponível ainda.</p>
+                            <p className="text-xs text-zinc-400 dark:text-zinc-600">As comissões aparecem somente após o pedido ser aprovado pelo administrador.</p>
                         </div>
                     ) : (
                     commissions.map((comm) => (

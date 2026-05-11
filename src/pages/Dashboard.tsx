@@ -65,7 +65,10 @@ export const Dashboard: React.FC = () => {
     const montlyGoal = 500000;
     
     const currentSales = orders.reduce((acc, order) => acc + order.total_amount, 0);
-    const currentCommission = orders.reduce((acc, order) => acc + (order.total_amount * 0.12), 0);
+    const COMMISSION_STATUSES = ['approved', 'in_production', 'shipped', 'delivered'];
+    const currentCommission = orders
+        .filter(o => COMMISSION_STATUSES.includes(o.status))
+        .reduce((acc, order) => acc + (order.total_amount * 0.12), 0);
     const progressPercentage = Math.min((currentSales / montlyGoal) * 100, 100);
     
     const averageTicket = orders.length > 0 ? currentSales / orders.length : 0;
