@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, Package, FileText, ChevronRight, RefreshCw, Clock, CheckCircle, Truck, Gift, XCircle, Factory, AlertCircle } from 'lucide-react';
+import { Search, Package, FileText, ChevronRight, RefreshCw, Clock, CheckCircle, Truck, Gift, XCircle, Factory, AlertCircle, ExternalLink } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Order } from '../types';
 
@@ -187,6 +187,18 @@ export const Orders: React.FC = () => {
                                             <p className="mt-2 text-[10px] text-amber-500 uppercase tracking-widest">
                                                 ⏳ Aguardando vinculação ao pedido Magazord pelo admin
                                             </p>
+                                        )}
+
+                                        {/* Botão de rastreio quando disponível */}
+                                        {(order.status === 'shipped' || order.status === 'delivered') && (order as any).tracking_url && (
+                                            <a
+                                                href={(order as any).tracking_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-400 text-white text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all shadow-md shadow-indigo-500/20 w-fit"
+                                            >
+                                                <Truck size={12} /> Rastrear Pedido <ExternalLink size={10} />
+                                            </a>
                                         )}
                                     </div>
 

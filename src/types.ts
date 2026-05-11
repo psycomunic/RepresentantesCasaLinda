@@ -59,6 +59,7 @@ export interface Order {
   payment_terms?: string;
   status: 'draft' | 'pending' | 'approved' | 'in_production' | 'shipped' | 'delivered' | 'cancelled';
   magazord_order_id?: string | null;
+  tracking_url?: string | null;
   notes?: string;
   created_at: string;
   client?: Client;

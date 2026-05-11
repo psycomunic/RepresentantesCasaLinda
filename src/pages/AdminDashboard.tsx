@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2, User, Link, Loader2 } from 'lucide-react';
+import { CheckCircle2, XCircle, Search, Clock, Users, UserPlus, Eye, X, Building2, MapPin, Briefcase, FileText, Phone, Mail, Package, Edit2, User, Link, Loader2, ExternalLink, Truck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Profile, Order } from '../types';
 
@@ -37,6 +37,8 @@ export const AdminDashboard: React.FC = () => {
   const [linkingOrderId, setLinkingOrderId] = useState<string | null>(null);
   const [magazordInput, setMagazordInput] = useState('');
   const [linkingSaving, setLinkingSaving] = useState(false);
+  const [trackingEditingId, setTrackingEditingId] = useState<string | null>(null);
+  const [trackingInput, setTrackingInput] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -110,6 +112,37 @@ export const AdminDashboard: React.FC = () => {
       alert('Erro ao vincular pedido. Tente novamente.');
     } finally {
       setLinkingSaving(false);
+    }
+  };
+
+  const handleApproveOrder = async (orderId: string) => {
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .update({ status: 'approved' })
+        .eq('id', orderId);
+      if (error) throw error;
+      setOrders(orders.map(o => o.id === orderId ? { ...o, status: 'approved' as any } : o));
+    } catch (err) {
+      console.error('Erro ao aprovar pedido:', err);
+      alert('Erro ao aprovar pedido. Tente novamente.');
+    }
+  };
+
+  const handleSaveTrackingUrl = async (orderId: string) => {
+    if (!trackingInput.trim()) return;
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .update({ tracking_url: trackingInput.trim() })
+        .eq('id', orderId);
+      if (error) throw error;
+      setOrders(orders.map(o => o.id === orderId ? { ...o, tracking_url: trackingInput.trim() } : o));
+      setTrackingEditingId(null);
+      setTrackingInput('');
+    } catch (err) {
+      console.error('Erro ao salvar rastreio:', err);
+      alert('Erro ao salvar link de rastreio. Tente novamente.');
     }
   };
 
@@ -435,6 +468,7 @@ export const AdminDashboard: React.FC = () => {
                       <th className="px-5 py-4">Valor</th>
                       <th className="px-5 py-4">Magazord</th>
                       <th className="px-5 py-4">Status</th>
+                      <th className="px-5 py-4">Ações / Rastreio</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
@@ -517,11 +551,78 @@ export const AdminDashboard: React.FC = () => {
                             <option value="cancelled">Cancelado</option>
                           </select>
                         </td>
+
+                        {/* Ações / Rastreio */}
+                        <td className="px-5 py-4">
+                          <div className="flex flex-col gap-2">
+                            {/* Botão Aprovar para pedidos pendentes */}
+                            {order.status === 'pending' && (
+                              <button
+                                onClick={() => handleApproveOrder(order.id)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-bold uppercase tracking-widest rounded-lg transition-all shadow-md"
+                              >
+                                <CheckCircle2 size={12} /> Aprovar
+                              </button>
+                            )}
+
+                            {/* Campo de rastreio para status 'shipped' ou 'delivered' */}
+                            {(order.status === 'shipped' || order.status === 'delivered') && (
+                              <div>
+                                {(order as any).tracking_url && trackingEditingId !== order.id ? (
+                                  <div className="flex items-center gap-1.5">
+                                    <a
+                                      href={(order as any).tracking_url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center gap-1 text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase tracking-widest transition-colors"
+                                    >
+                                      <Truck size={11} /> Rastrear
+                                    </a>
+                                    <button
+                                      onClick={() => { setTrackingEditingId(order.id); setTrackingInput((order as any).tracking_url || ''); }}
+                                      className="text-zinc-400 hover:text-brand-gold transition-colors"
+                                      title="Editar link"
+                                    >
+                                      <Edit2 size={10} />
+                                    </button>
+                                  </div>
+                                ) : trackingEditingId === order.id ? (
+                                  <div className="flex items-center gap-1.5">
+                                    <input
+                                      type="url"
+                                      value={trackingInput}
+                                      onChange={e => setTrackingInput(e.target.value)}
+                                      placeholder="https://..."
+                                      className="w-32 px-2 py-1 text-xs border border-indigo-400/40 rounded-lg bg-white dark:bg-white/5 text-zinc-900 dark:text-white outline-none focus:border-indigo-400"
+                                      onKeyDown={e => e.key === 'Enter' && handleSaveTrackingUrl(order.id)}
+                                    />
+                                    <button
+                                      onClick={() => handleSaveTrackingUrl(order.id)}
+                                      className="px-2 py-1 bg-indigo-500 text-white text-xs rounded-lg font-bold hover:bg-indigo-400 transition-all"
+                                    >
+                                      OK
+                                    </button>
+                                    <button onClick={() => setTrackingEditingId(null)} className="text-zinc-400 hover:text-red-400">
+                                      <X size={12} />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => { setTrackingEditingId(order.id); setTrackingInput(''); }}
+                                    className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-zinc-400 hover:text-indigo-400 transition-colors font-bold"
+                                  >
+                                    <Truck size={11} /> Add Rastreio
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </td>
                       </tr>
                     ))}
                     {filteredOrders.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center text-zinc-500">
+                        <td colSpan={7} className="px-6 py-12 text-center text-zinc-500">
                           Nenhum pedido encontrado.
                         </td>
                       </tr>
