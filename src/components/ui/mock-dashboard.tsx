@@ -62,11 +62,11 @@ const initNotifications: Notification[] = [
 // ─── Main component ───────────────────────────────────────────────────────────
 export const MockDashboard = () => {
   const [commissions, setCommissions] = useState<Commission[]>([
-    { id: 1, amount: 442.00, client: "Móveis & Cia", time: "Agora mesmo" },
-    { id: 0, amount: 317.50, client: "Studio Decor", time: "2 min atrás" },
+    { id: 1, amount: 874.20, client: "Móveis & Cia", time: "Agora mesmo" },
+    { id: 0, amount: 1342.80, client: "Studio Decor", time: "2 min atrás" },
   ]);
-  const [totalCommission, setTotalCommission] = useState(15511.00);
-  const [orders, setOrders] = useState(42);
+  const [totalCommission, setTotalCommission] = useState(12240.00);
+  const [orders, setOrders] = useState(14);
   const [pulsing, setPulsing] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>(initNotifications);
@@ -78,15 +78,15 @@ export const MockDashboard = () => {
 
   useEffect(() => {
     const toastMessages: Toast[] = [
-      { id: 0, type: 'success', title: 'Pedido confirmado', body: 'Boutique Casa pagou R$ 389,00' },
-      { id: 0, type: 'bonus', title: '🎉 Bônus de meta!', body: 'Você chegou a 80% da meta mensal' },
+      { id: 0, type: 'success', title: 'Pedido confirmado', body: 'Boutique Casa pagou R$ 7.890,00' },
+      { id: 0, type: 'bonus', title: '🎉 Bônus de meta!', body: 'Você chegou a 85% da meta mensal' },
       { id: 0, type: 'info', title: 'Novo pedido recebido', body: 'Studio Decor fez um pedido agora' },
-      { id: 0, type: 'success', title: 'Comissão creditada', body: 'Galeria Home aprovou R$ 571,00' },
+      { id: 0, type: 'success', title: 'Comissão creditada', body: 'Galeria Home aprovou R$ 1.142,00' },
     ];
     let idx = 0;
 
     const interval = setInterval(() => {
-      const amount = Math.floor(Math.random() * 600) + 150;
+      const amount = Math.floor(Math.random() * 900) + 600;
       const client = clients[Math.floor(Math.random() * clients.length)];
 
       const newEntry: Commission = { id: Date.now(), amount: amount + Math.random(), client, time: "Agora mesmo" };
@@ -270,8 +270,8 @@ export const MockDashboard = () => {
                 <ArrowUpRight className="w-4 h-4 text-purple-400" />
               </div>
               <div>
-                <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-bold">Ticket Médio</p>
-                <p className="text-xl font-black text-white">R$ 369</p>
+                <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-bold">Pedido Médio</p>
+                <p className="text-xl font-black text-white">R$ 7.285</p>
               </div>
             </div>
           </div>
@@ -283,8 +283,8 @@ export const MockDashboard = () => {
           {/* Goal Ring */}
           <div className="bg-[#161616] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-bold text-center">Meta Mensal</p>
-            <GoalRing percent={78} />
-            <p className="text-[10px] text-zinc-400 text-center leading-tight">R$ 15.511 <br /><span className="text-zinc-600">de R$ 20.000</span></p>
+            <GoalRing percent={85} />
+            <p className="text-[10px] text-zinc-400 text-center leading-tight">R$ 102.000 <br /><span className="text-zinc-600">de R$ 120.000</span></p>
           </div>
 
           {/* Live Feed */}

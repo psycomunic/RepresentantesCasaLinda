@@ -54,15 +54,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
 
       {/* Hero Section */}
       <AnimatedMarqueeHero
-        tagline="Seja Representante Black Label"
+        tagline="Canal oficial para representantes de decoração e home decor"
         title={
           <>
             Sua região é<br className="hidden sm:block" />
             <span className="font-display italic font-normal text-brand-gold">o seu império.</span>
           </>
         }
-        description="Assuma o mercado local com a marca mais cobiçada de quadros decorativos. Comissão premium de 12% e portal exclusivo de vendas."
-        ctaText="INICIAR CANDIDATURA"
+        subtitle="Sua carteira já vende decoração. Agora ela pode vender Casa Linda."
+        description="Se você já atende lojistas de decoração, móveis, iluminação ou home decor, a Casa Linda oferece comissão de 12%, catálogo físico e digital, maleta de amostras e portal atacado exclusivo para vender com agilidade e segurança."
+        ctaText="QUERO AVALIAR MINHA REGIÃO"
         onCtaClick={() => navigate('/cadastro')}
         images={[
           "/carrossel hero/imgi_14_641202422_18348715264227392_8604599904752408319_n.jpg",
@@ -83,20 +84,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       <section id="beneficios" className="py-16 px-6 border-b border-white/5 relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 max-w-4xl mx-auto space-y-4">
-            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Estrutura de Ponta</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Estrutura Comercial para Representantes</h2>
             <h3 className="text-5xl sm:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight">O poder de uma grande marca <br/> em suas mãos.</h3>
             <p className="text-zinc-600 dark:text-zinc-400 font-light text-xl">
-              Você não começa do zero. Você entra em campo com uma infraestrutura projetada para fechar negócios.
+              A Casa Linda entrega marca, produto, margem e ferramentas comerciais para representantes que já atuam no segmento de decoração.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: <Star size={24}/>, title: "Autoridade de Marca", desc: "Abra portas com facilidade e feche negócios grandes." },
-              { icon: <Shield size={24}/>, title: "Valor Percebido", desc: "Acabamentos finos que justificam o investimento." },
-              { icon: <Layers size={24}/>, title: "Portfólio Infinito", desc: "Modelos para atender desde estúdios a mansões." },
-              { icon: <TrendingUp size={24}/>, title: "Margem Agressiva", desc: "Garanta a lucratividade do seu lojista parceiro." },
-              { icon: <Truck size={24}/>, title: "Logística Eficiente", desc: "Produção e entrega que honram sua palavra." },
+              { icon: <Star size={24}/>, title: "Marca que abre portas", desc: "A Casa Linda já possui presença forte no mercado de quadros decorativos." },
+              { icon: <Shield size={24}/>, title: "Valor Percebido", desc: "Produto com alto valor percebido e acabamentos finos que justificam o investimento." },
+              { icon: <Layers size={24}/>, title: "Portfólio amplo e estratégico", desc: "Para diferentes estilos de loja: decoração contemporânea, clássica, religiosa, abstrata, luxo, ambientes corporativos e projetos especiais." },
+              { icon: <TrendingUp size={24}/>, title: "Margem atrativa para o lojista", desc: "Política pensada para que o lojista consiga vender com margem saudável e sem competir por preço baixo." },
+              { icon: <Truck size={24}/>, title: "Logística Eficiente", desc: "Operação estruturada para atender pedidos de atacado com acompanhamento, prazos claros e suporte comercial durante o processo." },
               { icon: <Monitor size={24}/>, title: "Plataforma Própria", desc: "Tecnologia para gerir seus pedidos em tempo real." }
             ].map((item, i) => (
               <div key={i} className="p-10 glass-panel glass-edge rounded-[2rem] group hover:-translate-y-2 transition-all duration-500">
@@ -123,18 +124,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
           <div className="space-y-12">
             <div className="space-y-4">
-              <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">O Seu Arsenal</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Sua Estrutura Comercial</h2>
               <h3 className="text-5xl sm:text-7xl font-display text-zinc-900 dark:text-white italic tracking-tight leading-[1.1]">Kit Premium <br/> de Vendas.</h3>
+              <p className="text-lg text-zinc-600 dark:text-zinc-400 font-light pt-2">
+                Estrutura completa para vender no atacado.
+              </p>
             </div>
-            
+
             <ul className="space-y-4">
               {[
-                "Catálogo de Luxo (Físico)",
-                "Acesso ao Portal de Atacado (Login Exclusivo)",
-                "Catálogos Digitais e Material de WhatsApp",
-                "Maleta Black Label com Amostras Reais",
-                "Suporte Comercial Full-Time",
-                "Comissão Fixa de 12%"
+                "Catálogo físico premium",
+                "Portal atacado com login exclusivo",
+                "Catálogo digital e materiais para WhatsApp",
+                "Maleta com amostras reais de molduras, canvas e acabamentos",
+                "Suporte comercial para abertura de clientes",
+                "Comissão de 12% sobre vendas faturadas"
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-6 group p-4 -ml-4 hover:bg-white dark:hover:bg-white/5 rounded-2xl transition-all duration-300 cursor-default">
                   <div className="w-12 h-12 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-white/10 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
@@ -170,7 +174,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
               <div>
                 <h4 className="text-xl font-display text-zinc-900 dark:text-white italic mb-1">Maleta Exclusiva</h4>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light leading-relaxed">
-                  Mostre a textura do canvas e o peso da moldura. Venda pela experiência tátil.
+                  Venda com amostras reais em mãos: textura, acabamento e qualidade percebida na frente do lojista.
+                </p>
+                <p className="text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 font-bold mt-3">
+                  Obs: Kit enviado aos representantes aprovados no processo de seleção.
                 </p>
               </div>
             </div>
@@ -192,7 +199,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
                   em tempo real.
                 </h2>
                 <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto text-lg font-light">
-                  <span className="text-brand-gold font-bold">O Portal Casa Linda</span> capacita nossos representantes com acompanhamento de comissões, gestão de pedidos e visualização das metas mensais.
+                  Sem planilhas soltas e sem depender de mensagens. <span className="text-brand-gold font-bold">O representante aprovado</span> terá acesso a um portal exclusivo para acompanhar pedidos, comissões, metas mensais e evolução da sua carteira.
                 </p>
               </div>
             }
@@ -206,14 +213,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       <section id="programa" className="py-16 px-6 border-b border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 relative z-10">
           <div className="glass-panel glass-edge p-12 md:p-16 rounded-[3rem] relative group">
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold mb-4">Quem estamos selecionando</h2>
             <h3 className="text-4xl font-display text-zinc-900 dark:text-white italic mb-12">Quem queremos a bordo</h3>
             <ul className="space-y-8">
               {[
-                "Representantes com carteira consolidada",
-                "Experiência prévia com Casa, Decoração ou Móveis",
-                "Profundo conhecimento da região de atuação",
-                "Perfil Hunter e Consultivo",
-                "CORE Ativo ou em fase de regularização"
+                "Carteira ativa de lojistas no segmento casa & decoração",
+                "Experiência com decoração, móveis, iluminação, presentes premium ou home decor",
+                "Atuação regional definida e conhecimento da praça",
+                "Perfil comercial para abrir contas e desenvolver carteira",
+                "CORE ativo ou em processo de regularização",
+                "Sem conflito com marcas concorrentes diretas"
               ].map((req, i) => (
                 <li key={i} className="flex gap-5 items-start text-zinc-700 dark:text-zinc-300 font-light text-lg">
                   <Star size={24} className="text-brand-gold shrink-0" />
@@ -224,13 +233,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
           </div>
 
           <div className="space-y-12 lg:py-10">
-            <h3 className="text-4xl font-display text-zinc-900 dark:text-white italic mb-14 pl-8 border-l-2 border-brand-gold">A Jornada</h3>
+            <div className="pl-8 border-l-2 border-brand-gold mb-14">
+              <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold mb-3">Como funciona o processo</h2>
+              <h3 className="text-4xl font-display text-zinc-900 dark:text-white italic">A Jornada</h3>
+            </div>
             <div className="space-y-12 relative before:absolute before:inset-0 before:ml-7 before:-translate-x-px before:h-[90%] before:w-px before:bg-gradient-to-b before:from-brand-gold before:to-transparent">
               {[
-                { step: "1", title: "Candidatura", desc: "Preencha o formulário para análise sigilosa do seu perfil." },
-                { step: "2", title: "Auditoria de Potencial", desc: "Analisamos estrategicamente a praça e sua capacidade de absorção." },
-                { step: "3", title: "Onboarding VIP", desc: "Treinamento intensivo sobre produto, argumento de venda e sistemas." },
-                { step: "4", title: "Go-Live", desc: "Você recebe a maleta física e os acessos para começar a faturar." }
+                { step: "1", title: "Candidatura", desc: "Preencha o formulário com sua região de atuação, carteira atual e experiência no segmento." },
+                { step: "2", title: "Análise de Perfil e Região", desc: "Avaliamos sua carteira, praça de atuação, marcas representadas e potencial comercial." },
+                { step: "3", title: "Treinamento e Ativação", desc: "Você recebe treinamento sobre produtos, política comercial, argumentos de venda e uso do portal atacado." },
+                { step: "4", title: "Início das Vendas", desc: "Após aprovação, você recebe seus acessos, materiais comerciais e kit físico para iniciar a atuação na região." }
               ].map((item, i) => (
                 <div key={i} className="relative flex items-start gap-8">
                   <div className="w-14 h-14 rounded-full bg-black border border-brand-gold flex items-center justify-center font-display text-brand-gold text-2xl shrink-0 shadow-[0_0_20px_rgba(197,160,89,0.2)] z-10">
@@ -256,18 +268,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             <Shield size={36} />
           </div>
           <h3 className="text-5xl md:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight">Política Comercial Blindada</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-8">
+          <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 font-light max-w-3xl mx-auto leading-relaxed">
+            Você desenvolve sua região com segurança comercial. A Casa Linda define regras de canal, acompanha sua performance e protege a operação para evitar conflitos de preço, território e carteira.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
             <div className="p-10 glass-panel rounded-[2rem] border border-zinc-200 dark:border-white/5 hover:border-brand-gold/50 transition-all duration-300">
-              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed">Proteção de Preço <br/>e Canal</p>
+              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed mb-3">Território <br/>Demarcado</p>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 font-light normal-case tracking-normal">Área de atuação definida.</p>
             </div>
             <div className="p-10 glass-panel rounded-[2rem] border border-zinc-200 dark:border-white/5 hover:border-brand-gold/50 transition-all duration-300">
-              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed">Território <br/>Demarcado</p>
+              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed mb-3">Meritocracia por <br/>Performance</p>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 font-light normal-case tracking-normal">Crescimento por performance.</p>
             </div>
             <div className="p-10 glass-panel rounded-[2rem] border border-zinc-200 dark:border-white/5 hover:border-brand-gold/50 transition-all duration-300">
-              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed">Meritocracia por <br/>Performance</p>
-            </div>
-            <div className="p-10 glass-panel rounded-[2rem] border border-zinc-200 dark:border-white/5 hover:border-brand-gold/50 transition-all duration-300">
-              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed">Estrutura de <br/>Expansão</p>
+              <p className="text-xs text-zinc-900 dark:text-white uppercase tracking-widest font-bold leading-relaxed mb-3">Estrutura de <br/>Expansão</p>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 font-light normal-case tracking-normal">Exclusividade condicionada.</p>
             </div>
           </div>
         </div>
@@ -330,13 +345,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
           <h2 className="text-5xl md:text-7xl font-display text-zinc-900 dark:text-white leading-tight italic tracking-tighter">
             Domine o mercado de decoração <br className="hidden md:block" /> da sua região.
           </h2>
-          
+          <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-light max-w-2xl mx-auto">
+            Transforme sua carteira de lojista em uma nova fonte de faturamento.
+          </p>
+
           <div className="flex justify-center pt-8">
             <button
               onClick={() => navigate('/cadastro')}
               className="group relative overflow-hidden bg-zinc-900 dark:bg-white text-white dark:text-black px-12 md:px-20 py-8 text-xs uppercase tracking-[0.4em] font-bold transition-all hover:scale-105 rounded-full shadow-xl dark:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
             >
-              <span className="relative z-10 flex items-center justify-center gap-4 group-hover:text-black">INICIAR CANDIDATURA <ArrowRight size={20} /></span>
+              <span className="relative z-10 flex items-center justify-center gap-4 group-hover:text-black">QUERO AVALIAR MINHA REGIÃO <ArrowRight size={20} /></span>
               <div className="absolute inset-0 bg-brand-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
             </button>
           </div>

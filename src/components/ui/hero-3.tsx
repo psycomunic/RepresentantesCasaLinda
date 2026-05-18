@@ -7,6 +7,7 @@ import { ButtonColorful } from "./button-colorful";
 interface AnimatedMarqueeHeroProps {
   tagline: string;
   title: React.ReactNode;
+  subtitle?: string;
   description: string;
   ctaText: string;
   images: string[];
@@ -18,6 +19,7 @@ interface AnimatedMarqueeHeroProps {
 export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
   tagline,
   title,
+  subtitle,
   description,
   ctaText,
   images,
@@ -81,13 +83,26 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
           )}
         </motion.h1>
 
+        {/* Subtitle */}
+        {subtitle && (
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={FADE_IN_ANIMATION_VARIANTS}
+            transition={{ delay: 0.4 }}
+            className="mt-6 max-w-3xl text-2xl md:text-3xl text-zinc-800 dark:text-zinc-200 font-display italic tracking-tight"
+          >
+            {subtitle}
+          </motion.p>
+        )}
+
         {/* Description */}
         <motion.p
           initial="hidden"
           animate="show"
           variants={FADE_IN_ANIMATION_VARIANTS}
           transition={{ delay: 0.5 }}
-          className="mt-8 max-w-3xl text-xl text-zinc-600 dark:text-zinc-400 font-light"
+          className="mt-6 max-w-3xl text-lg text-zinc-600 dark:text-zinc-400 font-light"
         >
           {description}
         </motion.p>
