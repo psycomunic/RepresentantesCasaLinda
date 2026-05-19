@@ -423,7 +423,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
 
       {/* Cinematic Dashboard Showcase */}
       <div className="overflow-x-hidden w-full bg-zinc-50 dark:bg-brand-dark transition-colors duration-500">
-        <div className="flex flex-col overflow-hidden pb-8 pt-8">
+        <div className="flex flex-col overflow-hidden py-0">
           <ContainerScroll
             titleComponent={
               <div className="mb-8">
@@ -653,7 +653,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       {/* Footer */}
       <footer className="py-16 border-t border-zinc-200 dark:border-white/5 text-center bg-white/50 dark:bg-black/80 backdrop-blur-3xl transition-colors">
         <div className="text-3xl font-display tracking-tighter text-zinc-900 dark:text-white italic opacity-30 mb-6">Casa Linda</div>
-        <p className="text-[9px] uppercase tracking-[0.5em] text-zinc-500 dark:text-white/30 font-bold">© 2024 Casa Linda Decorações — Exclusividade & Design</p>
+        <p className="text-[9px] uppercase tracking-[0.5em] text-zinc-500 dark:text-white/30 font-bold">© 2024 Casa Linda Decorações | Exclusividade & Design</p>
       </footer>
 
       {/* Video Modal Player */}
