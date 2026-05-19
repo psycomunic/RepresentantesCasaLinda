@@ -179,9 +179,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             <ThemeToggle />
             <button
               onClick={onLoginClick}
-              className="px-8 py-3 bg-zinc-900 dark:bg-white/[0.04] border border-zinc-900/10 dark:border-white/10 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-900 dark:text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all shadow-sm hover:shadow-[0_10px_20px_rgba(197,160,89,0.2)]"
+              className="relative overflow-hidden group px-8 py-3 bg-zinc-900 dark:bg-white/[0.04] border border-zinc-900/10 dark:border-white/10 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all shadow-sm hover:shadow-[0_10px_20px_rgba(197,160,89,0.2)]"
             >
-              Acessar Portal
+              <div className="absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/20 dark:via-brand-gold/30 to-transparent animate-shimmer pointer-events-none" />
+              <span className="relative z-10">Acessar Portal</span>
             </button>
           </div>
         </nav>

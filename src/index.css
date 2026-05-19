@@ -13,6 +13,7 @@
   --animate-float-slow: float 15s ease-in-out infinite;
   --animate-float-delayed: float 12s ease-in-out 2s infinite;
   --animate-pulse-slow: pulse-glow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shimmer: shimmer 2.5s infinite linear;
   
   --animate-float-frame-1: float-frame 25s ease-in-out infinite;
   --animate-float-frame-2: float-frame 32s ease-in-out 3s infinite;
@@ -78,8 +79,11 @@
   }
 
   @keyframes shimmer {
+    0% {
+      transform: translateX(-150%) skewX(-15deg);
+    }
     100% {
-      transform: translateX(200%);
+      transform: translateX(250%) skewX(-15deg);
     }
   }
 }
