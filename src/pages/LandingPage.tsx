@@ -167,8 +167,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       <div className={`fixed left-0 right-0 z-40 px-4 sm:px-6 transition-all duration-500 ${scrolled ? 'top-4' : 'top-[56px]'}`}>
         <nav className="max-w-7xl mx-auto px-6 sm:px-10 py-4 flex justify-between items-center bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-zinc-200/50 dark:border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <span className="text-2xl font-display tracking-tighter text-zinc-900 dark:text-white">Casa Linda</span>
-            <span className="text-[8px] uppercase tracking-[0.4em] text-brand-gold -mt-1 font-bold">Atacado Oficial</span>
+            <img src="/images/logo-preta.png" alt="Casa Linda" className="h-6 md:h-8 dark:hidden object-contain" />
+            <img src="/images/logo-branca.png" alt="Casa Linda" className="h-6 md:h-8 hidden dark:block object-contain" />
           </div>
           <div className="hidden md:flex items-center gap-12 text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500 dark:text-white/60">
             <a href="#programa" className="hover:text-brand-gold transition-colors duration-300">A Operação</a>
@@ -652,7 +652,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
 
       {/* Footer */}
       <footer className="py-16 border-t border-zinc-200 dark:border-white/5 text-center bg-white/50 dark:bg-black/80 backdrop-blur-3xl transition-colors">
-        <div className="text-3xl font-display tracking-tighter text-zinc-900 dark:text-white italic opacity-30 mb-6">Casa Linda</div>
+        <img src="/images/logo-preta.png" alt="Casa Linda" className="h-10 md:h-12 mx-auto opacity-40 dark:hidden object-contain mb-6" />
+        <img src="/images/logo-branca.png" alt="Casa Linda" className="h-10 md:h-12 mx-auto opacity-40 hidden dark:block object-contain mb-6" />
         <p className="text-[9px] uppercase tracking-[0.5em] text-zinc-500 dark:text-white/30 font-bold">© 2024 Casa Linda Decorações | Exclusividade & Design</p>
       </footer>
 

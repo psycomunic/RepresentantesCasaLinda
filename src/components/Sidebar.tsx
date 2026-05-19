@@ -26,7 +26,8 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
         className="p-12 cursor-pointer group"
         onClick={onLogout}
       >
-        <div className="text-3xl font-display tracking-tighter text-zinc-900 dark:text-white italic group-hover:text-brand-gold transition-colors">Casa Linda</div>
+        <img src="/images/logo-preta.png" alt="Casa Linda" className="h-8 dark:hidden object-contain" />
+        <img src="/images/logo-branca.png" alt="Casa Linda" className="h-8 hidden dark:block object-contain" />
         <div className="text-[8px] uppercase tracking-[0.5em] text-brand-gold mt-1 font-bold group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">Black Label Portal</div>
       </div>
 

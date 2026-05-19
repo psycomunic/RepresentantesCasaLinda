@@ -175,12 +175,9 @@ export const MockDashboard = () => {
       {/* ── Top Navigation Bar ──────────────────────────── */}
       <div className="flex justify-between items-center px-6 py-4 border-b border-white/5 bg-black/35 backdrop-blur-md relative z-40">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-brand-gold/20 border border-brand-gold/30 flex items-center justify-center">
-            <Star className="w-4 h-4 text-brand-gold" />
-          </div>
-          <div>
-            <p className="text-white font-bold text-sm leading-tight">Casa Linda</p>
-            <p className="text-zinc-500 text-[10px]">Portal do Representante</p>
+          <img src="/images/logo-branca.png" alt="Casa Linda" className="h-5 object-contain" />
+          <div className="pl-3 border-l border-white/10 mt-0.5">
+            <p className="text-zinc-400 text-[9px] uppercase tracking-wider font-semibold">Portal do Representante</p>
           </div>
         </div>
 
