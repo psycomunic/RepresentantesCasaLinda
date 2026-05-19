@@ -38,10 +38,41 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
   return (
     <section
       className={cn(
-        "relative w-full h-screen overflow-hidden bg-transparent flex flex-col items-center justify-start pt-32 md:pt-40 text-center px-4",
+        "relative w-full min-h-screen bg-transparent flex flex-col items-center justify-start pt-32 md:pt-40 text-center px-4 overflow-hidden",
         className
       )}
     >
+      {/* Background Grid & Mesh Orbs */}
+      <div className="absolute inset-0 architectural-grid pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(197,160,89,0.07)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(197,160,89,0.04)_0%,transparent_70%)] blur-[80px] animate-orb-1" />
+        <div className="absolute top-[40%] -right-[10%] w-[60%] h-[60%] bg-[radial-gradient(circle,rgba(255,255,255,0.03)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(197,160,89,0.03)_0%,transparent_70%)] blur-[90px] animate-orb-2" />
+        <div className="absolute -bottom-[10%] left-[20%] w-[55%] h-[55%] bg-[radial-gradient(circle,rgba(197,160,89,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.015)_0%,transparent_70%)] blur-[80px] animate-orb-3" />
+      </div>
+
+      {/* Floating Decorative Gold Outlines (Luxury Picture Frames) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Frame 1 */}
+        <motion.div 
+          className="absolute top-[15%] left-[5%] md:left-[10%] w-32 h-44 border border-brand-gold/20 dark:border-brand-gold/15 rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.03)] backdrop-blur-[2px] flex items-center justify-center p-3 animate-float-frame-1"
+        >
+          <div className="w-full h-full border border-brand-gold/10 dark:border-brand-gold/5 rounded-xs" />
+        </motion.div>
+        
+        {/* Frame 2 */}
+        <motion.div 
+          className="absolute top-[35%] right-[8%] md:right-[15%] w-45 h-32 border border-brand-gold/25 dark:border-brand-gold/10 rounded-sm shadow-[0_10px_35px_rgba(0,0,0,0.05)] backdrop-blur-[1px] flex items-center justify-center p-2.5 animate-float-frame-2"
+        >
+          <div className="w-full h-full border border-brand-gold/10 rounded-xs" />
+        </motion.div>
+
+        {/* Frame 3 (Canvas Accent) */}
+        <motion.div 
+          className="absolute bottom-[20%] left-[12%] md:left-[22%] w-28 h-28 border border-brand-gold/15 dark:border-brand-gold/10 rounded-sm backdrop-blur-[1px] flex items-center justify-center p-2 animate-float-frame-3"
+        >
+          <div className="w-full h-full border border-brand-gold/5 rounded-xs" />
+        </motion.div>
+      </div>
+
       <div className="z-20 flex flex-col items-center relative">
         {/* Tagline */}
         <motion.div
@@ -66,7 +97,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
               },
             },
           }}
-          className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-bold text-zinc-900 dark:text-white leading-[0.9] tracking-tighter"
+          className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-black text-zinc-900 dark:text-white leading-[0.95] tracking-tight"
         >
           {typeof title === 'string' ? (
             title.split(" ").map((word, i) => (
@@ -102,7 +133,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
           animate="show"
           variants={FADE_IN_ANIMATION_VARIANTS}
           transition={{ delay: 0.5 }}
-          className="mt-6 max-w-3xl text-lg text-zinc-600 dark:text-zinc-400 font-light"
+          className="mt-6 max-w-3xl text-lg text-zinc-600 dark:text-zinc-400 font-light leading-relaxed"
         >
           {description}
         </motion.p>
@@ -119,11 +150,11 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
       </div>
 
       {/* Animated Image Marquee */}
-      <div className="absolute z-0 bottom-[-15%] md:bottom-[-10%] left-0 w-full h-[50%] md:h-[55%] pointer-events-none [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]">
+      <div className="relative z-10 w-full mt-12 md:mt-16 pointer-events-none overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] py-6">
         <motion.div
-          className="flex gap-4"
+          className="flex gap-4 w-max"
           animate={{
-            x: ["-100%", "0%"],
+            x: ["-33.33%", "0%"],
             transition: {
               ease: "linear",
               duration: 40,
@@ -136,7 +167,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
               key={index}
               className="relative aspect-[3/4] h-56 md:h-80 flex-shrink-0"
               style={{
-                rotate: `${(index % 2 === 0 ? -2 : 5)}deg`,
+                rotate: `${(index % 2 === 0 ? -2 : 3)}deg`,
               }}
             >
               <div className="absolute inset-0 bg-black/5 dark:bg-black/20 z-10 rounded-2xl"></div>
