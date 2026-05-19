@@ -234,7 +234,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { icon: <Star size={24}/>, title: "Marca que abre portas", desc: "A Casa Linda já possui presença forte no mercado de quadros decorativos." },
-              { icon: <Shield size={24}/>, title: "Valor Percebido", desc: "Produto com alto valor percebido e acabamentos finos que justificam o investimento." },
+              { icon: <Shield size={24}/>, title: "Valor percebido", desc: "Produto com alto valor percebido." },
               { icon: <Layers size={24}/>, title: "Portfólio amplo e estratégico", desc: "Para diferentes estilos de loja: decoração contemporânea, clássica, religiosa, abstrata, luxo, ambientes corporativos e projetos especiais." },
               { icon: <TrendingUp size={24}/>, title: "Margem atrativa para o lojista", desc: "Política pensada para que o lojista consiga vender com margem saudável e sem competir por preço baixo." },
               { icon: <Truck size={24}/>, title: "Logística Eficiente", desc: "Operação estruturada para atender pedidos de atacado com acompanhamento, prazos claros e suporte comercial durante o processo." },
@@ -445,7 +445,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </div>
 
       {/* Bloco 4 & 5: Quem buscamos & Operation */}
-      <section id="programa" className="py-24 px-6 border-b border-white/5 relative overflow-hidden">
+      <section id="programa" className="pt-10 pb-16 px-6 border-b border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 relative z-10">
           {/* Card: Quem estamos selecionando */}
           <div className="glass-premium p-12 md:p-16 rounded-[3rem] relative group border border-zinc-200/50 dark:border-white/10 hover:shadow-[0_30px_60px_rgba(197,160,89,0.04)] transition-all duration-500 overflow-hidden">
