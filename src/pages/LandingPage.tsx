@@ -193,11 +193,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         tagline="Canal oficial para representantes de decoração e home decor"
         title={
           <>
-            Sua região é<br className="hidden sm:block" />
-            <span className="font-display italic font-normal text-brand-gold">o seu império.</span>
+            Sua carteira já vende decoração.<br className="hidden sm:block" />
+            <span className="font-display italic font-normal text-brand-gold">Agora ela pode vender Casa Linda.</span>
           </>
         }
-        subtitle="Sua carteira já vende decoração. Agora ela pode vender Casa Linda."
         description="Se você já atende lojistas de decoração, móveis, iluminação ou home decor, a Casa Linda oferece comissão de 12%, catálogo físico e digital, maleta de amostras e portal atacado exclusivo para vender com agilidade e segurança."
         ctaText="QUERO AVALIAR MINHA REGIÃO"
         onCtaClick={() => navigate('/cadastro')}
