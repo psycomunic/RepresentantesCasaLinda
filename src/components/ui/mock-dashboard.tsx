@@ -274,7 +274,7 @@ export const MockDashboard = () => {
           </div>
 
           {/* Small KPI Row */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
               <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <Package className="w-4 h-4 text-blue-400" />
@@ -291,6 +291,15 @@ export const MockDashboard = () => {
               <div>
                 <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Pedido Médio</p>
                 <p className="text-xl font-black text-white">R$ 7.285</p>
+              </div>
+            </div>
+            <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <Star className="w-4 h-4 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Clientes Ativos</p>
+                <p className="text-xl font-black text-white">11</p>
               </div>
             </div>
           </div>

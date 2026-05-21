@@ -629,11 +629,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         
         <div className="max-w-5xl mx-auto space-y-8 relative z-10">
           <h2 className="text-5xl md:text-7xl font-display text-zinc-900 dark:text-white leading-tight italic tracking-tighter">
-            Domine o mercado de decoração <br className="hidden md:block" /> da sua região.
+            Transforme sua carteira de lojistas <br className="hidden md:block" /> em uma nova fonte de faturamento.
           </h2>
-          <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-light max-w-2xl mx-auto">
-            Transforme sua carteira de lojista em uma nova fonte de faturamento.
-          </p>
 
           <div className="flex justify-center pt-8">
             <button

@@ -186,7 +186,7 @@ export function CinematicHero({
   tagline1 = "Acompanhe suas vendas,",
   tagline2 = "em tempo real.",
   cardHeading = "Seu painel de controle, no bolso.",
-  cardDescription = <><span className="text-brand-gold font-semibold">O Portal Casa Linda</span> capacita nossos representantes com acompanhamento de comissões, gestão de pedidos em tempo real e visualização das metas mensais, tudo direto do celular.</>,
+  cardDescription = <>Sem planilhas soltas e sem depender de mensagens. O representante aprovado terá acesso a um portal exclusivo para acompanhar pedidos, comissões, metas mensais e evolução da sua carteira.</>,
   metricValue = 12,
   metricLabel = "Pedidos no Mês",
   ctaHeading = "Acesse agora.",
