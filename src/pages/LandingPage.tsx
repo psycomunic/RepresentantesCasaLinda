@@ -528,17 +528,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             {[
               { 
                 icon: <Map size={26} />, 
-                title: "Território Demarcado", 
+                title: "Área de Atuação Definida", 
                 desc: "Área de atuação regional exclusiva e contratualmente garantida para evitar qualquer tipo de concorrência interna." 
               },
               { 
                 icon: <Award size={26} />, 
-                title: "Meritocracia por Performance", 
+                title: "Crescimento por Performance", 
                 desc: "Crescimento de comissões e prioridade em novas praças de acordo com o atingimento das metas regionais." 
               },
               { 
                 icon: <Globe size={26} />, 
-                title: "Estrutura de Expansão", 
+                title: "Exclusividade Condicionada", 
                 desc: "Manutenção da exclusividade atrelada ao cumprimento estratégico de atendimento e positivação dos lojistas." 
               }
             ].map((card, i) => (
