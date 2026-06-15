@@ -254,14 +254,25 @@ export const MockDashboard = () => {
           <div className="glass-premium border border-white/5 rounded-2xl p-5 relative overflow-hidden gold-border-glow">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/10 via-transparent to-transparent pointer-events-none" />
             <div className="flex justify-between items-start mb-3">
-              <div>
-                <p className="text-zinc-400 text-[10px] uppercase tracking-widest font-bold">Comissão do Mês</p>
-                <motion.div key={Math.floor(totalCommission)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
-                  <span className="text-brand-gold text-base font-bold">R$</span>
-                  <span className="text-3xl font-black text-white tracking-tight">
-                    {totalCommission.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </span>
-                </motion.div>
+              <div className="flex gap-8">
+                <div>
+                  <p className="text-zinc-400 text-[10px] uppercase tracking-widest font-bold">Vendas no Mês</p>
+                  <motion.div key={Math.floor(totalCommission * 8.333)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
+                    <span className="text-zinc-400 text-sm font-bold">R$</span>
+                    <span className="text-2xl font-black text-white tracking-tight">
+                      {((totalCommission / 0.12)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                  </motion.div>
+                </div>
+                <div className="border-l border-white/10 pl-6">
+                  <p className="text-brand-gold text-[10px] uppercase tracking-widest font-bold">Comissão do Mês (12%)</p>
+                  <motion.div key={Math.floor(totalCommission)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
+                    <span className="text-brand-gold text-sm font-bold">R$</span>
+                    <span className="text-2xl font-black text-white tracking-tight">
+                      {totalCommission.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                  </motion.div>
+                </div>
               </div>
               <span className="flex items-center gap-1 text-xs text-emerald-400 font-bold bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
                 <TrendingUp className="w-3 h-3" /> +18.4%
@@ -290,7 +301,9 @@ export const MockDashboard = () => {
               </div>
               <div>
                 <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Pedido Médio</p>
-                <p className="text-xl font-black text-white">R$ 7.285</p>
+                <p className="text-xl font-black text-white font-sans">
+                  R$ {Math.round((totalCommission / 0.12) / orders).toLocaleString('pt-BR')}
+                </p>
               </div>
             </div>
             <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
@@ -311,8 +324,11 @@ export const MockDashboard = () => {
           {/* Goal Ring */}
           <div className="glass-premium border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 gold-border-glow">
             <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold text-center">Meta Mensal</p>
-            <GoalRing percent={85} />
-            <p className="text-[10px] text-zinc-300 text-center leading-tight">R$ 102.000 <br /><span className="text-zinc-500">de R$ 120.000</span></p>
+            <GoalRing percent={Math.min(100, Math.round(((totalCommission / 0.12) / 120000) * 100))} />
+            <p className="text-[10px] text-zinc-300 text-center leading-tight">
+              R$ {Math.round(totalCommission / 0.12).toLocaleString('pt-BR')} <br />
+              <span className="text-zinc-500">de R$ 120.000</span>
+            </p>
           </div>
 
           {/* Live Feed */}

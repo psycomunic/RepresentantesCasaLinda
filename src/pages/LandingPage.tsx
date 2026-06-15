@@ -262,16 +262,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         {/* Glow */}
         <div className="absolute top-1/2 right-[-200px] -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.04] blur-[150px] rounded-full pointer-events-none animate-pulse-slow"></div>
         
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
-          <div className="space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Sua Estrutura Comercial</h2>
-              <h3 className="text-5xl sm:text-7xl font-display text-zinc-900 dark:text-white italic tracking-tight leading-[1.1]">Kit Premium <br/> de Vendas.</h3>
-              <p className="text-lg text-zinc-600 dark:text-zinc-400 font-light pt-2">
-                Estrutura completa para vender no atacado.
-              </p>
-            </div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Centered Header */}
+          <div className="text-center mb-16 max-w-4xl mx-auto space-y-4">
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Sua Estrutura Comercial</h2>
+            <h3 className="text-5xl sm:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight leading-[1.2]">
+              Estrutura completa para vender no atacado.
+            </h3>
+          </div>
 
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <ul className="space-y-4">
               {[
                 "Catálogo físico premium",
@@ -289,46 +289,46 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
                 </li>
               ))}
             </ul>
-          </div>
-          
-          <div className="flex flex-col gap-6 mt-12 lg:mt-0 relative group">
-            {/* Ambient gold glow behind the container */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-brand-gold/15 via-transparent to-brand-gold/5 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 pointer-events-none" />
             
-            {/* Main Showcase Container */}
-            <div className="relative w-full rounded-[2.5rem] p-4 bg-white/20 dark:bg-white/[0.02] backdrop-blur-xl border border-zinc-200/50 dark:border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.06)] dark:shadow-[0_30px_70px_rgba(0,0,0,0.35)]">
+            <div className="flex flex-col gap-6 mt-12 lg:mt-0 relative group">
+              {/* Ambient gold glow behind the container */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-brand-gold/15 via-transparent to-brand-gold/5 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 pointer-events-none" />
               
-              {/* Image Frame */}
-              <div className="relative w-full rounded-[2rem] overflow-hidden border border-zinc-200/30 dark:border-white/5 group/img">
-                <img 
-                  src="/images/maleta02.png" 
-                  alt="Maleta Black Label - Kit Representante Casa Linda" 
-                  className="w-full h-[460px] lg:h-[530px] object-cover transition-transform duration-[2.5s] ease-out group-hover/img:scale-105" 
-                />
-                {/* Reflection effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-1000 pointer-events-none" />
-                {/* Dark gradient for premium shadow */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-                {/* Floating Gold badge */}
-                <div className="absolute top-6 right-6 bg-brand-gold text-black text-[9px] font-black uppercase tracking-[0.2em] px-5 py-2.5 rounded-full shadow-[0_10px_20px_rgba(197,160,89,0.3)]">
-                  Black Label
+              {/* Main Showcase Container */}
+              <div className="relative w-full rounded-[2.5rem] p-4 bg-white/20 dark:bg-white/[0.02] backdrop-blur-xl border border-zinc-200/50 dark:border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.06)] dark:shadow-[0_30px_70px_rgba(0,0,0,0.35)]">
+                
+                {/* Image Frame */}
+                <div className="relative w-full rounded-[2rem] overflow-hidden border border-zinc-200/30 dark:border-white/5 group/img">
+                  <img 
+                    src="/images/maleta02.png" 
+                    alt="Maleta Black Label - Kit Representante Casa Linda" 
+                    className="w-full h-[460px] lg:h-[530px] object-cover transition-transform duration-[2.5s] ease-out group-hover/img:scale-105" 
+                  />
+                  {/* Reflection effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+                  {/* Dark gradient for premium shadow */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                  {/* Floating Gold badge */}
+                  <div className="absolute top-6 right-6 bg-brand-gold text-black text-[9px] font-black uppercase tracking-[0.2em] px-5 py-2.5 rounded-full shadow-[0_10px_20px_rgba(197,160,89,0.3)]">
+                    Black Label
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Info Card - Beautifully Glassmorphic */}
-            <div className="relative flex items-start gap-6 glass-premium p-8 rounded-[2rem] border border-zinc-200/50 dark:border-white/10 group/card hover:-translate-y-1 transition-transform duration-500">
-              <div className="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold shrink-0 border border-brand-gold/20 group-hover/card:bg-brand-gold group-hover/card:text-black group-hover/card:scale-105 transition-all duration-300">
-                <Briefcase size={26} />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-xl font-display text-zinc-900 dark:text-white italic mb-1">Maleta Exclusiva</h4>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm font-light leading-relaxed">
-                  Venda com amostras reais em mãos: textura, acabamento e qualidade percebida na frente do lojista.
-                </p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-500 font-semibold mt-3">
-                  Obs: Kit enviado aos representantes aprovados no processo de seleção.
-                </p>
+  
+              {/* Info Card - Beautifully Glassmorphic */}
+              <div className="relative flex items-start gap-6 glass-premium p-8 rounded-[2rem] border border-zinc-200/50 dark:border-white/10 group/card hover:-translate-y-1 transition-transform duration-500">
+                <div className="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold shrink-0 border border-brand-gold/20 group-hover/card:bg-brand-gold group-hover/card:text-black group-hover/card:scale-105 transition-all duration-300">
+                  <Briefcase size={26} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-xl font-display text-zinc-900 dark:text-white italic mb-1">Maleta Exclusiva</h4>
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm font-light leading-relaxed">
+                    Venda com amostras reais em mãos: textura, acabamento e qualidade percebida na frente do lojista.
+                  </p>
+                  <p className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-500 font-semibold mt-3">
+                    Obs: Kit enviado aos representantes aprovados no processo de seleção.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
