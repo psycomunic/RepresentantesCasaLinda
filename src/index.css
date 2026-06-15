@@ -15,9 +15,7 @@
   --animate-pulse-slow: pulse-glow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-shimmer: shimmer 2.5s infinite linear;
   
-  --animate-float-frame-1: float-frame 25s ease-in-out infinite;
-  --animate-float-frame-2: float-frame 32s ease-in-out 3s infinite;
-  --animate-float-frame-3: float-frame 38s ease-in-out 6s infinite;
+
   --animate-orb-1: orb-move-1 30s ease-in-out infinite;
   --animate-orb-2: orb-move-2 35s ease-in-out infinite;
   --animate-orb-3: orb-move-3 40s ease-in-out infinite;
@@ -31,14 +29,7 @@
     }
   }
 
-  @keyframes float-frame {
-    0%, 100% {
-      transform: translateY(0) rotate(0deg) scale(1);
-    }
-    50% {
-      transform: translateY(-25px) rotate(8deg) scale(1.03);
-    }
-  }
+
 
   @keyframes orb-move-1 {
     0%, 100% {

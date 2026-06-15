@@ -49,29 +49,7 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
         <div className="absolute -bottom-[10%] left-[20%] w-[55%] h-[55%] bg-[radial-gradient(circle,rgba(197,160,89,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.015)_0%,transparent_70%)] blur-[80px] animate-orb-3" />
       </div>
 
-      {/* Floating Decorative Gold Outlines (Luxury Picture Frames) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Frame 1 */}
-        <motion.div 
-          className="absolute top-[15%] left-[5%] md:left-[10%] w-32 h-44 border border-brand-gold/20 dark:border-brand-gold/15 rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.03)] backdrop-blur-[2px] flex items-center justify-center p-3 animate-float-frame-1"
-        >
-          <div className="w-full h-full border border-brand-gold/10 dark:border-brand-gold/5 rounded-xs" />
-        </motion.div>
-        
-        {/* Frame 2 */}
-        <motion.div 
-          className="absolute top-[35%] right-[8%] md:right-[15%] w-45 h-32 border border-brand-gold/25 dark:border-brand-gold/10 rounded-sm shadow-[0_10px_35px_rgba(0,0,0,0.05)] backdrop-blur-[1px] flex items-center justify-center p-2.5 animate-float-frame-2"
-        >
-          <div className="w-full h-full border border-brand-gold/10 rounded-xs" />
-        </motion.div>
 
-        {/* Frame 3 (Canvas Accent) */}
-        <motion.div 
-          className="absolute bottom-[20%] left-[12%] md:left-[22%] w-28 h-28 border border-brand-gold/15 dark:border-brand-gold/10 rounded-sm backdrop-blur-[1px] flex items-center justify-center p-2 animate-float-frame-3"
-        >
-          <div className="w-full h-full border border-brand-gold/5 rounded-xs" />
-        </motion.div>
-      </div>
 
       <div className="z-20 flex flex-col items-center relative">
         {/* Tagline */}
