@@ -82,6 +82,7 @@ export const MockDashboard = () => {
     { id: 1, amount: 874.20, client: "Móveis & Cia", time: "Agora mesmo" },
     { id: 0, amount: 1342.80, client: "Studio Decor", time: "2 min atrás" },
   ]);
+  const [totalSales, setTotalSales] = useState(102000.00);
   const [totalCommission, setTotalCommission] = useState(12240.00);
   const [orders, setOrders] = useState(14);
   const [pulsing, setPulsing] = useState(false);
@@ -103,12 +104,14 @@ export const MockDashboard = () => {
     let idx = 0;
 
     const interval = setInterval(() => {
-      const amount = Math.floor(Math.random() * 900) + 600;
+      const saleAmount = Math.floor(Math.random() * 8000) + 4000;
+      const commissionAmount = Number((saleAmount * 0.12).toFixed(2));
       const client = clients[Math.floor(Math.random() * clients.length)];
 
-      const newEntry: Commission = { id: Date.now(), amount: amount + Math.random(), client, time: "Agora mesmo" };
+      const newEntry: Commission = { id: Date.now(), amount: commissionAmount, client, time: "Agora mesmo" };
       setCommissions(prev => [newEntry, ...prev].slice(0, 4));
-      setTotalCommission(prev => prev + newEntry.amount);
+      setTotalSales(prev => prev + saleAmount);
+      setTotalCommission(prev => prev + commissionAmount);
       setOrders(prev => prev + 1);
       setPulsing(true);
       setTimeout(() => setPulsing(false), 800);
@@ -119,7 +122,7 @@ export const MockDashboard = () => {
         icon: <CheckCircle className="w-4 h-4" />,
         iconBg: 'bg-emerald-500/20 text-emerald-400',
         title: 'Pedido aprovado',
-        sub: `${client} — R$ ${(amount + Math.random()).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} de comissão`,
+        sub: `${client} — R$ ${commissionAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} de comissão`,
         time: 'Agora',
         unread: true,
       };
@@ -131,14 +134,14 @@ export const MockDashboard = () => {
       setToasts(prev => [...prev, toast]);
       setTimeout(() => dismissToast(toast.id), 4000);
       idx++;
-    }, 3800);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
   const markAllRead = () => setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
 
   return (
-    <div className="w-full h-full bg-[#080808] flex flex-col font-sans overflow-hidden select-none relative">
+    <div className="w-full h-full bg-[#080808] flex flex-col font-sans overflow-y-auto md:overflow-hidden select-none relative">
       {/* Background Glow Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-[10%] -left-[10%] w-[55%] h-[55%] bg-[radial-gradient(circle,rgba(197,160,89,0.06)_0%,transparent_70%)] blur-[40px]" />
@@ -245,26 +248,26 @@ export const MockDashboard = () => {
       </div>
 
       {/* ── Main Content ────────────────────────────────── */}
-      <div className="flex-1 p-4 grid grid-cols-5 gap-3 overflow-hidden relative z-10">
+      <div className="flex-1 p-4 grid grid-cols-1 md:grid-cols-5 gap-3 overflow-visible md:overflow-hidden relative z-10">
 
         {/* Left Panel (3/5) */}
-        <div className="col-span-3 flex flex-col gap-3">
+        <div className="col-span-1 md:col-span-3 flex flex-col gap-3">
 
           {/* Main KPI Card */}
           <div className="glass-premium border border-white/5 rounded-2xl p-5 relative overflow-hidden gold-border-glow">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/10 via-transparent to-transparent pointer-events-none" />
             <div className="flex justify-between items-start mb-3">
-              <div className="flex gap-8">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
                 <div>
                   <p className="text-zinc-400 text-[10px] uppercase tracking-widest font-bold">Vendas no Mês</p>
-                  <motion.div key={Math.floor(totalCommission * 8.333)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
+                  <motion.div key={Math.floor(totalSales)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
                     <span className="text-zinc-400 text-sm font-bold">R$</span>
                     <span className="text-2xl font-black text-white tracking-tight">
-                      {((totalCommission / 0.12)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      {totalSales.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </motion.div>
                 </div>
-                <div className="border-l border-white/10 pl-6">
+                <div className="border-t border-white/10 pt-3 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-6">
                   <p className="text-brand-gold text-[10px] uppercase tracking-widest font-bold">Comissão do Mês (12%)</p>
                   <motion.div key={Math.floor(totalCommission)} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-baseline gap-1 mt-1">
                     <span className="text-brand-gold text-sm font-bold">R$</span>
@@ -274,7 +277,7 @@ export const MockDashboard = () => {
                   </motion.div>
                 </div>
               </div>
-              <span className="flex items-center gap-1 text-xs text-emerald-400 font-bold bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
+              <span className="flex items-center gap-1 text-xs text-emerald-400 font-bold bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20 shrink-0">
                 <TrendingUp className="w-3 h-3" /> +18.4%
               </span>
             </div>
@@ -285,48 +288,48 @@ export const MockDashboard = () => {
           </div>
 
           {/* Small KPI Row */}
-          <div className="grid grid-cols-3 gap-3">
-            <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
-              <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="glass-premium border border-white/5 rounded-2xl p-3 sm:p-4 flex items-center gap-3 gold-border-glow">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <Package className="w-4 h-4 text-blue-400" />
               </div>
-              <div>
-                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Pedidos</p>
-                <motion.p key={orders} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl font-black text-white">{orders}</motion.p>
+              <div className="min-w-0">
+                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold truncate">Pedidos</p>
+                <motion.p key={orders} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-lg sm:text-xl font-black text-white">{orders}</motion.p>
               </div>
             </div>
-            <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
-              <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
+            <div className="glass-premium border border-white/5 rounded-2xl p-3 sm:p-4 flex items-center gap-3 gold-border-glow">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
                 <ArrowUpRight className="w-4 h-4 text-purple-400" />
               </div>
-              <div>
-                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Pedido Médio</p>
-                <p className="text-xl font-black text-white font-sans">
-                  R$ {Math.round((totalCommission / 0.12) / orders).toLocaleString('pt-BR')}
+              <div className="min-w-0">
+                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold truncate">Pedido Médio</p>
+                <p className="text-lg sm:text-xl font-black text-white font-sans truncate">
+                  R$ {Math.floor(totalSales / orders).toLocaleString('pt-BR')}
                 </p>
               </div>
             </div>
-            <div className="glass-premium border border-white/5 rounded-2xl p-4 flex items-center gap-3 gold-border-glow">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <div className="glass-premium border border-white/5 rounded-2xl p-3 sm:p-4 flex items-center gap-3 gold-border-glow">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
                 <Star className="w-4 h-4 text-emerald-400" />
               </div>
-              <div>
-                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Clientes Ativos</p>
-                <p className="text-xl font-black text-white">11</p>
+              <div className="min-w-0">
+                <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold truncate">Clientes Ativos</p>
+                <p className="text-lg sm:text-xl font-black text-white">11</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Right Panel (2/5) */}
-        <div className="col-span-2 flex flex-col gap-3">
+        <div className="col-span-1 md:col-span-2 flex flex-col gap-3">
 
           {/* Goal Ring */}
           <div className="glass-premium border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 gold-border-glow">
             <p className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold text-center">Meta Mensal</p>
-            <GoalRing percent={Math.min(100, Math.round(((totalCommission / 0.12) / 120000) * 100))} />
-            <p className="text-[10px] text-zinc-300 text-center leading-tight">
-              R$ {Math.round(totalCommission / 0.12).toLocaleString('pt-BR')} <br />
+            <GoalRing percent={Math.min(100, Math.round((totalSales / 120000) * 100))} />
+            <p className="text-[10px] text-zinc-300 text-center leading-tight font-sans">
+              R$ {Math.round(totalSales).toLocaleString('pt-BR')} <br />
               <span className="text-zinc-500">de R$ 120.000</span>
             </p>
           </div>
