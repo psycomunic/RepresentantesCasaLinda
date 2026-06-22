@@ -523,6 +523,25 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             Você desenvolve sua região com segurança comercial. A Casa Linda define regras de canal, acompanha sua performance e protege a operação para evitar conflitos de preço, território e carteira.
           </p>
 
+          {/* Balões da Política Comercial */}
+          <div className="flex flex-wrap justify-center gap-6 pt-12 pb-6 max-w-4xl mx-auto">
+            {[
+              { line1: "Área de Atuação", line2: "Definida" },
+              { line1: "Crescimento", line2: "por Performance" },
+              { line1: "Exclusividade", line2: "Condicionada" }
+            ].map((balloon, idx) => (
+              <div 
+                key={idx}
+                className="bg-white dark:bg-zinc-950/40 border border-brand-gold/30 dark:border-brand-gold/20 rounded-[2rem] px-10 py-6 shadow-[0_10px_35px_rgba(197,160,89,0.04)] dark:shadow-[0_10px_35px_rgba(0,0,0,0.15)] flex items-center justify-center text-center min-w-[240px] transition-all duration-500 hover:-translate-y-1 hover:border-brand-gold/60"
+              >
+                <p className="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.22em] text-zinc-800 dark:text-white leading-relaxed font-sans">
+                  {balloon.line1} <br />
+                  {balloon.line2}
+                </p>
+              </div>
+            ))}
+          </div>
+
           {/* Cards Grid */}
           <div className="grid md:grid-cols-3 gap-8 pt-10">
             {[
