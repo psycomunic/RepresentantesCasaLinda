@@ -216,7 +216,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       />
 
       {/* Bloco 2: Benefícios Premium */}
-      <section id="beneficios" className="py-24 px-6 border-b border-white/5 relative overflow-hidden">
+      <section id="beneficios" className="py-12 md:py-24 px-6 border-b border-white/5 relative overflow-hidden">
         {/* Background ambient orbs */}
         <div className="absolute top-1/3 left-10 w-96 h-96 bg-brand-gold/[0.02] blur-[100px] rounded-full pointer-events-none" />
         <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-black/[0.1] dark:bg-white/[0.01] blur-[120px] rounded-full pointer-events-none" />
