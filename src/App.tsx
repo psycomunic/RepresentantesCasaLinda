@@ -61,7 +61,7 @@ const ProtectedLayout = ({ user, onLogout }: { user: Profile, onLogout: () => vo
                 <Route path="/novo-pedido" element={<NewOrder />} />
                 <Route path="/ranking" element={<SalesRanking />} />
                 {user.role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<Navigate to="/portal" replace />} />
               </Routes>
             </section>
           </main>
@@ -133,21 +133,44 @@ const AppRoutes = () => {
     );
   }
 
-  if (!session || !userProfile) {
-    return (
-      <ThemeProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage onLoginClick={() => navigate('/login')} />} />
-          <Route path="/cadastro" element={<SignupPage />} />
-          <Route path="/obrigado" element={<ThankYouPage />} />
-          <Route path="/login" element={<AuthPage onLogin={() => navigate('/')} onBack={() => navigate('/')} />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </ThemeProvider>
-    );
-  }
+  const isAuthed = session && userProfile;
 
-  return <ProtectedLayout user={userProfile} onLogout={handleLogout} />;
+  return (
+    <ThemeProvider>
+      <Routes>
+        {/* Rotas Públicas */}
+        <Route path="/" element={<LandingPage onLoginClick={() => navigate('/login')} />} />
+        <Route path="/cadastro" element={<SignupPage />} />
+        <Route path="/obrigado" element={<ThankYouPage />} />
+        
+        <Route 
+          path="/login" 
+          element={
+            !isAuthed ? (
+              <AuthPage onLogin={() => navigate('/portal')} onBack={() => navigate('/')} />
+            ) : (
+              <Navigate to="/portal" replace />
+            )
+          } 
+        />
+
+        {/* Rota Protegida do Portal */}
+        <Route 
+          path="/portal/*" 
+          element={
+            isAuthed ? (
+              <ProtectedLayout user={userProfile} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          } 
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </ThemeProvider>
+  );
 };
 
 const App: React.FC = () => {

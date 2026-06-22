@@ -43,7 +43,7 @@ export const CheckoutFlow: React.FC = () => {
             <div className="max-w-4xl mx-auto py-32 text-center">
                 <h2 className="text-3xl font-display text-white italic">Seu carrinho está <span className="text-brand-gold">vazio</span></h2>
                 <button
-                    onClick={() => navigate('/catalogo')}
+                    onClick={() => navigate('/portal/catalogo')}
                     className="mt-8 px-8 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white text-[10px] uppercase tracking-widest font-bold transition-all"
                 >
                     Voltar ao Catálogo
@@ -109,7 +109,7 @@ export const CheckoutFlow: React.FC = () => {
             <div className="mb-12 flex items-center justify-between">
                 <div>
                     <button
-                        onClick={() => step > 1 && step < 3 ? setStep((s) => (s - 1) as 1 | 2) : navigate('/catalogo')}
+                        onClick={() => step > 1 && step < 3 ? setStep((s) => (s - 1) as 1 | 2) : navigate('/portal/catalogo')}
                         className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-white/40 hover:text-brand-gold mb-6 transition-colors font-bold"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -165,7 +165,7 @@ export const CheckoutFlow: React.FC = () => {
                         )}
 
                         <button
-                            onClick={() => navigate('/clientes')}
+                            onClick={() => navigate('/portal/clientes')}
                             className="mt-6 text-[10px] uppercase tracking-widest text-white/30 hover:text-white transition-colors underline"
                         >
                             + Cadastrar novo cliente
@@ -277,13 +277,13 @@ export const CheckoutFlow: React.FC = () => {
                     </p>
                     <div className="flex justify-center gap-4">
                         <button
-                            onClick={() => navigate('/pedidos')}
+                            onClick={() => navigate('/portal/pedidos')}
                             className="px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-white/10 transition-all"
                         >
                             Ver Pedidos
                         </button>
                         <button
-                            onClick={() => navigate('/catalogo')}
+                            onClick={() => navigate('/portal/catalogo')}
                             className="px-8 py-4 rounded-2xl bg-brand-gold text-black text-[10px] uppercase tracking-widest font-bold hover:bg-white shadow-[0_0_20px_rgba(197,160,89,0.2)] transition-all"
                         >
                             Novo Pedido

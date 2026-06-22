@@ -170,7 +170,7 @@ const WholesalePortal: React.FC = () => {
             </div>
 
             <button
-              onClick={() => navigate('/checkout')}
+              onClick={() => navigate('/portal/checkout')}
               disabled={cartTotals.totalItems === 0}
               className={`w-full py-6 rounded-2xl font-bold text-[10px] uppercase tracking-[0.4em] transition-all duration-700 ${cartTotals.totalItems > 0
                   ? 'bg-brand-gold text-black hover:bg-white shadow-[0_10px_40px_rgba(197,160,89,0.3)] hover:scale-[1.02]'

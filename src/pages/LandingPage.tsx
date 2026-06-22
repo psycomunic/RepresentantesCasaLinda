@@ -258,7 +258,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Bloco 3: Kit Comercial */}
-      <section className="py-24 px-6 relative border-b border-white/5 overflow-hidden">
+      <section className="py-12 md:py-24 px-6 relative border-b border-white/5 overflow-hidden">
         {/* Glow */}
         <div className="absolute top-1/2 right-[-200px] -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.04] blur-[150px] rounded-full pointer-events-none animate-pulse-slow"></div>
         
@@ -336,7 +336,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Bloco: Nossos Quadros em Ação */}
-      <section id="videos-quadros" className="py-24 px-6 border-b border-white/5 relative overflow-hidden bg-zinc-50 dark:bg-brand-dark/50 transition-colors duration-500">
+      <section id="videos-quadros" className="py-12 md:py-24 px-6 border-b border-white/5 relative overflow-hidden bg-zinc-50 dark:bg-brand-dark/50 transition-colors duration-500">
         {/* Glow decorative circle */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-brand-gold/[0.02] blur-[120px] rounded-full pointer-events-none" />
         

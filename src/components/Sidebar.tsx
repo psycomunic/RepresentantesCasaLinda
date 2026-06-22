@@ -10,14 +10,14 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ user, onLogout }) => {
   const menuItems = [
-    { id: '/', label: 'Dashboard', icon: LayoutDashboard },
-    { id: '/ranking', label: 'Ranking de Vendas', icon: TrendingUp },
-    { id: '/novo-pedido', label: 'Novo Pedido', icon: ShoppingBag },
-    { id: '/clientes', label: 'Meus Clientes', icon: Users },
+    { id: '/portal', label: 'Dashboard', icon: LayoutDashboard },
+    { id: '/portal/ranking', label: 'Ranking de Vendas', icon: TrendingUp },
+    { id: '/portal/novo-pedido', label: 'Novo Pedido', icon: ShoppingBag },
+    { id: '/portal/clientes', label: 'Meus Clientes', icon: Users },
     { id: 'catalogo', label: 'Catálogo Atacado', icon: ShoppingBag, external: true, url: 'https://atacadocasalinda.com.br' },
-    { id: '/pedidos', label: 'Pedidos Realizados', icon: Receipt },
-    { id: '/comissoes', label: 'Minhas Comissões', icon: DollarSign },
-    { id: '/admin', label: 'Aprovar Cadastros', icon: ShieldCheck },
+    { id: '/portal/pedidos', label: 'Pedidos Realizados', icon: Receipt },
+    { id: '/portal/comissoes', label: 'Minhas Comissões', icon: DollarSign },
+    { id: '/portal/admin', label: 'Aprovar Cadastros', icon: ShieldCheck },
   ];
 
   return (
