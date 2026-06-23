@@ -222,7 +222,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-black/[0.1] dark:bg-white/[0.01] blur-[120px] rounded-full pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20 max-w-4xl mx-auto space-y-4">
+          <div className="text-center mb-10 md:mb-20 max-w-4xl mx-auto space-y-4">
             <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Estrutura Comercial para Representantes</h2>
             <h3 className="text-5xl sm:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight">O poder de uma grande marca <br/> em suas mãos.</h3>
             <p className="text-zinc-600 dark:text-zinc-400 font-light text-xl max-w-3xl mx-auto">
@@ -251,7 +251,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
             ))}
           </div>
 
-          <div className="mt-20 glass-premium rounded-full p-6 flex items-center justify-center gap-4 text-brand-gold font-bold uppercase tracking-widest text-xs shadow-[0_10px_35px_rgba(197,160,89,0.06)] border border-brand-gold/25 mx-auto max-w-md">
+          <div className="mt-10 md:mt-20 glass-premium rounded-full p-6 flex items-center justify-center gap-4 text-brand-gold font-bold uppercase tracking-widest text-xs shadow-[0_10px_35px_rgba(197,160,89,0.06)] border border-brand-gold/25 mx-auto max-w-md">
             <Heart size={18} className="animate-pulse" /> Suporte Consultivo ao Representante
           </div>
         </div>
@@ -264,7 +264,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Centered Header */}
-          <div className="text-center mb-16 max-w-4xl mx-auto space-y-4">
+          <div className="text-center mb-10 md:mb-16 max-w-4xl mx-auto space-y-4">
             <h2 className="text-[10px] uppercase tracking-[0.5em] text-brand-gold font-bold">Sua Estrutura Comercial</h2>
             <h3 className="text-5xl sm:text-6xl font-display text-zinc-900 dark:text-white italic tracking-tight leading-[1.2]">
               Estrutura completa para vender no atacado.
@@ -342,7 +342,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
         
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16">
             <div className="space-y-4">
               <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">Coleções em Movimento</h2>
               <h3 className="text-4xl md:text-5xl font-display text-zinc-900 dark:text-white italic tracking-tight">
@@ -444,7 +444,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </div>
 
       {/* Bloco 4 & 5: Quem buscamos & Operation */}
-      <section id="programa" className="pt-10 pb-16 px-6 border-b border-white/5 relative overflow-hidden">
+      <section id="programa" className="pt-10 pb-10 md:pb-16 px-6 border-b border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 relative z-10">
           {/* Card: Quem estamos selecionando */}
           <div className="glass-premium p-12 md:p-16 rounded-[3rem] relative group border border-zinc-200/50 dark:border-white/10 hover:shadow-[0_30px_60px_rgba(197,160,89,0.04)] transition-all duration-500 overflow-hidden">
@@ -501,7 +501,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Política Comercial Séria */}
-      <section className="py-28 px-6 text-center border-b border-white/5 relative overflow-hidden">
+      <section className="py-14 md:py-28 px-6 text-center border-b border-white/5 relative overflow-hidden">
         {/* Decorative background glows */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-gold/[0.03] blur-[180px] rounded-full pointer-events-none" />
         <div className="absolute -top-40 right-10 w-[300px] h-[300px] bg-brand-gold/[0.02] blur-[100px] rounded-full pointer-events-none" />
@@ -594,7 +594,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 px-6 border-b border-white/5">
+      <section id="faq" className="py-12 md:py-24 px-6 border-b border-white/5">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-6">
             <h2 className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-bold">FAQ</h2>
@@ -643,7 +643,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 text-center px-6 relative overflow-hidden">
+      <section className="py-12 md:py-24 text-center px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(197,160,89,0.1)_0%,transparent_60%)] pointer-events-none"></div>
         
         <div className="max-w-5xl mx-auto space-y-8 relative z-10">
@@ -666,7 +666,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 border-t border-zinc-200 dark:border-white/5 text-center bg-white/50 dark:bg-black/80 backdrop-blur-3xl transition-colors">
+      <footer className="py-10 md:py-16 border-t border-zinc-200 dark:border-white/5 text-center bg-white/50 dark:bg-black/80 backdrop-blur-3xl transition-colors">
         <img src="/images/logo-preta.png" alt="Casa Linda" className="h-10 md:h-12 mx-auto opacity-40 dark:hidden object-contain mb-6" />
         <img src="/images/logo-branca.png" alt="Casa Linda" className="h-10 md:h-12 mx-auto opacity-40 hidden dark:block object-contain mb-6" />
         <p className="text-[9px] uppercase tracking-[0.5em] text-zinc-500 dark:text-white/30 font-bold">© 2024 Casa Linda Decorações | Exclusividade & Design</p>
