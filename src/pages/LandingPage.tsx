@@ -53,7 +53,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
       } else if (url.includes('youtube.com/shorts/')) {
         videoId = url.split('shorts/')[1].split('?')[0];
       }
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&vq=hd1080`;
     }
     return url;
   };
@@ -674,24 +674,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
 
       {/* Video Modal Player */}
       {activeVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all duration-300">
-          <div className="relative w-full max-w-5xl aspect-video glass-premium rounded-[2.5rem] border border-brand-gold/30 overflow-hidden shadow-[0_30px_70px_rgba(197,160,89,0.2)]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center md:p-4 bg-black/95 backdrop-blur-xl transition-all duration-300">
+          <div className={`relative w-full h-full md:h-[90vh] ${activeVideo.videoUrl.includes('shorts') ? 'md:aspect-[9/16]' : 'md:aspect-video max-w-5xl'} glass-premium md:rounded-[2.5rem] md:border border-brand-gold/30 overflow-hidden shadow-[0_30px_70px_rgba(197,160,89,0.2)]`}>
             {/* Close Button */}
             <button 
               onClick={() => setActiveVideo(null)}
-              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black/60 backdrop-blur border border-white/10 hover:border-brand-gold/60 text-white hover:text-brand-gold flex items-center justify-center transition-all duration-300 z-50 cursor-pointer"
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/60 backdrop-blur border border-white/10 hover:border-brand-gold/60 text-white hover:text-brand-gold flex items-center justify-center transition-all duration-300 z-50 cursor-pointer"
             >
               <X size={20} />
             </button>
             
             {/* Player Container */}
-            <div className="w-full h-full bg-black">
+            <div className="w-full h-full bg-black flex items-center justify-center">
               {activeVideo.videoUrl.includes('youtube.com') || activeVideo.videoUrl.includes('youtu.be') ? (
                 <iframe 
                   src={getEmbedUrl(activeVideo.videoUrl)}
                   title={activeVideo.title}
                   className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                   allowFullScreen
                 />
               ) : (
@@ -699,12 +699,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick }) => {
                   src={activeVideo.videoUrl}
                   controls
                   autoPlay
+                  playsInline
                   className="w-full h-full object-contain"
                 />
               )}
             </div>
-            
-
           </div>
         </div>
       )}
