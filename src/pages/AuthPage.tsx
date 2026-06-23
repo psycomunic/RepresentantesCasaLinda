@@ -5,9 +5,10 @@ import { supabase } from '../lib/supabase';
 interface AuthPageProps {
   onLogin: () => void;
   onBack: () => void;
+  onSignup?: () => void;
 }
 
-export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
+export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack, onSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -104,10 +105,22 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : 'ENTRAR'}
             </button>
-            <div className="text-center">
-              <button type="button" className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-white/40 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            
+            <div className="text-center pt-2">
+              <button type="button" className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-white/40 hover:text-zinc-900 dark:hover:text-white transition-colors mb-6">
                 Esqueci minha senha
               </button>
+              
+              <div className="pt-6 border-t border-zinc-200 dark:border-white/10">
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">Ainda não é um representante?</p>
+                <button 
+                  type="button" 
+                  onClick={onSignup}
+                  className="text-[11px] uppercase tracking-widest font-bold text-brand-gold hover:text-zinc-900 dark:hover:text-white transition-colors"
+                >
+                  Quero me cadastrar
+                </button>
+              </div>
             </div>
           </form>
         </div>

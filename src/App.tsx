@@ -147,7 +147,7 @@ const AppRoutes = () => {
           path="/login" 
           element={
             !isAuthed ? (
-              <AuthPage onLogin={() => navigate('/portal')} onBack={() => navigate('/')} />
+              <AuthPage onLogin={() => navigate('/portal')} onBack={() => navigate('/')} onSignup={() => navigate('/cadastro')} />
             ) : (
               <Navigate to="/portal" replace />
             )
