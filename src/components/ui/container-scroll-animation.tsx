@@ -35,17 +35,17 @@ export const ContainerScroll = ({
 
   return (
     <div
-      className="h-[35rem] md:h-[65rem] flex items-start justify-center relative p-2 md:p-20"
+      className="h-[50rem] md:h-[65rem] flex items-start justify-center relative p-2 md:p-20"
       ref={containerRef}
     >
       <div
-        className="pt-4 md:pt-8 pb-4 md:pb-16 w-full relative"
+        className="pt-10 md:pt-8 pb-4 md:pb-16 w-full relative"
         style={{
           perspective: "1000px",
         }}
       >
-        <Header translate={translate} titleComponent={titleComponent} />
-        <Card rotate={rotate} translate={translate} scale={scale}>
+        <Header translate={translate} titleComponent={titleComponent} isMobile={isMobile} />
+        <Card rotate={rotate} translate={translate} scale={scale} isMobile={isMobile}>
           {children}
         </Card>
       </div>
@@ -53,11 +53,11 @@ export const ContainerScroll = ({
   );
 };
 
-export const Header = ({ translate, titleComponent }: any) => {
+export const Header = ({ translate, titleComponent, isMobile }: any) => {
   return (
     <motion.div
       style={{
-        translateY: translate,
+        translateY: isMobile ? 0 : translate,
       }}
       className="div max-w-5xl mx-auto text-center"
     >
@@ -69,17 +69,23 @@ export const Header = ({ translate, titleComponent }: any) => {
 export const Card = ({
   rotate,
   scale,
+  translate,
   children,
+  isMobile,
 }: {
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
   translate: MotionValue<number>;
   children: React.ReactNode;
+  isMobile: boolean;
 }) => {
   return (
     <motion.div
-      style={{ rotateX: rotate, scale }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full"
+      style={{
+        rotateX: isMobile ? 0 : rotate,
+        scale: isMobile ? 0.95 : scale,
+      }}
+      className="max-w-5xl -mt-4 md:-mt-12 mx-auto h-[42rem] md:h-[40rem] w-full"
     >
       {/* === iPad Pro Frame === */}
       <div
